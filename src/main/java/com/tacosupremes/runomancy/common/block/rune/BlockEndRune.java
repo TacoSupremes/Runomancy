@@ -127,14 +127,14 @@ public class BlockEndRune extends BlockContainerRune implements IPageGiver{
 
 	@Override
 	public Page getPage() {
-		// TODO Auto-generated method stub
+		
 		return new ItemPage(new ItemStack(this));
 	}
 
 
 	@Override
 	public Categories getCategories() {
-		// TODO Auto-generated method stub
+		
 		return Categories.Runes;
 	}
 

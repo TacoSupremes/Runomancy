@@ -118,7 +118,7 @@ public class RunicContentsPage extends Page {
 
 	@Override
 	public Categories getCategory() {
-		// TODO Auto-generated method stub
+		
 		return Categories.Runes;
 	}
 

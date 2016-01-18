@@ -157,13 +157,13 @@ public class ItemPage extends Page {
 
 	@Override
 	public String returnPage() {
-		// TODO Auto-generated method stub
+		
 		return this.getCategory().getName();
 	}
 
 	@Override
 	public Categories getCategory() {
-		// TODO Auto-generated method stub
+		
 		Item i  = item.getItem();
 		Block b = Block.getBlockFromItem(i);
 		if(b != null){

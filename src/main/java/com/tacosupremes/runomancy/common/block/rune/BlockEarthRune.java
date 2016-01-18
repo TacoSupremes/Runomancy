@@ -91,14 +91,14 @@ public static final PropertyInteger mode = PropertyInteger.create("mode",0, ModB
 
 	@Override
 	public Page getPage() {
-		// TODO Auto-generated method stub
+		
 		return new ItemPage(new ItemStack(this));
 	}
 
 
 	@Override
 	public Categories getCategories() {
-		// TODO Auto-generated method stub
+		
 		return Categories.Runes;
 	}
 }

@@ -106,14 +106,14 @@ public class ContentsPage extends Page{
 
 	@Override
 	public String returnPage() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
 
 	@Override
 	public Categories getCategory() {
-		// TODO Auto-generated method stub
+		
 		return Categories.Home;
 	}
 	
