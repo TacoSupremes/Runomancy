@@ -1,0 +1,32 @@
+itemGroup.runomancy=Runomancy
+item.runicWand.name=Runic Wand
+item.runicBattery.name=Bottled Runic Essence
+item.runicPickaxe.name=Runic Pickaxe
+item.runicShovel.name=Runic Shovel
+item.runicAxe.name=Runic Axe
+item.runicHoe.name=Runic Hoe
+item.runicIngot.name=Runic Ingot
+item.modBook.name=Runic Tome
+item.hungerRune.name=Hunger Rune
+
+tile.endRune.name=End Rune
+tile.obsidianRune.name=Obsidian Rune
+tile.fireRune.name=Lava Rune
+tile.earthRune.name=Earth Rune
+tile.powerTorch.name=Runic Torch
+tile.battery.name=Runic Battery
+
+runomancy.contains=Currently contains
+
+runomancy.table=Table of Contents
+runomancy.back=Back
+runomancy.cat=Runes
+runomancy.cat1=Basic Runomancy
+runomancy.cat2=Generating Formations
+runomancy.cat3=Functional Formations
+runomancy.cat4=Runic Items
+
+runomancy.endRune.entry=End Runes are the brain of runic formations. Every Runic Formation must have this rune at the center of it.
+runomancy.obsidianRune.entry=Obsidian Runes are like a wall for runic energy.  These runes are typically used with runes that manipulate items or blocks in the world and provide stability to the constructs.
+runomancy.fireRune.entry=Lava Runes are firey like their normal block counterparts. These runes can be used in formations to channel fire to allow smelting or burning of items.
+runomancy.earthRune.entry=Earth Runes are filled with the essence of the earth.  These runes can interact with all living things which can include plants and the world itself.

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "mode=0": { "model": "runomancy:earthRune" },
+    "mode=1": { "model": "runomancy:earthRunePlant", "y": 180},
+    "mode=2": {
+      "model": "runomancy:earthRunePlant",
+      "y": 270
+    },
+    "mode=3": {
+      "model": "runomancy:earthRunePlant"
+    },
+    "mode=4": {
+      "model": "runomancy:earthRunePlant",
+      "y": 90
+    },
+    "mode=5": { "model": "runomancy:earthRuneMiner"}
+
+  }
+}

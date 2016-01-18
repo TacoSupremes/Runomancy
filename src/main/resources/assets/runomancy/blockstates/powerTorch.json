@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "facing=up": { "model": "runomancy:torch" },
+        "facing=east": { "model": "runomancy:torch_wall" },
+        "facing=south": { "model": "runomancy:torch_wall", "y": 90 },
+        "facing=west": { "model": "runomancy:torch_wall", "y": 180 },
+        "facing=north": { "model": "runomancy:torch_wall", "y": 270 }
+    }
+}
