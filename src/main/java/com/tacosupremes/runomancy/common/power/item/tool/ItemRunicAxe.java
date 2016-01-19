@@ -6,6 +6,10 @@ import com.tacosupremes.runomancy.common.Runomancy;
 import com.tacosupremes.runomancy.common.item.ModItems;
 import com.tacosupremes.runomancy.common.power.PowerHelper;
 import com.tacosupremes.runomancy.common.power.item.IRunicBattery;
+import com.tacosupremes.runomancy.gui.Categories;
+import com.tacosupremes.runomancy.gui.IPageGiver;
+import com.tacosupremes.runomancy.gui.ItemPage;
+import com.tacosupremes.runomancy.gui.Page;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -26,7 +30,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemRunicAxe extends ItemAxe {
+public class ItemRunicAxe extends ItemAxe implements IPageGiver{
 
 	public ItemRunicAxe() {
 		super(ModItems.runic);
@@ -118,6 +122,24 @@ public class ItemRunicAxe extends ItemAxe {
 		
 		
 		return super.onBlockDestroyed(stack, worldIn, blockIn, pos, playerIn);
+	}
+
+
+
+	@Override
+	public Page getPage() {
+		
+		return new ItemPage(new ItemStack(this, 1, this.getMaxDamage() - 1 ));
+		
+	}
+
+
+
+	@Override
+	public Categories getCategories() {
+		
+		return Categories.RunicItems;
+		
 	}
 
 

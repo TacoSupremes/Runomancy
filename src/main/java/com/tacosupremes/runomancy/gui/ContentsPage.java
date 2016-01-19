@@ -76,7 +76,7 @@ public class ContentsPage extends Page{
 	public void handleButtons(GuiButton b) {
 		
 		
-		//System.out.println(b.name);
+		
 		if(b.id == 0)
 			this.g.changePage("RUNES");
 		
@@ -88,11 +88,11 @@ public class ContentsPage extends Page{
 		
 		if(b.id == 3)
 			this.g.changePage("FUNCTIONAL");
-			
 		
-	//	return;
-	//	
-	//	}
+		if(b.id == 4)
+			this.g.changePage("RUNICITEMS");
+			
+	
 		
 		
 	}

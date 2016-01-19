@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.tacosupremes.runomancy.common.block.rune.IRune;
 import com.tacosupremes.runomancy.common.runelogic.IRuneEffect;
+import com.tacosupremes.runomancy.common.runelogic.RuneFormations;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -20,7 +21,9 @@ public class FormationPage extends Page {
 	@Override
 	public void draw(int mx, int my, float ticks) {
 	
-		this.drawFormation(20, 20, effect);
+		int s = (int)Math.sqrt(effect.getNeededBlocks().length);
+		
+		this.drawFormation(x + w / 2 - ( s * 12) / 2 , y+20, effect);
 		
 		
 	}

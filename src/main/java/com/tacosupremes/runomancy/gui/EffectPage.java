@@ -4,9 +4,11 @@ import org.lwjgl.opengl.GL11;
 
 import com.tacosupremes.runomancy.common.runelogic.IFunctionalRuneEffect;
 import com.tacosupremes.runomancy.common.runelogic.IRuneEffect;
+import com.tacosupremes.runomancy.gui.buttons.TextButton;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.util.StatCollector;
 
 public class EffectPage extends Page {
@@ -37,8 +39,33 @@ public class EffectPage extends Page {
 		
 
 	}
+	
+	
 
 	
+	@Override
+	public void handleButtons(GuiButton gb) {
+		
+		if(gb.id == 0)
+			this.g.changePage(effect.getName()+".formation");
+		
+		super.handleButtons(gb);
+		
+	}
+
+	@Override
+	public void initButtons() {
+		
+		
+		String s =StatCollector.translateToLocal("runomancy.viewFormation");
+		
+		if(!this.hasInit)
+		this.buttons.add(new TextButton(0, x+w/2-Minecraft.getMinecraft().fontRendererObj.getStringWidth(s) / 2, y+h-30, s));
+		
+		super.initButtons();
+		
+	}
+
 	@Override
 	public String returnPage() {
 		

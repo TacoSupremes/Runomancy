@@ -23,6 +23,8 @@ public class Pages {
 	
 	public static String[] p = new String[]{LibMisc.MODID + ".basics"};
 	
+	public static List<String> runicItems = new ArrayList<String>();
+	
 	public static void postInit(){
 		
 		addPage("HOME", new ContentsPage());
@@ -37,12 +39,17 @@ public class Pages {
 			
 			if(i instanceof IPageGiver){
 				
+				
+				
 				addPage(i.getUnlocalizedName(),((IPageGiver)i).getPage());
 				addPage(i.getUnlocalizedName().substring(5)+"REC", new RecipePage(new ItemStack(i)));
+				//if(((IPageGiver)i).getCategories() == Categories.RunicItems)
+					runicItems.add(i.getUnlocalizedName());
 			}
 			
 			
 		}
+		
 		
 		for(Block i : ModBlocks.blocks){
 			
@@ -55,6 +62,9 @@ public class Pages {
 			
 			
 		}
+		
+		
+		
 		
 		
 		

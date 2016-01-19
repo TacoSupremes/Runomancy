@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.tacosupremes.runomancy.gui.EffectPage;
 import com.tacosupremes.runomancy.gui.FormationPage;
+import com.tacosupremes.runomancy.gui.ListPage;
 import com.tacosupremes.runomancy.gui.Pages;
 
 public class RuneFormations {
@@ -35,6 +36,8 @@ public class RuneFormations {
 			Pages.addPage(i.getName(), new EffectPage(i));	
 			Pages.addPage(i.getName()+".formation", new FormationPage(i));			
 		}
+		
+		Pages.addPage("RUNICITEMS", new ListPage(Pages.runicItems));
 		
 		
 		

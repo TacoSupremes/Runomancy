@@ -63,7 +63,7 @@ public class ItemPage extends Page {
 		
 		
 		if(b.id == 0){
-			g.changePage(item.getUnlocalizedName().substring(5)+"REC");//new RecipePage(x, y, w, h, g, this, item));
+			g.changePage(item.getUnlocalizedName().substring(5)+"REC");
 			return;
 		}
 	

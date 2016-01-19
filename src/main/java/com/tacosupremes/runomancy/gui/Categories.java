@@ -2,7 +2,7 @@ package com.tacosupremes.runomancy.gui;
 
 public enum Categories {
 	
-Home(0), Runes(1), Runomancy(1), Generating(1), Functional(1), Items(1),
+Home(0), Runes(1), Runomancy(1), Generating(1), Functional(1), RunicItems(1),
 Item(2), Recipe(3)
 
 
