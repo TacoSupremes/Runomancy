@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
+import com.tacosupremes.runomancy.common.lib.LibMisc;
 import com.tacosupremes.runomancy.common.power.PowerHelper;
 import com.tacosupremes.runomancy.common.power.block.tile.IPowerTile;
 import com.tacosupremes.runomancy.common.power.item.IRunicBattery;
@@ -140,6 +141,12 @@ public class RuneEffectRepair implements IFunctionalRuneEffect {
 	public int getCost(){
 		
 		return 150;
+	}
+	
+	@Override
+	public String getName() {
+		
+		return LibMisc.MODID + ".repair.effect";
 	}
 	
 }

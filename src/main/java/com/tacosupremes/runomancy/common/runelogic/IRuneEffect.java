@@ -20,6 +20,8 @@ public interface IRuneEffect {
 	public int getPowerCapacity();
 	
 	public int getTransferRate();
+	
+	public String getName();
 
 	
 	

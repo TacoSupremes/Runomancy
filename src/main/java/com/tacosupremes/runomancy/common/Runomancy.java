@@ -72,7 +72,8 @@ public class Runomancy {
     {
     	ModRecipes.postInit();
     	LibMisc.Ores.postInit();
-    	Pages.init();
+    	Pages.postInit();
+    	RuneFormations.makePages();
 		
     }
     

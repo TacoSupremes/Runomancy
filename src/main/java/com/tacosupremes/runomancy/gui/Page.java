@@ -36,7 +36,7 @@ public abstract class Page{
 		this.h = h;
 		this.g = g;
 		
-		
+		this.init();
 	}
 	
 	
@@ -56,7 +56,16 @@ public abstract class Page{
 		
 	}
 	
-	public abstract void init();
+	public void init(){
+		
+	
+		
+		
+		if(needsBackButton() && !hasInit)
+			this.buttons.add(new TextButton(LibMisc.GuiIDs.Buttons.BACK, x+w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(StatCollector.translateToLocal("runomancy.back"))/2, y+(h-24), StatCollector.translateToLocal("runomancy.back")));
+		hasInit = true;
+		this.initButtons();
+	}
 		
 		
 	public boolean needsBackButton(){

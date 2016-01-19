@@ -26,23 +26,22 @@ public class ContentsPage extends Page{
 		
 		
 		
-		if(hasInit){
-			
-			return;
-		}
+		
 		int in = 0;
 		//final int end = Pages.getAvailableID()+3;
+		if(!hasInit){
 		for(int i = 0; i<=4;i++){
 		this.buttons.add(new TextButton(i, x+16, y+32+16*(in), StatCollector.translateToLocal("runomancy.cat"+(i == 0 ? "" : i))));
 		in++;
 		}
+		}
+		hasInit = true;
+		this.initButtons();
 	}
 
 	@Override
 	public void initButtons() {
-		
-		if(hasInit)
-			return;
+	
 		
 		int in = 0;
 		
@@ -78,9 +77,19 @@ public class ContentsPage extends Page{
 		
 		
 		//System.out.println(b.name);
-		//if(b.name == "runomancy.cat"){
-		this.g.changePage("RUNES");
+		if(b.id == 0)
+			this.g.changePage("RUNES");
+		
+		if(b.id == 1)
+			this.g.changePage("BASICS");
 	
+		if(b.id == 2)
+			this.g.changePage("GENERATING");
+		
+		if(b.id == 3)
+			this.g.changePage("FUNCTIONAL");
+			
+		
 	//	return;
 	//	
 	//	}

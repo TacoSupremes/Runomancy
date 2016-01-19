@@ -7,10 +7,13 @@ import java.util.Map;
 
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.item.ModItems;
+import com.tacosupremes.runomancy.common.lib.LibMisc;
+import com.tacosupremes.runomancy.common.runelogic.RuneFormations;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import scala.actors.threadpool.Arrays;
 
 public class Pages {
 	
@@ -18,10 +21,16 @@ public class Pages {
 	
 	public static Map<String, Page> pages = new HashMap<String, Page>();	
 	
-	public static void init(){
+	public static String[] p = new String[]{LibMisc.MODID + ".basics"};
+	
+	public static void postInit(){
 		
 		addPage("HOME", new ContentsPage());
 		addPage("RUNES", new RunicContentsPage());
+		addPage("BASICS", new ListPage(Arrays.asList(p)));
+		addPage("GENERATING", new ListPage(RuneFormations.generatingEffects));
+		addPage("FUNCTIONAL", new ListPage(RuneFormations.functionalEffects));
+		
 		
 		
 		for(Item i : ModItems.items){
@@ -46,6 +55,8 @@ public class Pages {
 			
 			
 		}
+		
+		
 		
 		
 	}

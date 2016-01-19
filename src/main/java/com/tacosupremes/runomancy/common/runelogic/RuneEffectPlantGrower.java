@@ -2,6 +2,7 @@ package com.tacosupremes.runomancy.common.runelogic;
 
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
+import com.tacosupremes.runomancy.common.lib.LibMisc;
 import com.tacosupremes.runomancy.common.utils.BlockUtils;
 
 import net.minecraft.block.Block;
@@ -168,6 +169,12 @@ public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 	public int getCost() {
 		
 		return 100;
+	}
+	
+	@Override
+	public String getName() {
+		
+		return LibMisc.MODID + ".plant.effect";
 	}
 
 }

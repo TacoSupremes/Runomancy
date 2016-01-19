@@ -3,6 +3,7 @@ package com.tacosupremes.runomancy.common.runelogic;
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.block.rune.IRune;
 import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
+import com.tacosupremes.runomancy.common.lib.LibMisc;
 import com.tacosupremes.runomancy.common.power.block.tile.IPowerNode;
 import com.tacosupremes.runomancy.common.power.block.tile.IPowerTile;
 import com.tacosupremes.runomancy.common.utils.InventoryHelper;
@@ -198,6 +199,12 @@ public class RuneEffectMiner implements IFunctionalRuneEffect {
 		
 		return en;
 		
+	}
+	
+	@Override
+	public String getName() {
+		
+		return LibMisc.MODID + ".miner.effect";
 	}
 
 }

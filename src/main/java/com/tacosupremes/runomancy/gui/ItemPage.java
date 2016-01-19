@@ -44,11 +44,16 @@ public class ItemPage extends Page {
 
 	@Override
 	public void init() {
-		String s = "Recipe";
-		this.buttons.add(new TextButton(0, x + w / 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(s) , y+h-40, s));
+		
+		if(!hasInit){
+			
+		this.buttons.add(new TextButton(0, x + w / 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(StatCollector.translateToLocal("runomancy.recipe")) / 2 , y+h-40, StatCollector.translateToLocal("runomancy.recipe")));
 		
 		buttons.add(new TextButton(LibMisc.GuiIDs.Buttons.BACK, x+w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(StatCollector.translateToLocal("runomancy.back"))/2, y+(h-24), StatCollector.translateToLocal("runomancy.back")));
 		
+		}
+		hasInit = true;
+		this.initButtons();
 		
 	}
 

@@ -118,37 +118,7 @@ public class GuiModBook extends GuiScreen {
 	
 
 	
-	void drawFormation(IRuneEffect re){
-		
-		GL11.glPushMatrix();
-		GL11.glColor4f(1F, 1F, 1F, 1F);
-		int index = 0;
-		int x = 0;
-		int y = 0;
-		
-		int d =(int) Math.sqrt(re.getNeededBlocks().length);
-		
-		for(Block b : re.getNeededBlocks()){
-			
-			IRune i = (IRune)b;
-			
-		Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(new ItemStack(b), left+8+x, top+40+y);
-		
-		index ++;
-		x+=12;
-		
-		
-		if(index % d == 0){
-		
-		x = 0;
-		y+=12;
-		
-		}
-		}
-		
-		GL11.glPopMatrix();
 	
-	}
 	
 
 	
@@ -182,6 +152,11 @@ public class GuiModBook extends GuiScreen {
 
 
 	public void changePage(String s){
+		
+		if(Pages.pages.get(s) == null){
+			System.out.println("RIP : " + s);
+			return;
+		}
 		this.cp = Pages.pages.get(s);
 		System.out.print(s);
 		
@@ -191,7 +166,6 @@ public class GuiModBook extends GuiScreen {
 		this.cp.init();
 		this.cp.initButtons();
 		this.buttonList = cp.buttons;
-		
 		
 		this.canInput = true;
 		this.allowUserInput = true;

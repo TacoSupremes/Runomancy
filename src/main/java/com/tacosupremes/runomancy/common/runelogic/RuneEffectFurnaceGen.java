@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
+import com.tacosupremes.runomancy.common.lib.LibMisc;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
@@ -102,6 +103,12 @@ public class RuneEffectFurnaceGen implements IRuneEffect {
 	public int getTransferRate() {
 		
 		return 50;
+	}
+	
+	@Override
+	public String getName() {
+		
+		return LibMisc.MODID + ".furnacegen.effect";
 	}
 
 }

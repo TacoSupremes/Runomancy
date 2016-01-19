@@ -2,6 +2,7 @@ package com.tacosupremes.runomancy.common.runelogic;
 
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
+import com.tacosupremes.runomancy.common.lib.LibMisc;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -74,6 +75,12 @@ public class RuneEffectSolarGen implements IRuneEffect {
 	public int getTransferRate() {
 		
 		return 50;
+	}
+	
+	@Override
+	public String getName() {
+		
+		return LibMisc.MODID + ".solar.effect";
 	}
 
 }
