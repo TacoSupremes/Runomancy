@@ -42,6 +42,7 @@ public abstract class Page{
 	
 	
 	public List<GuiButton> buttons = new ArrayList<GuiButton>();
+	private List<Page> sp = null;
 	
 	public abstract void draw(int mx, int my, float ticks);
 		
@@ -109,6 +110,17 @@ public abstract class Page{
 	 public abstract String returnPage();
 	 
 	 public abstract Categories getCategory();
+	 
+	 public boolean needsSubPage(){
+		 
+		 return getSubPages() != null;
+	 }
+	 
+	 
+	 public List<Page> getSubPages(){
+		 
+		 return sp;
+	 }
 	 
 
 

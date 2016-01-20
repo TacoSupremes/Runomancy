@@ -31,6 +31,8 @@ Thumbs.db
 ## Jars
 *.jar
 !/gradle/wrapper/gradle-wrapper.jar
+
+*.launch
 !Runomancy_Client.launch
 !Runomancy_Server.launch
 
