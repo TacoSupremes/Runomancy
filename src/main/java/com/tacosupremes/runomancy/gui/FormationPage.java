@@ -8,7 +8,9 @@ import com.tacosupremes.runomancy.common.runelogic.RuneFormations;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 
 public class FormationPage extends Page {
 
@@ -23,7 +25,11 @@ public class FormationPage extends Page {
 	
 		int s = (int)Math.sqrt(effect.getNeededBlocks().length);
 		
-		this.drawFormation(x + w / 2 - ( s * 12) / 2 , y+20, effect);
+		String str = StatCollector.translateToLocal(effect.getName());
+		
+		Minecraft.getMinecraft().fontRendererObj.drawString(str, x +w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(str) / 2, y+20, 0);
+		
+		this.drawFormation(x + w / 2 - ( s * 13 + s) / 2 , y+40, effect);
 		
 		
 	}
@@ -34,6 +40,8 @@ void drawFormation(int left, int top, IRuneEffect re){
 		
 		GL11.glPushMatrix();
 		GL11.glColor4f(1F, 1F, 1F, 1F);
+		
+		RenderHelper.enableGUIStandardItemLighting();
 		int index = 0;
 		int x = 0;
 		int y = 0;
@@ -43,8 +51,8 @@ void drawFormation(int left, int top, IRuneEffect re){
 		for(Block b : re.getNeededBlocks()){
 			
 			IRune i = (IRune)b;
-			
-		Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(new ItemStack(b), left+8+x, top+40+y);
+			if(b != null)
+		Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(new ItemStack(b), left+x, top+y);
 		
 		index ++;
 		x+=12;
@@ -57,6 +65,7 @@ void drawFormation(int left, int top, IRuneEffect re){
 		
 		}
 		}
+	
 		
 		GL11.glPopMatrix();
 	

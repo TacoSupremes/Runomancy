@@ -14,7 +14,7 @@ import net.minecraft.util.StatCollector;
 
 public class ListPage extends Page {
 	
-	
+	//TODO CREATE SUBPAGE SYSTEM FOR WHEN LIST OVERFLOWS
 	private List<String> l;
 
 	public ListPage(List<String> l){

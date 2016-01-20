@@ -23,7 +23,11 @@ public class RuneChargerPage extends Page {
 		
 		
 		RenderHelper.enableGUIStandardItemLighting();
+		
 		Minecraft.getMinecraft().getRenderItem().renderItemAndEffectIntoGUI(r.getIn(),  x+w/2 - 10 - 30, y+h / 2 - 10);
+		
+	
+		
 		Minecraft.getMinecraft().getRenderItem().renderItemAndEffectIntoGUI(r.getOut(), x+w/2 - 10 + 30, y+h / 2 - 10);
 		
 		

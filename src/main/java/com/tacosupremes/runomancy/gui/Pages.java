@@ -89,9 +89,8 @@ public class Pages {
 			
 		}
 		
-		
-		
 		addPage("RUNICITEMS", new ItemListPage(Pages.runicItems));
+		
 		addPage("RUNICBLOCKS", new ItemListPage(Pages.runicBlocks, null));
 		
 		for(RuneChargerRecipe r : ModRecipes.rcr){

@@ -23,7 +23,7 @@ public class ItemListPage extends Page {
 	
 	
 	
-
+	//TODO CREATE SUBPAGE SYSTEM FOR WHEN LIST OVERFLOWS
 
 	
 
@@ -94,6 +94,7 @@ public class ItemListPage extends Page {
 			
 			if(gb.id == LibMisc.GuiIDs.Buttons.BACK)
 				continue;
+			
 			gb.xPosition = x+16;
 			gb.yPosition = y+32+16*in;
 			in++;

@@ -54,13 +54,24 @@ public class EffectPage extends Page {
 	}
 
 	@Override
-	public void initButtons() {
-		
+	public void init() {
 		
 		String s =StatCollector.translateToLocal("runomancy.viewFormation");
 		
 		if(!this.hasInit)
 		this.buttons.add(new TextButton(0, x+w/2-Minecraft.getMinecraft().fontRendererObj.getStringWidth(s) / 2, y+h-30, s));
+		
+		super.init();
+	}
+
+	@Override
+	public void initButtons() {
+		
+		String s =StatCollector.translateToLocal("runomancy.viewFormation");
+	
+		this.buttons.get(0).xPosition = x+w/2-Minecraft.getMinecraft().fontRendererObj.getStringWidth(s) / 2;
+		this.buttons.get(0).yPosition = y+h-40;
+		
 		
 		super.initButtons();
 		
