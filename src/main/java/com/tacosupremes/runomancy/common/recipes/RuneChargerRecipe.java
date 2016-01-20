@@ -7,7 +7,7 @@ public class RuneChargerRecipe {
 	private ItemStack in;
 	private ItemStack out;
 	private int cost;
-	public RuneChargerRecipe(ItemStack in, ItemStack out, int cost){
+	public RuneChargerRecipe(ItemStack out, ItemStack in, int cost){
 		this.in = in;
 		this.out = out;
 		this.cost = cost;

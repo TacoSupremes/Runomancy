@@ -2,6 +2,11 @@ package com.tacosupremes.runomancy.common.item;
 
 import java.util.List;
 
+import com.tacosupremes.runomancy.gui.Categories;
+import com.tacosupremes.runomancy.gui.IPageGiver;
+import com.tacosupremes.runomancy.gui.ItemPage;
+import com.tacosupremes.runomancy.gui.Page;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,7 +20,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemHungerTablet extends ItemMod{
+public class ItemHungerTablet extends ItemMod implements IPageGiver{
 
 	public ItemHungerTablet() {
 		super("hungerRune", 1);
@@ -159,6 +164,30 @@ public class ItemHungerTablet extends ItemMod{
 				l.add("Food Absorption: " + EnumChatFormatting.GREEN + "Active");
 			else
 				l.add("Food Absorption: " + EnumChatFormatting.RED + "Inactive");
+		
+	}
+
+
+	@Override
+	public Page getPage() {
+		
+		return new ItemPage(new ItemStack(this));
+		
+	}
+
+
+	@Override
+	public Categories getCategories() {
+		
+		return Categories.RunicItems;
+		
+	}
+
+
+	@Override
+	public boolean hasNormalRecipe() {
+		
+		return true;
 		
 	}
 	

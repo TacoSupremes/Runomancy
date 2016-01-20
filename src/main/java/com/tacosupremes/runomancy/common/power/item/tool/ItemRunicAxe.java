@@ -143,7 +143,13 @@ public class ItemRunicAxe extends ItemAxe implements IPageGiver{
 	}
 
 
-
+	@Override
+	public boolean hasNormalRecipe() {
+		
+		return true;
+		
+	}
+	
 	
 	
 	

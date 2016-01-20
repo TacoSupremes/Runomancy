@@ -8,6 +8,8 @@ import java.util.Map;
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.item.ModItems;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
+import com.tacosupremes.runomancy.common.recipes.ModRecipes;
+import com.tacosupremes.runomancy.common.recipes.RuneChargerRecipe;
 import com.tacosupremes.runomancy.common.runelogic.RuneFormations;
 
 import net.minecraft.block.Block;
@@ -23,15 +25,20 @@ public class Pages {
 	
 	public static String[] p = new String[]{LibMisc.MODID + ".basics"};
 	
-	public static List<String> runicItems = new ArrayList<String>();
+	public static List<Item> runicItems = new ArrayList<Item>();
+
+	public static List<Block> runicBlocks = new ArrayList<Block>();
 	
 	public static void postInit(){
 		
+		
+		
 		addPage("HOME", new ContentsPage());
-		addPage("RUNES", new RunicContentsPage());
+		addPage("RUNES", new ItemListPage(ModBlocks.runes, null));
 		addPage("BASICS", new ListPage(Arrays.asList(p)));
 		addPage("GENERATING", new ListPage(RuneFormations.generatingEffects));
 		addPage("FUNCTIONAL", new ListPage(RuneFormations.functionalEffects));
+		
 		
 		
 		
@@ -42,9 +49,26 @@ public class Pages {
 				
 				
 				addPage(i.getUnlocalizedName(),((IPageGiver)i).getPage());
+				if(((IPageGiver)i).hasNormalRecipe())
 				addPage(i.getUnlocalizedName().substring(5)+"REC", new RecipePage(new ItemStack(i)));
-				//if(((IPageGiver)i).getCategories() == Categories.RunicItems)
-					runicItems.add(i.getUnlocalizedName());
+				if(((IPageGiver)i).getCategories() == Categories.RunicItems)
+					runicItems.add(i);
+			}
+			
+			
+		}
+		
+	for(Item i : ModItems.nitems){
+			
+			if(i instanceof IPageGiver){
+				
+				
+				
+				addPage(i.getUnlocalizedName(),((IPageGiver)i).getPage());
+				if(((IPageGiver)i).hasNormalRecipe())
+				addPage(i.getUnlocalizedName().substring(5)+"REC", new RecipePage(new ItemStack(i)));
+				if(((IPageGiver)i).getCategories() == Categories.RunicItems)
+					runicItems.add(i);
 			}
 			
 			
@@ -56,8 +80,10 @@ public class Pages {
 			if(i instanceof IPageGiver){
 				
 				addPage(i.getUnlocalizedName(),((IPageGiver)i).getPage());
+				if(((IPageGiver)i).hasNormalRecipe())
 				addPage(i.getUnlocalizedName().substring(5)+"REC", new RecipePage(new ItemStack(i)));
-				
+				if(((IPageGiver)i).getCategories() == Categories.RunicBlocks)
+					runicBlocks.add(i);
 			}
 			
 			
@@ -65,7 +91,14 @@ public class Pages {
 		
 		
 		
+		addPage("RUNICITEMS", new ItemListPage(Pages.runicItems));
+		addPage("RUNICBLOCKS", new ItemListPage(Pages.runicBlocks, null));
 		
+		for(RuneChargerRecipe r : ModRecipes.rcr){
+		addPage(r.getOut().getUnlocalizedName().substring(5)+"REC", new RuneChargerPage(r));
+			
+			
+		}
 		
 		
 		

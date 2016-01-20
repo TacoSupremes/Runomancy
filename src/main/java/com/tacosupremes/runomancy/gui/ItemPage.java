@@ -88,9 +88,8 @@ public class ItemPage extends Page {
 		
 			FontRenderer f = Minecraft.getMinecraft().fontRendererObj;
 		
-		
 		String s = StatCollector.translateToLocal("runomancy."+item.getUnlocalizedName().substring(5) + ".entry");
-	
+		
 		drawTextSplit(s, f, x+16, y+32, w-32, 0);
 		
 		String n = StatCollector.translateToLocal(item.getUnlocalizedName() + ".name");
@@ -105,6 +104,9 @@ public class ItemPage extends Page {
 	
 
 	public static void drawTextSplit(String s, FontRenderer f, int x, int y,  int trim,  int color){
+		
+		if(s.isEmpty() || s == "")
+			return;
 		
 		if(f.getStringWidth(s) < trim){
 			f.drawString(s, x, y, color);

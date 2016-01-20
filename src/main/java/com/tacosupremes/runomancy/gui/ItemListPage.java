@@ -1,5 +1,8 @@
 package com.tacosupremes.runomancy.gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.lwjgl.opengl.GL11;
 
 import com.tacosupremes.runomancy.common.block.ModBlocks;
@@ -12,20 +15,36 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
-public class RunicContentsPage extends Page {
+public class ItemListPage extends Page {
 	
 	
 	
 
 
 	
-	int maxID = ModBlocks.runes.size();
+
+	private List<Item> l;
+	private List<Block> bl;
 	
-	public RunicContentsPage() {
+	public ItemListPage(List<Item> l) {
 		super();
+		this.l = l;
+		this.bl = null;
+	}
+	
+	public ItemListPage(List<Block> l, String s) {
+		super();
+		this.bl = l;
+		this.l = null;
+		
+		
+		
+		
+	
 	}
 
 	
@@ -38,11 +57,21 @@ public class RunicContentsPage extends Page {
 		
 		
 		if(!hasInit){
-		for(int i = 0; i<maxID;i++){
-		this.buttons.add(new ItemButton(i, x+16, y+32+16*i, ModBlocks.runes.get(i).getLocalizedName(), ModBlocks.runes.get(i)));
+			
+			
+		if(bl == null){
+		for(int i = 0; i<l.size();i++){
+		this.buttons.add(new ItemButton(i, x+16, y+32+16*i, StatCollector.translateToLocal(l.get(i).getUnlocalizedName() +".name"), l.get(i)));
 		
 		}
-		
+		}else{
+			
+			for(int i = 0; i<bl.size();i++){
+				this.buttons.add(new ItemButton(i, x+16, y+32+16*i, StatCollector.translateToLocal(bl.get(i).getUnlocalizedName() +".name"), bl.get(i)));
+				
+				}
+			
+		}
 		
 		buttons.add(new TextButton(LibMisc.GuiIDs.Buttons.BACK, x+w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(StatCollector.translateToLocal("runomancy.back"))/2, y+(h-24), StatCollector.translateToLocal("runomancy.back")));
 		
@@ -63,6 +92,8 @@ public class RunicContentsPage extends Page {
 		
 		for(GuiButton gb : buttons){
 			
+			if(gb.id == LibMisc.GuiIDs.Buttons.BACK)
+				continue;
 			gb.xPosition = x+16;
 			gb.yPosition = y+32+16*in;
 			in++;
@@ -99,9 +130,13 @@ public class RunicContentsPage extends Page {
 		
 		
 			
-			if(b.id != LibMisc.GuiIDs.Buttons.BACK)
-			g.changePage(ModBlocks.runes.get(b.id).getUnlocalizedName());
-	
+			if(b.id != LibMisc.GuiIDs.Buttons.BACK){
+				
+				if(l != null)
+					g.changePage(l.get(b.id).getUnlocalizedName());
+				else
+					g.changePage(bl.get(b.id).getUnlocalizedName());
+			}
 			
 		
 		super.handleButtons(b);

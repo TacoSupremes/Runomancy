@@ -139,6 +139,12 @@ public class BlockEndRune extends BlockContainerRune implements IPageGiver{
 	}
 
 
+	@Override
+	public boolean hasNormalRecipe() {
+		
+		return true;
+		
+	}
 	
 
 	

@@ -1,8 +1,13 @@
 package com.tacosupremes.runomancy.common.item;
 
+import com.tacosupremes.runomancy.gui.Categories;
+import com.tacosupremes.runomancy.gui.IPageGiver;
+import com.tacosupremes.runomancy.gui.ItemPage;
+import com.tacosupremes.runomancy.gui.Page;
+
 import net.minecraft.item.ItemStack;
 
-public class ItemRunicWand extends ItemMod {
+public class ItemRunicWand extends ItemMod implements IPageGiver {
 
 	public ItemRunicWand() {
 		super("runicWand",0);
@@ -21,8 +26,28 @@ public class ItemRunicWand extends ItemMod {
 	}
 
 
+	@Override
+	public Page getPage() {
+		
+		return new ItemPage(new ItemStack(this));
+		
+	}
+
+
+	@Override
+	public Categories getCategories() {
+		
+		return Categories.RunicItems;
+		
+	}
 	
 	
+	@Override
+	public boolean hasNormalRecipe() {
+		
+		return true;
+		
+	}
 	
 	
 	

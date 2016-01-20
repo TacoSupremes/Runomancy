@@ -105,6 +105,12 @@ public abstract class BlockRune extends BlockMod implements IRune, IPageGiver {
 	        return soil.isSideSolid(worldIn, down, EnumFacing.UP);
 	    }
 
-	
+		@Override
+		public boolean hasNormalRecipe() {
+			
+			return true;
+			
+		}
+		
 
 }

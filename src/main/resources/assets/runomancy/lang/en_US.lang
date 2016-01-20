@@ -27,6 +27,11 @@ runomancy.cat1=Basic Runomancy
 runomancy.cat2=Generating Formations
 runomancy.cat3=Functional Formations
 runomancy.cat4=Runic Items
+runomancy.cat5=Runic Blocks
+
+runomancy.runicAxe.entry=The Runic Axe is an Axe made out of Runic Ingots. The Axe must be charged with Runic Energy to break blocks at a reasonable speed.
+runomancy.runicWand.entry=The Runic Wand is used for a couple of things.
+runomancy.runicIngot.entry=Runic Ingots are the building blocks for various items.
 
 runomancy.endRune.entry=End Runes are the brain of runic formations. Every Runic Formation must have this rune at the center of it.
 runomancy.obsidianRune.entry=Obsidian Runes are like a wall for runic energy.  These runes are typically used with runes that manipulate items or blocks in the world and provide stability to the constructs.

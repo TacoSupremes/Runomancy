@@ -17,23 +17,28 @@ import net.minecraft.item.ItemStack;
 public class ItemButton extends TextButton {
 
 	private ItemStack item;
+	private boolean isItem = false;
 
 
 	public ItemButton(int buttonId, int x, int y, String buttonText, ItemStack item) {
 		super(buttonId, x, y, 16+Minecraft.getMinecraft().fontRendererObj.getStringWidth(buttonText)+ 15, Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT, buttonText);
 		this.item = item;
+		if(Block.getBlockFromItem(item.getItem()) == null)
+			isItem = true;
 		
 	}
 
 	public ItemButton(int buttonId, int x, int y, String buttonText, Item item) {
 		super(buttonId, x, y, 16+Minecraft.getMinecraft().fontRendererObj.getStringWidth(buttonText)+ 15, Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT, buttonText);
 		this.item = new ItemStack(item);
+		this.isItem = true;
 		
 	}
 	
 	public ItemButton(int buttonId, int x, int y, String buttonText, Block block) {
 		super(buttonId, x, y, 16+Minecraft.getMinecraft().fontRendererObj.getStringWidth(buttonText)+ 15, Minecraft.getMinecraft().fontRendererObj.FONT_HEIGHT, buttonText);
 		this.item = new ItemStack(block);
+		this.isItem = false;
 		
 	}
 	
@@ -49,7 +54,7 @@ public class ItemButton extends TextButton {
 			GL11.glColor4f(1F, 1F, 1F, 1F);
 			
 			RenderHelper.enableGUIStandardItemLighting();
-			mc.getRenderItem().renderItemIntoGUI(item, xPosition, yPosition-8);
+			mc.getRenderItem().renderItemIntoGUI(item, xPosition - 1, yPosition - (isItem ? 5 : 8));
 			RenderHelper.disableStandardItemLighting();
 			
 			GL11.glPopMatrix();

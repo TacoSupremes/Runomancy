@@ -30,7 +30,7 @@ public class ContentsPage extends Page{
 		int in = 0;
 		//final int end = Pages.getAvailableID()+3;
 		if(!hasInit){
-		for(int i = 0; i<=4;i++){
+		for(int i = 0; i<=5;i++){
 		this.buttons.add(new TextButton(i, x+16, y+32+16*(in), StatCollector.translateToLocal("runomancy.cat"+(i == 0 ? "" : i))));
 		in++;
 		}
@@ -91,6 +91,9 @@ public class ContentsPage extends Page{
 		
 		if(b.id == 4)
 			this.g.changePage("RUNICITEMS");
+		
+		if(b.id == 5)
+			this.g.changePage("RUNICBLOCKS");
 			
 	
 		

@@ -55,6 +55,9 @@ public class ListPage extends Page {
 		
 		for(GuiButton gb : buttons){
 			
+			if(gb.id == LibMisc.GuiIDs.Buttons.BACK)
+				continue;
+			
 			gb.xPosition = x+16;
 			gb.yPosition = y+32+16*in;
 			in++;
@@ -83,14 +86,9 @@ public class ListPage extends Page {
 	@Override
 	public void handleButtons(GuiButton b) {
 		
-		if(b.id != LibMisc.GuiIDs.Buttons.BACK){
-			
-				System.out.println(l.get(b.id));
-		
-		
-			
+		if(b.id != LibMisc.GuiIDs.Buttons.BACK)
 			g.changePage(l.get(b.id));
-		}
+		
 		
 		
 		super.handleButtons(b);

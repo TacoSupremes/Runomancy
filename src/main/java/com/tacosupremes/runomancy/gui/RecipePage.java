@@ -11,6 +11,7 @@ import com.tacosupremes.runomancy.gui.buttons.TextButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
@@ -76,7 +77,7 @@ public class RecipePage extends Page {
 			
 			//int ssx = sx;
 			//int ex = sx+wx;
-			if((ssx < mx && mx < ex) && (my > wy+sy && my <wy+19+sy))
+			if((ssx < mx && mx < ex) && (my > wy+sy && my <wy+19+sy) && wis != null)
 				this.g.drawTooltip(wis, mx, my);
 			
 			if(index % wd == 0){
@@ -114,7 +115,7 @@ public class RecipePage extends Page {
 			int y = 1;
 			
 			int d =3;
-			
+			RenderHelper.enableGUIStandardItemLighting();
 			for(ItemStack is : l){
 				
 				
@@ -141,6 +142,7 @@ public class RecipePage extends Page {
 				
 				
 			}
+			RenderHelper.disableStandardItemLighting();;
 			
 		}else
 			System.out.println("FML");
