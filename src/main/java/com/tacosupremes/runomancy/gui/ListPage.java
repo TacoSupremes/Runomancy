@@ -26,33 +26,35 @@ public class ListPage extends Page {
 			
 			List<String> tl = new ArrayList<String>();
 			List<String> sfl = new ArrayList<String>();
-			int ai=0;
-			int index = 0;
+			
+			
 			boolean tla = false;
+			
+			
 			for(String i : l2){
 				
-				if(index < 8){
+				if(tl.size() < 7 && !tla){
 				
 				
 				tl.add(i);
 			
 				
 				
-				index++;
-				ai++;
-				if(ai != l2.size())
-				continue;
-				}
+				
+				
+				
+				}else{
 					if(!tla){
-						
+						tl.add(i);
 					this.l = this.copyL(tl);
+					
 					
 					tl.removeAll(tl);
 					
 					tla = true;
 					
 					}else{
-						
+					
 					sfl.add(i);
 					
 					
@@ -60,29 +62,31 @@ public class ListPage extends Page {
 					}
 					
 					
-					
+				}
 				
-				ai++;
+				
 			}
 			
-		
+		String tempName = this.removeNumbers(name);
 			
 			boolean validName = false;
 			int k = 1;
 			
 			while(!validName){
 				
-				if(!Pages.pages.containsKey(this.name+k))
+				if(!Pages.pages.containsKey(tempName+k) && !Pages.taken.contains(tempName+k))
 					break;
 				
 				k+=1;
 				
 			}
-				Page p = new ListPage(sfl, this.name+k);
+			
+			Pages.taken.add(tempName+k);
+				Page p = new ListPage(sfl, tempName+k);
 				p.setReturnPage(name);
 			
-				Pages.addPage(this.name+k, p);
-				sp = (this.name + k);
+				Pages.addPage(tempName+k, p);
+				sp = (tempName + k);
 				
 			
 			
@@ -146,7 +150,7 @@ public class ListPage extends Page {
 		GL11.glPushMatrix();
 		
 		FontRenderer f = Minecraft.getMinecraft().fontRendererObj;
-		String s = StatCollector.translateToLocal("runomancy.table");
+		String s = StatCollector.translateToLocal(LibMisc.MODID+"."+ListPage.removeNumbers(name).toLowerCase());
 		
 		f.drawString(s, x + w / 2 - f.getStringWidth(s) / 2 , y+16, 0);
 		
@@ -189,8 +193,32 @@ public class ListPage extends Page {
 
 
 
-
+public static String removeNumbers(String s){
 	
+	
+	boolean done = true;
+	
+	StringBuilder sb =new StringBuilder(s);
+	
+	while(done){
+		
+	if(isInteger(sb.charAt(sb.length()-1)))
+		sb.deleteCharAt(sb.length()-1);
+	else
+		break;
+	
+	}
+	
+	return sb.toString();
+	
+}
+	
+
+public static boolean isInteger(char c){
+	
+	
+	return c == '0' || c == '1' || c == '2' || c == '3' || c == '4' || c == '5' || c == '6' || c == '7' || c == '8' || c == '9';
+}
 	
 	
 
@@ -203,8 +231,8 @@ public List<String> copyL(List<String> ol){
 	
 	
 	for(String o : ol){
-		
-		nl.add(o.copyValueOf(o.toCharArray()));
+		String s = String.copyValueOf(o.toCharArray());
+		nl.add(s);
 	}
 	
 	

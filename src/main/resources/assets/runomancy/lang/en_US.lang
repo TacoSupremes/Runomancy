@@ -30,6 +30,14 @@ runomancy.cat3=Functional Formations
 runomancy.cat4=Runic Items
 runomancy.cat5=Runic Blocks
 
+runomancy.runes=Runes
+runomancy.basics=Basic Runomancy
+runomancy.generating=Generating Formations
+runomancy.functional=Functional Formations
+runomancy.runicitems=Runic Items
+runomancy.runicblocks=Runic Blocks
+runomancy.begin=Beginning Runomancy
+
 runomancy.runicAxe.entry=The Runic Axe is an Axe made out of Runic Ingots. The Axe must be charged with Runic Energy to break blocks at a reasonable speed.
 runomancy.runicWand.entry=The Runic Wand is used for a couple of things.
 runomancy.runicIngot.entry=Runic Ingots are the building blocks for various items.

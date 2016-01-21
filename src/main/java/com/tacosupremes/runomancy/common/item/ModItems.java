@@ -74,9 +74,9 @@ public class ModItems {
 		
 		potionAmulet = new ItemPotionAmulet();
 		
-		runicIngot = new ItemRunicIngot();
-		
 		hungerTablet = new ItemHungerTablet();
+		
+		runicIngot = new ItemRunicIngot();
 		
 		modBook = new ItemModBook();
 	}
@@ -98,6 +98,7 @@ public class ModItems {
 				
 				
 				ModelBakery.registerItemVariants(i, s);
+				
 				
 				for(int i2 = 0; i2<=i.meta;i2++){
 					ModItems.registerItemRender(i, i2);

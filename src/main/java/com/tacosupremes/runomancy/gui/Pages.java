@@ -23,13 +23,17 @@ public class Pages {
 	
 	public static Map<String, Page> pages = new HashMap<String, Page>();	
 	
-	public static String[] p = new String[]{LibMisc.MODID + ".basics","g","fg","gf","hgh","hghg","fnl", "acl", "yotcn", "ow", "fuck", "forge", "it", "b", "gay"};
+	public static String[] p = new String[]{"runomancy.begin"};
+	
 	
 	public static List<Item> runicItems = new ArrayList<Item>();
 
 	public static List<Block> runicBlocks = new ArrayList<Block>();
 	
+	public static List<String> taken = new ArrayList<String>();
+	
 	public static void postInit(){
+		
 		
 		
 		
@@ -117,7 +121,10 @@ public class Pages {
 			
 		}
 		
-		
+		for(String s : p){
+			
+			addPage(s, new TextPage(s, "BASICS", 2));
+		}
 		
 	}
 	
