@@ -291,7 +291,8 @@ public ItemStack getOtherForms(ItemStack i){
 		
 		public static class Buttons {
 			
-			public static int BACK = 45673;
+			public static final int NEXT = 46583;
+			public static final int BACK = 45673;
 		}
 		
 		

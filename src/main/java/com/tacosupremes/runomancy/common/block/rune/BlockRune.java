@@ -5,7 +5,9 @@ import java.util.Random;
 import com.tacosupremes.runomancy.common.block.BlockMod;
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.item.ModItems;
+import com.tacosupremes.runomancy.gui.Categories;
 import com.tacosupremes.runomancy.gui.IPageGiver;
+import com.tacosupremes.runomancy.gui.Page;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -111,6 +113,16 @@ public abstract class BlockRune extends BlockMod implements IRune, IPageGiver {
 			return true;
 			
 		}
+
 		
+
+		@Override
+		public int getSubPages() {
+			
+			return 0;
+			
+		}
+
+	
 
 }

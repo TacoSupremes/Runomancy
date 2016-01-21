@@ -17,6 +17,7 @@ public class FormationPage extends Page {
 	private IRuneEffect effect;
 
 	public FormationPage(IRuneEffect i) {
+		super(i.getName()+".formation");
 		this.effect = i;
 	}
 

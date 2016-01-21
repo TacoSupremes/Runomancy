@@ -146,6 +146,12 @@ public class BlockEndRune extends BlockContainerRune implements IPageGiver{
 		
 	}
 	
+	@Override
+	public int getSubPages() {
+		
+		return 0;
+		
+	}
 
 	
 	

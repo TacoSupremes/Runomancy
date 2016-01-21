@@ -21,10 +21,13 @@ public abstract class Page{
 	protected Page lastPage;
 	
 	public boolean hasInit = false;
-
+	protected String name;
+	
+	public String returnName = null;
 	
 
-	public Page(){
+	public Page(String s){
+		this.name = s;
 		
 	}
 	
@@ -42,7 +45,7 @@ public abstract class Page{
 	
 	
 	public List<GuiButton> buttons = new ArrayList<GuiButton>();
-	private List<Page> sp = null;
+	protected String sp = null;
 	
 	public abstract void draw(int mx, int my, float ticks);
 		
@@ -53,17 +56,23 @@ public abstract class Page{
 		if(gb.id == LibMisc.GuiIDs.Buttons.BACK)
 			this.goBack();
 		
+		if(gb.id == LibMisc.GuiIDs.Buttons.NEXT){
+			this.g.changePage(sp);
+			
+		}
+		
 		
 		
 	}
 	
 	public void init(){
 		
+	if(this.needsSubPage() && !hasInit)
+		this.buttons.add(new TextButton(LibMisc.GuiIDs.Buttons.NEXT, x+w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(StatCollector.translateToLocal("runomancy.next"))/2 + 35, y+(h-24), StatCollector.translateToLocal("runomancy.next")));
 	
 		
-		
 		if(needsBackButton() && !hasInit)
-			this.buttons.add(new TextButton(LibMisc.GuiIDs.Buttons.BACK, x+w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(StatCollector.translateToLocal("runomancy.back"))/2, y+(h-24), StatCollector.translateToLocal("runomancy.back")));
+			this.buttons.add(new TextButton(LibMisc.GuiIDs.Buttons.BACK, x+w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(StatCollector.translateToLocal("runomancy.back"))/2  - (this.sp == null ? 0 : 35), y+(h-24), StatCollector.translateToLocal("runomancy.back")));
 		hasInit = true;
 		this.initButtons();
 	}
@@ -76,7 +85,8 @@ public abstract class Page{
 	
 
 	public void goBack() {
-		g.changePage(this.returnPage());
+		
+		g.changePage(this.returnName == null ? this.returnPage() : returnName);
 		
 	}
 	
@@ -96,11 +106,20 @@ public abstract class Page{
 		
 		for(GuiButton g : this.buttons){
 			
-			if(g.id == LibMisc.GuiIDs.Buttons.BACK){
-				g.xPosition =  x+w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(StatCollector.translateToLocal("runomancy.back"))/2;
+		
+			
+			if(g.id == LibMisc.GuiIDs.Buttons.NEXT){
+				g.xPosition =  x+w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(StatCollector.translateToLocal("runomancy.next"))/2 + 35;
 				g.yPosition = y+(h-24);
 				
-				return;
+				continue;
+			}
+			
+			if(g.id == LibMisc.GuiIDs.Buttons.BACK){
+				g.xPosition =  x+w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(StatCollector.translateToLocal("runomancy.back"))/2 - (this.sp == null ? 0 : 35);
+				g.yPosition = y+(h-24);
+				
+				continue;
 			}
 		}
 		
@@ -117,11 +136,15 @@ public abstract class Page{
 	 }
 	 
 	 
-	 public List<Page> getSubPages(){
+	 public String getSubPages(){
 		 
 		 return sp;
 	 }
 	 
+	 
+	 public void setReturnPage(String rp){
+		 this.returnName = rp;
+	 }
 
 
 }

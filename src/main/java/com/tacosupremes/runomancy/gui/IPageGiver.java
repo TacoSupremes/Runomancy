@@ -9,4 +9,6 @@ public interface IPageGiver {
 	public Categories getCategories();
 	
 	public boolean hasNormalRecipe();
+	
+	public int getSubPages();
 }

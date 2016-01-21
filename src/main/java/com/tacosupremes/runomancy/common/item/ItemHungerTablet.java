@@ -190,6 +190,14 @@ public class ItemHungerTablet extends ItemMod implements IPageGiver{
 		return true;
 		
 	}
+
+
+	@Override
+	public int getSubPages() {
+		
+		return 0;
+		
+	}
 	
 	
 

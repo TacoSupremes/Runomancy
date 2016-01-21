@@ -32,7 +32,7 @@ public class ItemPage extends Page {
 	
 	
 	public ItemPage(ItemStack is){
-		super();
+		super(is.getUnlocalizedName());
 		this.item = is;
 	}
 	

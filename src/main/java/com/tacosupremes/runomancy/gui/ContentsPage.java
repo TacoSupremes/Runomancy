@@ -15,8 +15,8 @@ public class ContentsPage extends Page{
 
 	
 	
-	public ContentsPage(){
-		super();
+	public ContentsPage(String s){
+		super(s);
 	}
 	
 //	public String[] n = new String[]{}

@@ -1,5 +1,6 @@
 package com.tacosupremes.runomancy.gui;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.opengl.GL11;
@@ -10,17 +11,87 @@ import com.tacosupremes.runomancy.gui.buttons.TextButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.item.Item;
 import net.minecraft.util.StatCollector;
 
 public class ListPage extends Page {
 	
-	//TODO CREATE SUBPAGE SYSTEM FOR WHEN LIST OVERFLOWS
+	
 	private List<String> l;
 
-	public ListPage(List<String> l){
-		super();
+	public ListPage(List<String> l2, String s){
+		super(s);
 		
-		this.l = l;
+		if(l2.size() > 8){
+			
+			List<String> tl = new ArrayList<String>();
+			List<String> sfl = new ArrayList<String>();
+			int ai=0;
+			int index = 0;
+			boolean tla = false;
+			for(String i : l2){
+				
+				if(index < 8){
+				
+				
+				tl.add(i);
+			
+				
+				
+				index++;
+				ai++;
+				if(ai != l2.size())
+				continue;
+				}
+					if(!tla){
+						
+					this.l = this.copyL(tl);
+					
+					tl.removeAll(tl);
+					
+					tla = true;
+					
+					}else{
+						
+					sfl.add(i);
+					
+					
+						
+					}
+					
+					
+					
+				
+				ai++;
+			}
+			
+		
+			
+			boolean validName = false;
+			int k = 1;
+			
+			while(!validName){
+				
+				if(!Pages.pages.containsKey(this.name+k))
+					break;
+				
+				k+=1;
+				
+			}
+				Page p = new ListPage(sfl, this.name+k);
+				p.setReturnPage(name);
+			
+				Pages.addPage(this.name+k, p);
+				sp = (this.name + k);
+				
+			
+			
+			
+			
+		}else
+		this.l = l2;
+		
+		
 		
 	}
 	
@@ -55,7 +126,7 @@ public class ListPage extends Page {
 		
 		for(GuiButton gb : buttons){
 			
-			if(gb.id == LibMisc.GuiIDs.Buttons.BACK)
+			if(gb.id == LibMisc.GuiIDs.Buttons.BACK || gb.id == LibMisc.GuiIDs.Buttons.NEXT)
 				continue;
 			
 			gb.xPosition = x+16;
@@ -86,7 +157,7 @@ public class ListPage extends Page {
 	@Override
 	public void handleButtons(GuiButton b) {
 		
-		if(b.id != LibMisc.GuiIDs.Buttons.BACK)
+		if(b.id != LibMisc.GuiIDs.Buttons.BACK && b.id != LibMisc.GuiIDs.Buttons.NEXT)
 			g.changePage(l.get(b.id));
 		
 		
@@ -123,7 +194,23 @@ public class ListPage extends Page {
 	
 	
 
-
+public List<String> copyL(List<String> ol){
+	
+	
+	
+	
+	List<String> nl = new ArrayList<String>();
+	
+	
+	for(String o : ol){
+		
+		nl.add(o.copyValueOf(o.toCharArray()));
+	}
+	
+	
+	
+	return nl;
+}
 
 
 

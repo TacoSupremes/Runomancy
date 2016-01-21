@@ -216,6 +216,10 @@ public class GuiModBook extends GuiScreen {
 	        }
 	    }
 	
+	 
+	 public void setBL(List<GuiButton> bl){
+		 this.buttonList = bl;
+	 }
 	
 
 	

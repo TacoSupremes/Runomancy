@@ -23,28 +23,191 @@ public class ItemListPage extends Page {
 	
 	
 	
-	//TODO CREATE SUBPAGE SYSTEM FOR WHEN LIST OVERFLOWS
+	
 
 	
 
 	private List<Item> l;
 	private List<Block> bl;
 	
-	public ItemListPage(List<Item> l) {
-		super();
-		this.l = l;
+	public ItemListPage(List<Item> l2, String s) {
+		super(s);
+		
+		if(l2.size() > 8){
+			
+			List<Item> tl = new ArrayList<Item>();
+			List<Item> sfl = new ArrayList<Item>();
+			int ai=0;
+			int index = 0;
+			boolean tla = false;
+			for(Item i : l2){
+				
+				if(index < 8){
+				
+				
+				tl.add(i);
+			
+				
+				
+				index++;
+				ai++;
+				if(ai != l2.size())
+				continue;
+				}
+					if(!tla){
+						
+					this.l = this.copyL(tl);
+					
+					tl.removeAll(tl);
+					
+					tla = true;
+					
+					}else{
+						
+					sfl.add(i);
+					
+					
+						
+					}
+					
+					
+					
+				
+				ai++;
+			}
+			
+		
+			
+			boolean validName = false;
+			int k = 1;
+			
+			while(!validName){
+				
+				if(!Pages.pages.containsKey(this.name+k))
+					break;
+				
+				k+=1;
+				
+			}
+				Page p = new ItemListPage(sfl, this.name+k);
+				p.setReturnPage(name);
+			
+				Pages.addPage(this.name+k, p);
+				sp = (this.name + k);
+				
+			
+			
+			
+			
+		}else
+		this.l = l2;
+		
 		this.bl = null;
 	}
 	
-	public ItemListPage(List<Block> l, String s) {
-		super();
-		this.bl = l;
-		this.l = null;
+	private List<Item> copyL(List<Item> ol) {
 		
 		
 		
+		List<Item> nl = new ArrayList<Item>();
 		
+		
+		for(Item i : ol){
+			nl.add(i);
+		}
+		
+		return nl ;
+		
+	}
 	
+private List<Block> copyBL(List<Block> ol) {
+		
+		
+		
+		List<Block> nl = new ArrayList<Block>();
+		
+		
+		for(Block i : ol){
+			nl.add(i);
+		}
+		
+		return nl ;
+		
+	}
+
+	public ItemListPage(List<Block> l2, String s, int useless) {
+		super(s);
+		
+		if(l2.size() > 8){
+			
+			List<Block> tl = new ArrayList<Block>();
+			List<Block> sfl = new ArrayList<Block>();
+			int ai=0;
+			int index = 0;
+			boolean tla = false;
+			for(Block i : l2){
+				
+				if(index < 8){
+				
+				
+				tl.add(i);
+			
+				
+				
+				index++;
+				ai++;
+				if(ai != l2.size())
+				continue;
+				}
+					if(!tla){
+						
+					this.bl = this.copyBL(tl);
+					
+					tl.removeAll(tl);
+					
+					tla = true;
+					
+					}else{
+						
+					sfl.add(i);
+					
+					
+						
+					}
+					
+					
+					
+				
+				ai++;
+			}
+			
+		
+			
+			boolean validName = false;
+			int k = 1;
+			
+			while(!validName){
+				
+				if(!Pages.pages.containsKey(this.name+k))
+					break;
+				
+				k+=1;
+				
+			}
+				Page p = new ItemListPage(sfl, this.name+k,0);
+				p.setReturnPage(name);
+			
+				Pages.addPage(this.name+k, p);
+				sp = (this.name + k);
+				
+			
+			
+			
+			
+		}else
+		this.bl = l2;
+		
+		this.l = null;
 	}
 
 	
@@ -114,7 +277,7 @@ public class ItemListPage extends Page {
 		GL11.glPushMatrix();
 		
 		FontRenderer f = Minecraft.getMinecraft().fontRendererObj;
-		String s = StatCollector.translateToLocal("runomancy.cat");
+		String s = StatCollector.translateToLocal(this.name);
 		
 		f.drawString(s, x + w / 2 - f.getStringWidth(s) / 2 , y+16, 0);
 		

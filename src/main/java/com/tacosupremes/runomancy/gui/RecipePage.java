@@ -23,7 +23,7 @@ public class RecipePage extends Page {
 
 
 	public RecipePage(ItemStack is){
-		super();
+		super(is.getUnlocalizedName().substring(5)+"REC");
 		this.item = is;
 	}
 

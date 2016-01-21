@@ -13,7 +13,7 @@ public class RuneChargerPage extends Page {
 	private RuneChargerRecipe r;
 
 	public RuneChargerPage(RuneChargerRecipe r) {
-		
+		super(r.getOut().getUnlocalizedName().substring(5)+ "REC");
 		this.r = r;
 	}
 

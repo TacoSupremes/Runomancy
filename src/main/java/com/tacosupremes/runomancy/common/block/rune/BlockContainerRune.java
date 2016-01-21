@@ -92,6 +92,9 @@ public abstract class BlockContainerRune extends BlockModContainer implements IR
 	        
 	        return soil.isSideSolid(worldIn, down, EnumFacing.UP);
 	    }
+	    
+		
+
 
 	
 }

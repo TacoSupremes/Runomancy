@@ -37,5 +37,13 @@ public class ItemRunicIngot extends ItemMod implements IPageGiver{
 		return false;
 		
 	}
+
+
+	@Override
+	public int getSubPages() {
+		
+		return 0;
+		
+	}
 	
 }

@@ -149,6 +149,15 @@ public class ItemRunicAxe extends ItemAxe implements IPageGiver{
 		return true;
 		
 	}
+
+
+
+	@Override
+	public int getSubPages() {
+		
+		return 0;
+		
+	}
 	
 	
 	
