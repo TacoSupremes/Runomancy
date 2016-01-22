@@ -54,11 +54,11 @@ public class Pages {
 				
 				addPage(i.getUnlocalizedName(),((IPageGiver)i).getPage());
 				
-				for(int j = 0; j<((IPageGiver)i).getSubPages(); j++){
-					
-					addPage(i.getUnlocalizedName()+(j+1),((IPageGiver)i).getPage());
+				
+					if(((IPageGiver)i).getSubPages() != null)
+					addPage(i.getUnlocalizedName()+1,((IPageGiver)i).getSubPages());
 
-				}
+				
 				if(((IPageGiver)i).hasNormalRecipe())
 				addPage(i.getUnlocalizedName().substring(5)+"REC", new RecipePage(new ItemStack(i)));
 				if(((IPageGiver)i).getCategories() == Categories.RunicItems)
@@ -75,12 +75,9 @@ public class Pages {
 				
 				
 				addPage(i.getUnlocalizedName(),((IPageGiver)i).getPage());
-				
-				for(int j = 0; j<((IPageGiver)i).getSubPages(); j++){
-					
-					addPage(i.getUnlocalizedName()+(j+1),((IPageGiver)i).getPage());
+				if(((IPageGiver)i).getSubPages() != null)
+					addPage(i.getUnlocalizedName()+1,((IPageGiver)i).getSubPages());
 
-				}
 				if(((IPageGiver)i).hasNormalRecipe())
 				addPage(i.getUnlocalizedName().substring(5)+"REC", new RecipePage(new ItemStack(i)));
 				if(((IPageGiver)i).getCategories() == Categories.RunicItems)
@@ -97,11 +94,9 @@ public class Pages {
 				
 				addPage(i.getUnlocalizedName(),((IPageGiver)i).getPage());
 				
-				for(int j = 0; j<((IPageGiver)i).getSubPages(); j++){
-					
-					addPage(i.getUnlocalizedName()+(j+1),((IPageGiver)i).getPage());
+				if(((IPageGiver)i).getSubPages() != null)
+					addPage(i.getUnlocalizedName()+1,((IPageGiver)i).getSubPages());
 
-				}
 				if(((IPageGiver)i).hasNormalRecipe())
 				addPage(i.getUnlocalizedName().substring(5)+"REC", new RecipePage(new ItemStack(i)));
 				if(((IPageGiver)i).getCategories() == Categories.RunicBlocks)

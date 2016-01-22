@@ -34,7 +34,7 @@ public class ModRecipes {
 		rcr.add(new RuneChargerRecipe(new ItemStack(ModItems.runicBattery), new ItemStack(Items.glass_bottle, 1), 100));	
 		rcr.add(new RuneChargerRecipe(new ItemStack(ModItems.runicIngot), new ItemStack(Items.iron_ingot, 1), 300));			
 		rcr.add(new RuneChargerRecipe(new ItemStack(ModBlocks.powerTorch), new ItemStack(Blocks.torch, 1), 0));
-		addShapelessRecipe(new ItemStack(ModBlocks.endRune,2), w, new ItemStack(Items.ender_pearl), new ItemStack(ModBlocks.fireRune),new ItemStack(Items.beef),new ItemStack(Items.blaze_rod),new ItemStack(Items.bowl),new ItemStack(Items.experience_bottle),new ItemStack(Items.clay_ball),new ItemStack(Items.flint));
+		addShapelessRecipe(new ItemStack(ModBlocks.endRune,2), w, new ItemStack(Items.ender_pearl));
 		addShapelessRecipe(new ItemStack(ModBlocks.obsidianRune,2), w, new ItemStack(Blocks.obsidian));
 		addShapelessRecipe(new ItemStack(ModBlocks.fireRune,2), w, new ItemStack(Items.lava_bucket));
 		addShapedRecipe(new ItemStack(ModItems.runicPickaxe,1,ModItems.runicPickaxe.getMaxDamage()-1), "RRR"," S "," S ", 'R', new ItemStack(ModItems.runicIngot), 'S', new ItemStack(Items.stick));

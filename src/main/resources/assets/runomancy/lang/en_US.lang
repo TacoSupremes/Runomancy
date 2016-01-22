@@ -17,6 +17,7 @@ tile.powerTorch.name=Runic Torch
 tile.battery.name=Runic Battery
 
 runomancy.contains=Currently contains
+runomancy.bound=Bound to
 
 runomancy.table=Table of Contents
 runomancy.recipe=Recipe

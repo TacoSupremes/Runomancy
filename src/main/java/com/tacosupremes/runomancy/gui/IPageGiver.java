@@ -10,5 +10,5 @@ public interface IPageGiver {
 	
 	public boolean hasNormalRecipe();
 	
-	public int getSubPages();
+	public Page getSubPages();
 }

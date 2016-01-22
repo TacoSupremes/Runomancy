@@ -117,11 +117,12 @@ public abstract class BlockRune extends BlockMod implements IRune, IPageGiver {
 		
 
 		@Override
-		public int getSubPages() {
+		public Page getSubPages() {
 			
-			return 0;
+			return null;
 			
 		}
+		
 
 	
 

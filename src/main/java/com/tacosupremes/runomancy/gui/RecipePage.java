@@ -16,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StatCollector;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class RecipePage extends Page {
 
@@ -98,7 +99,7 @@ public class RecipePage extends Page {
 		
 	}
 	
-
+	int m = 0;
 	private void drawRecipe(int s, int t, int mx, int my) {
 		ItemStack[] l = ModRecipes.getRecipe(item);
 		
@@ -116,8 +117,11 @@ public class RecipePage extends Page {
 			
 			int d =3;
 			RenderHelper.enableGUIStandardItemLighting();
-			for(ItemStack is : l){
+			for(ItemStack is2 : l){
 				
+				
+				
+				ItemStack is = new ItemStack(is2.getItem(),1,is2.getItemDamage() != OreDictionary.WILDCARD_VALUE ? is2.getItemDamage() : m);
 				
 				
 			
@@ -125,7 +129,13 @@ public class RecipePage extends Page {
 			
 			Minecraft.getMinecraft().getRenderItem().renderItemOverlays(Minecraft.getMinecraft().fontRendererObj, is, s+x, t+y);
 			
-			
+			if(is2.getItemDamage() == OreDictionary.WILDCARD_VALUE){
+				if(m == is2.getMaxDamage())
+					m = 0;
+				else	
+					m++;
+				
+			}
 			
 			index ++;
 			x+=18;

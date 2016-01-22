@@ -8,6 +8,7 @@ import com.tacosupremes.runomancy.common.lib.LibMisc;
 import com.tacosupremes.runomancy.common.power.item.ItemPotionAmulet;
 import com.tacosupremes.runomancy.common.power.item.ItemRunicBattery;
 import com.tacosupremes.runomancy.common.power.item.ItemVacuumBucket;
+import com.tacosupremes.runomancy.common.power.item.ItemWarpRune;
 import com.tacosupremes.runomancy.common.power.item.tool.ItemRunicAxe;
 import com.tacosupremes.runomancy.common.power.item.tool.ItemRunicHoe;
 import com.tacosupremes.runomancy.common.power.item.tool.ItemRunicPickaxe;
@@ -42,6 +43,8 @@ public class ModItems {
 
 	public static Item potionAmulet;
 
+	public static Item warpRune;
+	
 	public static Item runicIngot;
 
 	public static Item runicAxe;
@@ -75,6 +78,8 @@ public class ModItems {
 		potionAmulet = new ItemPotionAmulet();
 		
 		hungerTablet = new ItemHungerTablet();
+		
+		warpRune = new ItemWarpRune();
 		
 		runicIngot = new ItemRunicIngot();
 		

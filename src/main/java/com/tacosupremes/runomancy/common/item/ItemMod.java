@@ -22,6 +22,10 @@ public class ItemMod extends Item{
 	}
 
 	
+	public ItemMod(String s){
+		this(s,0);
+	}
+	
 	
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
