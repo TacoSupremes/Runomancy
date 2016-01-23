@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.tacosupremes.runomancy.common.Runomancy;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
+import com.tacosupremes.runomancy.common.power.item.ItemLevitateRune;
 import com.tacosupremes.runomancy.common.power.item.ItemPotionAmulet;
 import com.tacosupremes.runomancy.common.power.item.ItemRunicBattery;
 import com.tacosupremes.runomancy.common.power.item.ItemVacuumBucket;
@@ -45,6 +46,8 @@ public class ModItems {
 
 	public static Item warpRune;
 	
+	public static Item levitateRune;
+	
 	public static Item runicIngot;
 
 	public static Item runicAxe;
@@ -80,6 +83,8 @@ public class ModItems {
 		hungerTablet = new ItemHungerTablet();
 		
 		warpRune = new ItemWarpRune();
+		
+		levitateRune = new ItemLevitateRune();
 		
 		runicIngot = new ItemRunicIngot();
 		

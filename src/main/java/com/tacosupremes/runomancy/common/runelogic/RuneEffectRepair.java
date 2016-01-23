@@ -32,8 +32,11 @@ public class RuneEffectRepair implements IFunctionalRuneEffect {
 		if(te.power <this.getCost())
 			return;
 		
-		  List<EntityItem> entities = (List<EntityItem>) w.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.fromBounds(x, y, z, x + 1, y + 0.3F, z + 1));
+		  List<EntityItem> entities = (List<EntityItem>) w.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.fromBounds(x, y, z, x + 1, y + 1F, z + 1));
 	        for (EntityItem entity : entities) {
+	        	
+	        	if(!entity.isCollided)
+	        		continue;
 	        	
 	        	ItemStack is = entity.getEntityItem().copy();
 	        	

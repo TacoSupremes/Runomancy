@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
+import net.minecraft.world.World;
 
 public class BlockUtils {
 	/*
@@ -73,6 +74,12 @@ public static ItemStack toItemStack(IBlockState s){
 	
 
 	return new ItemStack(s.getBlock(),1,s.getBlock().getMetaFromState(s));
+}
+
+public static int getMeta(World w, BlockPos pos){
+	
+	return w.getBlockState(pos).getBlock().getMetaFromState(w.getBlockState(pos));
+	
 }
 
 

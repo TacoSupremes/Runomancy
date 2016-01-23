@@ -9,6 +9,7 @@ import com.tacosupremes.runomancy.common.power.block.tile.IPowerTile;
 import com.tacosupremes.runomancy.common.runelogic.IFunctionalRuneEffect;
 import com.tacosupremes.runomancy.common.runelogic.IRuneEffect;
 import com.tacosupremes.runomancy.common.runelogic.RuneFormations;
+import com.tacosupremes.runomancy.common.utils.BlockUtils;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -95,6 +96,7 @@ public class TileEndRune extends TileEntity implements ITickable{
 						for(int xD = -sr;xD<=sr; xD++){
 						
 						BlockPos bp = new BlockPos(this.getPos().add(new BlockPos(xD, 0, zD)));
+				
 						
 						if(this.getWorld().getBlockState(bp).getBlock() == re.getNeededBlocks()[index]){
 							index++;

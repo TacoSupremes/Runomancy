@@ -21,7 +21,9 @@ public class RuneChargerRecipe {
 		return out;
 	}
 	public int getCost() {
+		
 		return cost;
+		
 	}
 	
 	
