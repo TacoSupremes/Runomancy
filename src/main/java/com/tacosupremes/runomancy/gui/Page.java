@@ -18,7 +18,6 @@ public abstract class Page{
 
 	public int x,y,w,h;
 	protected GuiModBook g;
-	protected Page lastPage;
 	
 	public boolean hasInit = false;
 	protected String name;
@@ -92,9 +91,6 @@ public abstract class Page{
 	
 	
 
-	public Page getLastPage() {
-		return lastPage;
-	}
 
 	public void mouseClicked(int mouseX, int mouseY, int mouseButton) {}
 		

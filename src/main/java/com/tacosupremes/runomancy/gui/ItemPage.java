@@ -165,6 +165,10 @@ public class ItemPage extends Page {
 	@Override
 	public String returnPage() {
 		
+		
+		if(this.returnName != null)
+			return this.returnName;
+		
 		return this.getCategory().getName();
 	}
 
