@@ -47,51 +47,19 @@ public class ItemLevitateRune extends ItemMod {
 			
 			if(isSelected && player.fallDistance > 0)
 				player.fallDistance = 0;
-				
-			
-			
-			if(PowerHelper.getBattery(player.inventory, false) != null){
-				
-				ItemStack bat = PowerHelper.getBattery(player.inventory, false);
-				
-				int pow = ((IRunicBattery)bat.getItem()).getPower(bat);
-				
-				if(pow > 0){
 					
-					if(is.getItemDamage() != 1)
-						is.setItemDamage(1);
-					
-					
-				
-					
-					if(player.fallDistance > 0 && player.fallDistance < 5 && player.motionY < 0){
+			if(player.fallDistance > 0 && player.fallDistance < 5 && player.motionY < 0)
+				player.fallDistance = 0;
+
 						
-						if(pow > (int)player.fallDistance*80){
-							
-							((IRunicBattery)bat.getItem()).removePower(bat, (int)player.fallDistance*80, true);
-							player.fallDistance = 0;
-							
-							
-						}else{
-							
-							int avail = pow / 80;
-							
-							player.fallDistance -= avail;
-							((IRunicBattery)bat.getItem()).setPower(bat, 0);
-							
-						}
-						
-					}
 					
 					
 					
-				}else
-					is.setItemDamage(0);
+					
 				
 				
 				
-			}else
-				is.setItemDamage(0);
+				
 			
 			
 			

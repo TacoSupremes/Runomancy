@@ -6,8 +6,6 @@ import java.util.List;
 
 import com.tacosupremes.runomancy.common.power.block.tile.IPowerNode;
 import com.tacosupremes.runomancy.common.power.block.tile.IPowerTile;
-import com.tacosupremes.runomancy.common.power.item.IRunicBattery;
-
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -324,75 +322,7 @@ public static int addPower(World w, BlockPos pos, int amountFill, int r, boolean
 		return i; 
 	}
 	
-	public static int drainPowerBattery(int amount, IInventory ii, boolean doit) {
-		
-		ItemStack is = getBattery(ii, false);
-		
-		
-		
-		if(is == null)
-			return 0;
-		
-		IRunicBattery bat = (IRunicBattery)is.getItem();
-		
-		
-		if(bat.getPower(is) <amount){
-			if(doit)
-				bat.removePower(is, amount, true);
-				
-		return bat.getPower(is);
-		}
-			
-		
-		if(doit)
-			((IRunicBattery)is.getItem()).removePower(is, amount, true);
-		
-		
-		
-		
-		return amount;
-	}
 	
-	
-	
-	
-	public static ItemStack getBattery(IInventory ii, boolean filling){
-		
-		ItemStack is = null;
-		
-		for(int i=0;i<ii.getSizeInventory();i++){
-			
-			
-			
-			if(ii.getStackInSlot(i) == null)
-				continue;
-			
-			ItemStack temp = ii.getStackInSlot(i);
-			
-			if(temp.getItem() instanceof IRunicBattery){
-				
-				IRunicBattery bat = (IRunicBattery)temp.getItem();
-				
-			
-				if(bat.getCapacity(temp) == bat.getPower(temp) && filling)
-					continue;;
-					
-				if(bat.getPower(temp) == 0 && !filling)
-					continue;
-					
-				is = ii.getStackInSlot(i);
-				
-			}
-			
-			
-			
-		}
-		
-		//if(filling)
-		
-		return is;
-		
-	}
 	
 	public ItemStack[]getBatteries(IInventory ii){
 		
@@ -400,33 +330,6 @@ public static int addPower(World w, BlockPos pos, int amountFill, int r, boolean
 		return null;
 	}
 	
-public static int addPowerBattery(int amount, IInventory ii, boolean doit) {
-		
-		ItemStack is = getBattery(ii, true);
-		
-		
-		
-		if(is == null)
-			return 0;
-		
-		
-		IRunicBattery bat = (IRunicBattery)is.getItem();
-		
-		if(bat.getPower(is) + amount > bat.getCapacity(is)){
-			if(doit)
-				bat.addPower(is, bat.getCapacity(is)-bat.getPower(is), true);
-			
-		return bat.getCapacity(is)-bat.getPower(is);
-		}
-			
-		
-		if(doit)
-			((IRunicBattery)is.getItem()).addPower(is, amount, true);
-		
-		
-		
-		
-		return amount;
-	}
+
 
 }

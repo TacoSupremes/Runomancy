@@ -5,7 +5,6 @@ import java.util.List;
 import com.tacosupremes.runomancy.common.Runomancy;
 import com.tacosupremes.runomancy.common.item.ModItems;
 import com.tacosupremes.runomancy.common.power.PowerHelper;
-import com.tacosupremes.runomancy.common.power.item.IRunicBattery;
 import com.tacosupremes.runomancy.gui.Categories;
 import com.tacosupremes.runomancy.gui.IPageGiver;
 import com.tacosupremes.runomancy.gui.ItemPage;
@@ -84,31 +83,6 @@ public class ItemRunicHoe extends ItemHoe implements IPageGiver {
 	
 
 
-	@Override
-	public void onUpdate(ItemStack stack, World worldIn, Entity e, int itemSlot, boolean isSelected) {
-		
-	if(stack.getItemDamage() == 1)
-		return;
-	
-	if(!(e instanceof EntityPlayer))
-		return;
-	
-	if(PowerHelper.getBattery(((EntityPlayer)e).inventory,false) == null)
-		return;
-	
-	ItemStack battery = PowerHelper.getBattery(((EntityPlayer)e).inventory,false);
-	
-	IRunicBattery bat = (IRunicBattery)battery.getItem();
-		
-	if(bat.removePower(battery, 450, false) == 450){
-		stack.setItemDamage(stack.getItemDamage()-1);
-		bat.removePower(battery, 450, true);
-	}
-		
-		
-		
-	}
-
 
 
 	@Override
@@ -172,7 +146,10 @@ public class ItemRunicHoe extends ItemHoe implements IPageGiver {
 
 
 
-	
+	 public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+	    {
+		 return repair.getItem() == ModItems.runicIngot;
+	    }
 	
 	
 	

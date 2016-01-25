@@ -30,8 +30,7 @@ public class ModRecipes {
 	public static void postInit(){
 		
 		ItemStack w = new ItemStack(ModItems.runicWand,1, OreDictionary.WILDCARD_VALUE);
-		
-		rcr.add(new RuneChargerRecipe(new ItemStack(ModItems.runicBattery), new ItemStack(Items.glass_bottle, 1), 100));	
+			
 		rcr.add(new RuneChargerRecipe(new ItemStack(ModItems.runicIngot), new ItemStack(Items.iron_ingot, 1), 300));			
 		rcr.add(new RuneChargerRecipe(new ItemStack(ModBlocks.powerTorch), new ItemStack(Blocks.torch, 1), 0));
 		addShapelessRecipe(new ItemStack(ModBlocks.endRune,2), w, new ItemStack(Items.ender_pearl));

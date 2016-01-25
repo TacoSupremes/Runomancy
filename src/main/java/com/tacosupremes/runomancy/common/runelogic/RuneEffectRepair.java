@@ -7,7 +7,6 @@ import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
 import com.tacosupremes.runomancy.common.power.PowerHelper;
 import com.tacosupremes.runomancy.common.power.block.tile.IPowerTile;
-import com.tacosupremes.runomancy.common.power.item.IRunicBattery;
 import com.tacosupremes.runomancy.common.recipes.ModRecipes;
 import com.tacosupremes.runomancy.common.recipes.RuneChargerRecipe;
 
@@ -55,16 +54,7 @@ public class RuneEffectRepair implements IFunctionalRuneEffect {
 	        		
 	        	}
 	        	
-	        	if(is.getItem() instanceof IRunicBattery){
-	        		
-	        	IRunicBattery bat =	(IRunicBattery)is.getItem();
-	        	if(te.power > this.getTransferRate() && bat.addPower(is, this.getTransferRate(), false) > 0){
-	        	bat.addPower(is, this.getTransferRate(), true);
-	        	te.power-= this.getTransferRate();
-	        	this.spawnParticleOnEntity(entity);
-    			entity.setEntityItemStack(is);
-	        	}
-	        	}
+	        	
 	        	
 	        	for(RuneChargerRecipe r : ModRecipes.rcr){
 	        		
