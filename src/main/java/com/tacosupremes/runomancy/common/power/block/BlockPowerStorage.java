@@ -5,6 +5,7 @@ import com.tacosupremes.runomancy.common.power.block.tile.TilePowerStorage;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.world.World;
 
 public class BlockPowerStorage extends BlockModContainer{
@@ -26,4 +27,13 @@ public class BlockPowerStorage extends BlockModContainer{
 		return TilePowerStorage.class;
 	}
 
+	@Override
+	public EnumWorldBlockLayer getBlockLayer() {
+		
+		return EnumWorldBlockLayer.CUTOUT;
+		
+	}
+
+	
+	
 }

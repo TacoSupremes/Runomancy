@@ -1,4 +1,4 @@
-package com.tacosupremes.runomancy.common.power.item.tool;
+package com.tacosupremes.runomancy.common.item.tool;
 
 import java.util.List;
 
@@ -19,8 +19,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemPickaxe;
+import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
@@ -29,17 +29,16 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemRunicAxe extends ItemAxe implements IPageGiver{
+public class ItemRunicShovel extends ItemSpade implements IPageGiver {
 
-	public ItemRunicAxe() {
+	public ItemRunicShovel() {
 		super(ModItems.runic);
-		this.setUnlocalizedName("runicAxe");
+		this.setUnlocalizedName("runicShovel");
 		this.setCreativeTab(Runomancy.tab);
 		this.setHasSubtypes(true);
 		GameRegistry.registerItem(this, this.getUnlocalizedName().substring(5));
 		ModItems.nitems.add(this);
-		
-	
+		this.setNoRepair();
 	}
 
 	
@@ -51,7 +50,12 @@ public class ItemRunicAxe extends ItemAxe implements IPageGiver{
 	}
 
 	
-	
+
+	@Override
+	public boolean isItemTool(ItemStack stack) {
+		
+		return true;
+	}
 
 
 	@Override
@@ -61,19 +65,19 @@ public class ItemRunicAxe extends ItemAxe implements IPageGiver{
 	}
 
 
-	 public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
-	    {
-		 return repair.getItem() == ModItems.runicIngot;
-	    }
-	
-
-
 
 	@Override
-	public boolean isItemTool(ItemStack stack) {
+	public ItemStack onItemRightClick(ItemStack is, World w, EntityPlayer player) {
+	
+		if(!is.hasTagCompound())
+			is.setTagCompound(new NBTTagCompound());
 		
-		return true;
+		return super.onItemRightClick(is, w, player);
 	}
+
+
+
+	
 
 
 
@@ -81,8 +85,8 @@ public class ItemRunicAxe extends ItemAxe implements IPageGiver{
 	public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> l) {
 		
 		
-	l.add(new ItemStack(item,1,1));
-	l.add(new ItemStack(item,1,item.getMaxDamage()-1));
+		l.add(new ItemStack(item,1,1));
+		l.add(new ItemStack(item,1,item.getMaxDamage()-1));
 		
 		
 	}
@@ -101,11 +105,10 @@ public class ItemRunicAxe extends ItemAxe implements IPageGiver{
 	}
 
 
-
 	@Override
 	public Page getPage() {
 		
-		return new ItemPage(new ItemStack(this, 1, this.getMaxDamage() - 1 ));
+		return new ItemPage(new ItemStack(this));
 		
 	}
 
@@ -117,6 +120,7 @@ public class ItemRunicAxe extends ItemAxe implements IPageGiver{
 		return Categories.RunicItems;
 		
 	}
+
 
 
 	@Override
@@ -134,10 +138,13 @@ public class ItemRunicAxe extends ItemAxe implements IPageGiver{
 		return null;
 		
 	}
+
+
 	
-	
-	
-	
+	 public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+	    {
+		 return repair.getItem() == ModItems.runicIngot;
+	    }
 	
 	
 

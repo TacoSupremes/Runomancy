@@ -3,6 +3,7 @@ package com.tacosupremes.runomancy.common.block;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tacosupremes.runomancy.client.render.RenderPowerStorage;
 import com.tacosupremes.runomancy.common.block.rune.BlockEarthRune;
 import com.tacosupremes.runomancy.common.block.rune.BlockEndRune;
 import com.tacosupremes.runomancy.common.block.rune.BlockFireRune;
@@ -11,10 +12,13 @@ import com.tacosupremes.runomancy.common.item.ItemRunicWand;
 import com.tacosupremes.runomancy.common.item.ModItems;
 import com.tacosupremes.runomancy.common.power.block.BlockPowerStorage;
 import com.tacosupremes.runomancy.common.power.block.BlockPowerTorch;
+import com.tacosupremes.runomancy.common.power.block.tile.TilePowerStorage;
 import com.tacosupremes.runomancy.common.runelogic.RuneFormations;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
 public class ModBlocks {
 	
@@ -65,6 +69,8 @@ public class ModBlocks {
 		for(Block i : blocks){
 			ModItems.registerItemRender(Item.getItemFromBlock(i), 0);
 		}
+		
+		ClientRegistry.bindTileEntitySpecialRenderer(TilePowerStorage.class, new RenderPowerStorage());
 		
 	}
 	

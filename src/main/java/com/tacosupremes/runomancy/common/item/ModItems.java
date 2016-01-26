@@ -4,15 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tacosupremes.runomancy.common.Runomancy;
+import com.tacosupremes.runomancy.common.item.tool.ItemRunicAxe;
+import com.tacosupremes.runomancy.common.item.tool.ItemRunicHoe;
+import com.tacosupremes.runomancy.common.item.tool.ItemRunicPickaxe;
+import com.tacosupremes.runomancy.common.item.tool.ItemRunicShovel;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
-import com.tacosupremes.runomancy.common.power.item.ItemLevitateRune;
-import com.tacosupremes.runomancy.common.power.item.ItemPotionAmulet;
-import com.tacosupremes.runomancy.common.power.item.ItemVacuumBucket;
-import com.tacosupremes.runomancy.common.power.item.tool.ItemRunicAxe;
-import com.tacosupremes.runomancy.common.power.item.tool.ItemRunicHoe;
-import com.tacosupremes.runomancy.common.power.item.tool.ItemRunicPickaxe;
-import com.tacosupremes.runomancy.common.power.item.tool.ItemRunicShovel;
-
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelBakery;
@@ -34,11 +30,7 @@ public class ModItems {
 
 	public static Item runicPickaxe;
 	
-	public static Item runicBucket;
-	
 	public static ToolMaterial runic = EnumHelper.addToolMaterial("runic", 3, 75, 7.1F, 2, 32);
-
-	public static Item potionAmulet;
 
 	public static Item levitateRune;
 	
@@ -52,7 +44,7 @@ public class ModItems {
 	
 	public static Item modBook;
 	
-	//public static Item enchantBook;
+	public static Item soulGem;
 	
 	public static Item hungerTablet;
 	
@@ -68,13 +60,11 @@ public class ModItems {
 		
 		runicHoe = new ItemRunicHoe();
 		
-		runicBucket = new ItemVacuumBucket();
-		
-		potionAmulet = new ItemPotionAmulet();
-		
 		hungerTablet = new ItemHungerTablet();
 	
 		levitateRune = new ItemLevitateRune();
+		
+		soulGem = new ItemSoulGem();
 		
 		runicIngot = new ItemRunicIngot();
 		

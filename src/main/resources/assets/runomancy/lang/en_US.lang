@@ -18,6 +18,11 @@ tile.battery.name=Runic Battery
 
 runomancy.contains=Currently contains
 runomancy.bound=Bound to
+runomancy.empty=Empty
+runomancy.press=Press
+runomancy.shift=Shift
+runomancy.moreInfo=For More Info
+runomancy.health=Health
 
 runomancy.table=Table of Contents
 runomancy.recipe=Recipe
@@ -38,6 +43,7 @@ runomancy.functional=Functional Formations
 runomancy.runicitems=Runic Items
 runomancy.runicblocks=Runic Blocks
 runomancy.begin=Beginning Runomancy
+runomancy.chargerRecipe=Runic Imbuer Recipe
 
 runomancy.runicAxe.entry=The Runic Axe is an Axe made out of Runic Ingots. The Axe must be charged with Runic Energy to break blocks at a reasonable speed.
 runomancy.runicWand.entry=The Runic Wand is used for a couple of things.

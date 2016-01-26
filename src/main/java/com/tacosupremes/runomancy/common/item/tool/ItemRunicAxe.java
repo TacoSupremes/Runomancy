@@ -1,4 +1,4 @@
-package com.tacosupremes.runomancy.common.power.item.tool;
+package com.tacosupremes.runomancy.common.item.tool;
 
 import java.util.List;
 
@@ -20,27 +20,26 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemAxe;
-import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemRunicHoe extends ItemHoe implements IPageGiver {
+public class ItemRunicAxe extends ItemAxe implements IPageGiver{
 
-	public ItemRunicHoe() {
+	public ItemRunicAxe() {
 		super(ModItems.runic);
-		this.setUnlocalizedName("runicHoe");
+		this.setUnlocalizedName("runicAxe");
 		this.setCreativeTab(Runomancy.tab);
 		this.setHasSubtypes(true);
 		GameRegistry.registerItem(this, this.getUnlocalizedName().substring(5));
 		ModItems.nitems.add(this);
-		this.setNoRepair();
+		
+	
 	}
 
 	
@@ -54,23 +53,6 @@ public class ItemRunicHoe extends ItemHoe implements IPageGiver {
 	
 	
 
-	@Override
-	public boolean isItemTool(ItemStack stack) {
-		
-		return true;
-	}
-
-	@Override
-	public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side,
-			float hitX, float hitY, float hitZ) {
-		
-		if(stack.getItemDamage() == stack.getMaxDamage()-1)
-			return false;
-		
-		return super.onItemUse(stack, playerIn, worldIn, pos, side, hitX, hitY, hitZ);
-	}
-
-
 
 	@Override
 	public float getDigSpeed(ItemStack stack, IBlockState state) {
@@ -79,9 +61,19 @@ public class ItemRunicHoe extends ItemHoe implements IPageGiver {
 	}
 
 
-
+	 public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
+	    {
+		 return repair.getItem() == ModItems.runicIngot;
+	    }
 	
 
+
+
+	@Override
+	public boolean isItemTool(ItemStack stack) {
+		
+		return true;
+	}
 
 
 
@@ -89,8 +81,8 @@ public class ItemRunicHoe extends ItemHoe implements IPageGiver {
 	public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> l) {
 		
 		
-		l.add(new ItemStack(item,1,1));
-		l.add(new ItemStack(item,1,item.getMaxDamage()-1));
+	l.add(new ItemStack(item,1,1));
+	l.add(new ItemStack(item,1,item.getMaxDamage()-1));
 		
 		
 	}
@@ -113,7 +105,7 @@ public class ItemRunicHoe extends ItemHoe implements IPageGiver {
 	@Override
 	public Page getPage() {
 		
-		return new ItemPage(new ItemStack(this));
+		return new ItemPage(new ItemStack(this, 1, this.getMaxDamage() - 1 ));
 		
 	}
 
@@ -125,7 +117,6 @@ public class ItemRunicHoe extends ItemHoe implements IPageGiver {
 		return Categories.RunicItems;
 		
 	}
-
 
 
 	@Override
@@ -143,13 +134,9 @@ public class ItemRunicHoe extends ItemHoe implements IPageGiver {
 		return null;
 		
 	}
-
-
-
-	 public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
-	    {
-		 return repair.getItem() == ModItems.runicIngot;
-	    }
+	
+	
+	
 	
 	
 	

@@ -1,4 +1,4 @@
-package com.tacosupremes.runomancy.common.power.item.tool;
+package com.tacosupremes.runomancy.common.item.tool;
 
 import java.util.List;
 

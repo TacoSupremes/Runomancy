@@ -57,7 +57,7 @@ public class ModRecipes {
 	private static void addShapedRecipe(ItemStack stack, Object... recipeComponents) {
 		GameRegistry.addShapedRecipe(stack, recipeComponents);
 		
-		//Taken From CraftingManager
+		//Borrowed From CraftingManager
 		 String s = "";
 	        int i = 0;
 	        int j = 0;
@@ -141,7 +141,7 @@ public class ModRecipes {
 		
 		
 		
-	//	return null;
+	
 	}
 		
 	

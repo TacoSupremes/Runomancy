@@ -1,8 +1,7 @@
-package com.tacosupremes.runomancy.common.power.item;
+package com.tacosupremes.runomancy.common.item;
 
 import java.util.Random;
 
-import com.tacosupremes.runomancy.common.item.ItemMod;
 import com.tacosupremes.runomancy.common.power.PowerHelper;
 
 import net.minecraft.entity.Entity;

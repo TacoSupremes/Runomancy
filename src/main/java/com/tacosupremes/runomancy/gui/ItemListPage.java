@@ -93,6 +93,26 @@ super(s);
 			}
 			
 			Pages.taken.add(tempName+k);
+			
+			for(Item b : this.l){
+				
+				IPageGiver ip = ((IPageGiver)b);
+				
+				Page p = ((IPageGiver)b).getPage();
+				p.setReturnPage(name);
+				
+				Pages.addPage(b.getUnlocalizedName(), p);
+				
+				if(ip.getSubPages() != null)
+					Pages.addPage(b.getUnlocalizedName()+1,(ip.getSubPages()));
+				
+				if(ip.hasNormalRecipe())
+					Pages.addPage(b.getUnlocalizedName().substring(5)+"REC", new RecipePage(new ItemStack(b)));
+				
+				
+			}
+			
+			
 				Page p = new ItemListPage(sfl, tempName+k);
 				p.setReturnPage(name);
 			
@@ -103,9 +123,28 @@ super(s);
 			
 			
 			
-		}else
+		}else{
 		this.l = l2;
+		for(Item b : this.l){
+			
+			IPageGiver ip = ((IPageGiver)b);
+			
+			Page p = ((IPageGiver)b).getPage();
+			p.setReturnPage(name);
+			
+			Pages.addPage(b.getUnlocalizedName(), p);
+			
+			if(ip.getSubPages() != null)
+				Pages.addPage(b.getUnlocalizedName()+1,(ip.getSubPages()));
+			
+			if(ip.hasNormalRecipe())
+				Pages.addPage(b.getUnlocalizedName().substring(5)+"REC", new RecipePage(new ItemStack(b)));
+			
+			
+		}
 		this.bl = null;
+		
+		}
 		
 		
 	}
@@ -148,21 +187,13 @@ private List<Block> copyBL(List<Block> ol) {
 			List<Block> tl = new ArrayList<Block>();
 			List<Block> sfl = new ArrayList<Block>();
 			
-			
 			boolean tla = false;
-			
 			
 			for(Block i : l2){
 				
 				if(tl.size() < 7 && !tla){
 				
-				
 				tl.add(i);
-			
-				
-				
-				
-				
 				
 				}else{
 					if(!tla){
@@ -203,6 +234,27 @@ private List<Block> copyBL(List<Block> ol) {
 			}
 			
 			Pages.taken.add(tempName+k);
+			
+			for(Block b : this.bl){
+				
+				IPageGiver ip = ((IPageGiver)b);
+				
+				Page p = ((IPageGiver)b).getPage();
+				p.setReturnPage(name);
+				
+				Pages.addPage(b.getUnlocalizedName(), p);
+				
+				if(ip.getSubPages() != null)
+					Pages.addPage(b.getUnlocalizedName()+1,(ip.getSubPages()));
+				
+				if(ip.hasNormalRecipe())
+					Pages.addPage(b.getUnlocalizedName().substring(5)+"REC", new RecipePage(new ItemStack(b)));
+				
+				
+			}
+			
+			
+			
 				Page p = new ItemListPage(sfl, tempName+k,0);
 				p.setReturnPage(name);
 			
@@ -213,11 +265,26 @@ private List<Block> copyBL(List<Block> ol) {
 			
 			
 			
-		}else
+		}else{
 		this.bl = l2;
 		this.l = null;
 		
+		for(Block b : this.bl){
+			
+			IPageGiver ip = ((IPageGiver)b);
+			
+			Pages.addPage(b.getUnlocalizedName(), ((IPageGiver)b).getPage());
+			
+			if(ip.getSubPages() != null)
+				Pages.addPage(b.getUnlocalizedName()+1,(ip.getSubPages()));
+			
+			if(ip.hasNormalRecipe())
+				Pages.addPage(b.getUnlocalizedName().substring(5)+"REC", new RecipePage(new ItemStack(b)));
+			
+			
+		}
 		
+		}
 	}
 
 	

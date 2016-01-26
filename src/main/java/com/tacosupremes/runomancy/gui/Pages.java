@@ -48,41 +48,16 @@ public class Pages {
 		
 		for(Item i : ModItems.items){
 			
-			if(i instanceof IPageGiver){
-				
-				
-				
-				addPage(i.getUnlocalizedName(),((IPageGiver)i).getPage());
-				
-				
-					if(((IPageGiver)i).getSubPages() != null)
-					addPage(i.getUnlocalizedName()+1,((IPageGiver)i).getSubPages());
-
-				
-				if(((IPageGiver)i).hasNormalRecipe())
-				addPage(i.getUnlocalizedName().substring(5)+"REC", new RecipePage(new ItemStack(i)));
-				if(((IPageGiver)i).getCategories() == Categories.RunicItems)
-					runicItems.add(i);
-			}
-			
+			if(i instanceof IPageGiver)
+				runicItems.add(i);
 			
 		}
 		
 	for(Item i : ModItems.nitems){
 			
-			if(i instanceof IPageGiver){
-				
-				
-				
-				addPage(i.getUnlocalizedName(),((IPageGiver)i).getPage());
-				if(((IPageGiver)i).getSubPages() != null)
-					addPage(i.getUnlocalizedName()+1,((IPageGiver)i).getSubPages());
-
-				if(((IPageGiver)i).hasNormalRecipe())
-				addPage(i.getUnlocalizedName().substring(5)+"REC", new RecipePage(new ItemStack(i)));
-				if(((IPageGiver)i).getCategories() == Categories.RunicItems)
-					runicItems.add(i);
-			}
+			if(i instanceof IPageGiver)
+				runicItems.add(i);
+			
 			
 			
 		}
@@ -91,17 +66,10 @@ public class Pages {
 		for(Block i : ModBlocks.blocks){
 			
 			if(i instanceof IPageGiver){
-				
-				addPage(i.getUnlocalizedName(),((IPageGiver)i).getPage());
-				
-				if(((IPageGiver)i).getSubPages() != null)
-					addPage(i.getUnlocalizedName()+1,((IPageGiver)i).getSubPages());
-
-				if(((IPageGiver)i).hasNormalRecipe())
-				addPage(i.getUnlocalizedName().substring(5)+"REC", new RecipePage(new ItemStack(i)));
-				if(((IPageGiver)i).getCategories() == Categories.RunicBlocks)
-					runicBlocks.add(i);
+				if(!ModBlocks.runes.contains(i))
+				runicBlocks.add(i);
 			}
+			
 			
 			
 		}

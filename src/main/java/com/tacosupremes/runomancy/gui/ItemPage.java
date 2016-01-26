@@ -128,12 +128,12 @@ public class ItemPage extends Page {
 			
 			if(f.getStringWidth(cs) >= trim){
 				if(ca[i] != ' '){
-					
+					if(space != -1){
 					for(int d = i; d> space; d--){
 					StringBuilder sb = new StringBuilder(cs);
 					sb.deleteCharAt(cs.length()-1);
 					cs = sb.toString();
-					
+					}
 					}
 					
 				}

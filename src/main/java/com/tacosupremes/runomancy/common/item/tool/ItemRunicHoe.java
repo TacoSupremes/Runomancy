@@ -1,4 +1,4 @@
-package com.tacosupremes.runomancy.common.power.item.tool;
+package com.tacosupremes.runomancy.common.item.tool;
 
 import java.util.List;
 
@@ -19,21 +19,23 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemAxe;
+import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemPickaxe;
-import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemRunicShovel extends ItemSpade implements IPageGiver {
+public class ItemRunicHoe extends ItemHoe implements IPageGiver {
 
-	public ItemRunicShovel() {
+	public ItemRunicHoe() {
 		super(ModItems.runic);
-		this.setUnlocalizedName("runicShovel");
+		this.setUnlocalizedName("runicHoe");
 		this.setCreativeTab(Runomancy.tab);
 		this.setHasSubtypes(true);
 		GameRegistry.registerItem(this, this.getUnlocalizedName().substring(5));
@@ -50,12 +52,24 @@ public class ItemRunicShovel extends ItemSpade implements IPageGiver {
 	}
 
 	
+	
 
 	@Override
 	public boolean isItemTool(ItemStack stack) {
 		
 		return true;
 	}
+
+	@Override
+	public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side,
+			float hitX, float hitY, float hitZ) {
+		
+		if(stack.getItemDamage() == stack.getMaxDamage()-1)
+			return false;
+		
+		return super.onItemUse(stack, playerIn, worldIn, pos, side, hitX, hitY, hitZ);
+	}
+
 
 
 	@Override
@@ -66,18 +80,8 @@ public class ItemRunicShovel extends ItemSpade implements IPageGiver {
 
 
 
-	@Override
-	public ItemStack onItemRightClick(ItemStack is, World w, EntityPlayer player) {
 	
-		if(!is.hasTagCompound())
-			is.setTagCompound(new NBTTagCompound());
-		
-		return super.onItemRightClick(is, w, player);
-	}
 
-
-
-	
 
 
 
@@ -103,6 +107,7 @@ public class ItemRunicShovel extends ItemSpade implements IPageGiver {
 		
 		return super.onBlockDestroyed(stack, worldIn, blockIn, pos, playerIn);
 	}
+
 
 
 	@Override
@@ -140,11 +145,12 @@ public class ItemRunicShovel extends ItemSpade implements IPageGiver {
 	}
 
 
-	
+
 	 public boolean getIsRepairable(ItemStack toRepair, ItemStack repair)
 	    {
 		 return repair.getItem() == ModItems.runicIngot;
 	    }
+	
 	
 	
 
