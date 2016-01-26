@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+  "textures": {
+     "end": "runomancy:blocks/endBlock",
+    "side": "runomancy:blocks/battery1"
+  }
+}

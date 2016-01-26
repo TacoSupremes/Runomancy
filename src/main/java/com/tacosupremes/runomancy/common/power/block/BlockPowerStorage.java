@@ -1,19 +1,31 @@
 package com.tacosupremes.runomancy.common.power.block;
 
 import com.tacosupremes.runomancy.common.block.BlockModContainer;
+import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.power.block.tile.TilePowerStorage;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumWorldBlockLayer;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockPowerStorage extends BlockModContainer{
 
 	public BlockPowerStorage() {
 		super(Material.glass, "battery");
+		this.setDefaultState(this.getDefaultState().withProperty(mode, 0));
+		
 		
 	}
+	
+	public static final PropertyInteger mode = PropertyInteger.create("mode",0, 7);
+	
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
@@ -34,6 +46,34 @@ public class BlockPowerStorage extends BlockModContainer{
 		
 	}
 
-	
+	@SideOnly(Side.CLIENT)
+    public IBlockState getStateForEntityRender(IBlockState state)
+    {
+        return this.getDefaultState().withProperty(mode, 6);
+    }
+
+    /**
+     * Convert the given metadata into a BlockState for this Block
+     */
+    public IBlockState getStateFromMeta(int meta)
+    {
+        return this.getDefaultState().withProperty(mode, meta);
+    }
+
+    /**
+     * Convert the BlockState into the correct metadata value
+     */
+    public int getMetaFromState(IBlockState state)
+    {
+       
+
+        return state.getValue(mode);
+    }
+
+    protected BlockState createBlockState()
+    {
+        return new BlockState(this, new IProperty[] {mode});
+    }
+
 	
 }

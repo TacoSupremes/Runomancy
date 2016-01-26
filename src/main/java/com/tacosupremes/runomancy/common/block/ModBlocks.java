@@ -3,7 +3,6 @@ package com.tacosupremes.runomancy.common.block;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tacosupremes.runomancy.client.render.RenderPowerStorage;
 import com.tacosupremes.runomancy.common.block.rune.BlockEarthRune;
 import com.tacosupremes.runomancy.common.block.rune.BlockEndRune;
 import com.tacosupremes.runomancy.common.block.rune.BlockFireRune;
@@ -70,7 +69,6 @@ public class ModBlocks {
 			ModItems.registerItemRender(Item.getItemFromBlock(i), 0);
 		}
 		
-		ClientRegistry.bindTileEntitySpecialRenderer(TilePowerStorage.class, new RenderPowerStorage());
 		
 	}
 	

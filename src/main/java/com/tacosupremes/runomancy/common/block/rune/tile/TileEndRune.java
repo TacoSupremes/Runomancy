@@ -82,6 +82,7 @@ public class TileEndRune extends TileEntity implements ITickable{
 		
 		
 		
+		
 		if(!isFormed()){
 			effect:
 			for(IRuneEffect re : RuneFormations.effects){
@@ -155,6 +156,7 @@ public class TileEndRune extends TileEntity implements ITickable{
 					
 						if(((double)(this.power)/((double)(this.getEffect().getPowerCapacity())) < 0.25D)){
 							
+							
 							this.power += PowerHelper.drainPower(this.getWorld(), pos, this.getEffect().getTransferRate(), RuneFormations.getRange(getEffect())+3, true);
 					
 						}else{
@@ -172,6 +174,7 @@ public class TileEndRune extends TileEntity implements ITickable{
 				}else{
 					
 					if(this.power > 0 && PowerHelper.addPower(this.getWorld(), pos, this.getEffect().getTransferRate(), RuneFormations.getRange(getEffect())+3, false)!=-1){
+						
 						this.power-=PowerHelper.addPower(this.getWorld(), pos, this.getEffect().getTransferRate(), RuneFormations.getRange(getEffect())+3, true);
 					}
 					

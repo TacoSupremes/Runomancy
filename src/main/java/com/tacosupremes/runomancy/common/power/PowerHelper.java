@@ -265,6 +265,7 @@ public class PowerHelper {
 	
 public static int addPower(World w, BlockPos pos, int amountFill, int r, boolean doit){
 		
+	
 		
 		List<IPowerTile> l = sortBasedOnPower(getPowerSources(w, pos, r), false);
 		

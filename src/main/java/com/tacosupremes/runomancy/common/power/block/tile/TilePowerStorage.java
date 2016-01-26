@@ -1,13 +1,16 @@
 package com.tacosupremes.runomancy.common.power.block.tile;
 
+import com.tacosupremes.runomancy.common.power.block.BlockPowerStorage;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ITickable;
 import net.minecraft.world.World;
 
-public class TilePowerStorage extends TileEntity implements IPowerTile{
+public class TilePowerStorage extends TileEntity implements IPowerTile, ITickable{
 	
 	
 	int power = 0;
@@ -78,7 +81,56 @@ public class TilePowerStorage extends TileEntity implements IPowerTile{
 	@Override
 	public int getMaxPower() {
 	
-		return 20000;
+		return 18000;
+	}
+
+	
+
+	@Override
+	public void update() {
+		
+		if(this.getPower() > this.getMaxPower())
+			this.power = this.getMaxPower();
+		
+		
+		System.out.println(this.getPower());
+		
+		if(this.power == 0){
+			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 0)
+				this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).withProperty(BlockPowerStorage.mode, 0));
+		}
+		
+		if(this.power > 0 && this.power <= 3000){
+			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 1)
+				this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).withProperty(BlockPowerStorage.mode, 1));
+		}
+		
+		if(this.power > 3000 && this.power <= 6000){
+			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 2)
+				this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).withProperty(BlockPowerStorage.mode, 2));
+		}
+		
+		if(this.power > 6000 && this.power <= 9000){
+			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 3)
+				this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).withProperty(BlockPowerStorage.mode, 3));
+		}
+		
+		if(this.power > 9000 && this.power <= 12000){
+			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 4)
+				this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).withProperty(BlockPowerStorage.mode, 4));
+		}
+		
+		if(this.power > 12000 && this.power <= 15000){
+			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 5)
+				this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).withProperty(BlockPowerStorage.mode, 5));
+		}
+		
+		if(this.power > 15000 && this.power <= 18000){
+			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 6)
+				this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).withProperty(BlockPowerStorage.mode, 6));
+		}
+		
+		
 	}
 	
 	
