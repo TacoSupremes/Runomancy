@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 public class TilePowerStorage extends TileEntity implements IPowerTile, ITickable{
 	
 	
-	int power = 0;
+	public int power = 0;
 	
 	private void readCustomNBT(NBTTagCompound nbt) {
 		
@@ -89,6 +89,9 @@ public class TilePowerStorage extends TileEntity implements IPowerTile, ITickabl
 	@Override
 	public void update() {
 		
+		if(this.worldObj.isRemote)
+			return;
+		
 		if(this.getPower() > this.getMaxPower())
 			this.power = this.getMaxPower();
 		
@@ -106,8 +109,12 @@ public class TilePowerStorage extends TileEntity implements IPowerTile, ITickabl
 		}
 		
 		if(this.power > 3000 && this.power <= 6000){
-			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 2)
+			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 2){
+				
+				int pc = this.power;
 				this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).withProperty(BlockPowerStorage.mode, 2));
+				((TilePowerStorage)this.getWorld().getTileEntity(getPos())).power = pc;
+			}
 		}
 		
 		if(this.power > 6000 && this.power <= 9000){
