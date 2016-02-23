@@ -101,42 +101,55 @@ public class TilePowerStorage extends TileEntity implements IPowerTile, ITickabl
 		if(this.power == 0){
 			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 0)
 				this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).withProperty(BlockPowerStorage.mode, 0));
+			
 		}
 		
 		if(this.power > 0 && this.power <= 3000){
-			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 1)
+			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 1){
 				this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).withProperty(BlockPowerStorage.mode, 1));
+				((TilePowerStorage)this.getWorld().getTileEntity(getPos())).addPower(power);
+		}
 		}
 		
 		if(this.power > 3000 && this.power <= 6000){
 			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 2){
 				
-				int pc = this.power;
+				
 				this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).withProperty(BlockPowerStorage.mode, 2));
-				((TilePowerStorage)this.getWorld().getTileEntity(getPos())).power = pc;
+				((TilePowerStorage)this.getWorld().getTileEntity(getPos())).addPower(power);
 			}
 		}
 		
 		if(this.power > 6000 && this.power <= 9000){
-			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 3)
+			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 3){
 				this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).withProperty(BlockPowerStorage.mode, 3));
+				((TilePowerStorage)this.getWorld().getTileEntity(getPos())).addPower(power);
+			}
 		}
 		
 		if(this.power > 9000 && this.power <= 12000){
-			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 4)
+			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 4){
 				this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).withProperty(BlockPowerStorage.mode, 4));
+				((TilePowerStorage)this.getWorld().getTileEntity(getPos())).addPower(power);
+				
+			}
 		}
 		
 		if(this.power > 12000 && this.power <= 15000){
-			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 5)
+			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 5){
 				this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).withProperty(BlockPowerStorage.mode, 5));
+				((TilePowerStorage)this.getWorld().getTileEntity(getPos())).addPower(power);
+				
+			}
 		}
 		
 		if(this.power > 15000 && this.power <= 18000){
-			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 6)
+			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 6){
 				this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).withProperty(BlockPowerStorage.mode, 6));
+				((TilePowerStorage)this.getWorld().getTileEntity(getPos())).addPower(power);
+				
+			}
 		}
-		
 		
 	}
 	
