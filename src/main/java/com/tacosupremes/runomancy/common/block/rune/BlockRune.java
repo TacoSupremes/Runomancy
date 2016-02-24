@@ -38,6 +38,12 @@ public abstract class BlockRune extends BlockMod implements IRune, IPageGiver {
 	
 	}
 	
+	public BlockRune(String s) {
+		this(Material.circuits, s);
+		
+	
+	}
+	
 	@SideOnly(Side.CLIENT)
     public EnumWorldBlockLayer getBlockLayer()
     {

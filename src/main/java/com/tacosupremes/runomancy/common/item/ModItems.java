@@ -48,6 +48,8 @@ public class ModItems {
 	
 	public static Item hungerTablet;
 	
+	public static Item enderShard;
+	
 	public static void preInit(){
 		
 		runicWand = new ItemRunicWand();
@@ -63,6 +65,8 @@ public class ModItems {
 		hungerTablet = new ItemHungerTablet();
 	
 		levitateRune = new ItemLevitateRune();
+		
+		enderShard = new ItemEnderShard();
 		
 		soulGem = new ItemSoulGem();
 		

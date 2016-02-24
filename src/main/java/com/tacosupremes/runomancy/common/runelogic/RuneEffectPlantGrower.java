@@ -59,6 +59,7 @@ public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 				if(grow.canGrow(w, bp, w.getBlockState(bp), w.isRemote)){
 					te.power -= this.getCost();
 					for(int i=0;i<=3;i++){
+						if(!w.isRemote)
 					b.updateTick(w, bp, w.getBlockState(bp), w.rand);
 					
 					w.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, bp.getX()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, bp.getY()+0.3D, bp.getZ()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, 0, 0, 0, 0);

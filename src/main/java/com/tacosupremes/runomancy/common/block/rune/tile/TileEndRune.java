@@ -24,7 +24,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.Vec3i;
 
-public class TileEndRune extends TileEntity implements ITickable{
+public class TileEndRune extends TileEntity implements ITickable, IPowerTile{
 
 	
 	int currentEffect = -1;
@@ -282,6 +282,67 @@ public class TileEndRune extends TileEntity implements ITickable{
 			return null;
 		
 		return RuneFormations.effects.get(currentEffect);
+	}
+
+
+
+	@Override
+	public int getRange() {
+		
+		return 5;
+		
+	}
+
+
+
+	@Override
+	public int getPower() {
+		
+		return this.getEffect() != null ? this.getEffect().isGenerating() ? power : 0 : 0;
+		
+	}
+
+
+
+	@Override
+	public int addPower(int i) {
+		
+		if(this.getEffect() == null)
+			return 0;
+		
+		if(this.getEffect().isGenerating())
+			return 0;
+		
+		this.power += i;
+			
+		return power;
+		
+	}
+
+
+
+	@Override
+	public int removePower(int i) {
+		
+		if(this.getEffect() == null)
+			return 0;
+		
+		if(!this.getEffect().isGenerating())
+			return 0;
+		
+		this.power -= i;
+		
+		return power;
+		
+	}
+
+
+
+	@Override
+	public int getMaxPower() {
+		
+		return this.getEffect() == null ? 0 : this.getEffect().getPowerCapacity();
+		
 	}
 
 }

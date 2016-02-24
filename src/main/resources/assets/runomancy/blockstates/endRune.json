@@ -6,6 +6,7 @@
     "mode=3": { "model": "runomancy:endRuneLava" },
     "mode=4": { "model": "runomancy:endRunePlant" },
     "mode=5": { "model": "runomancy:endRuneFurnaceGen" },
-    "mode=6": { "model": "runomancy:endRunePlant" }
+    "mode=6": { "model": "runomancy:endRunePlant" },
+    "mode=7": { "model": "runomancy:endRuneWell" }
   }
 }

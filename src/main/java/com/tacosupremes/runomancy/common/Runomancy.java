@@ -11,6 +11,7 @@ import com.tacosupremes.runomancy.common.runelogic.RuneEffectMiner;
 import com.tacosupremes.runomancy.common.runelogic.RuneEffectPlantGrower;
 import com.tacosupremes.runomancy.common.runelogic.RuneEffectRepair;
 import com.tacosupremes.runomancy.common.runelogic.RuneEffectSolarGen;
+import com.tacosupremes.runomancy.common.runelogic.RuneEffectWell;
 import com.tacosupremes.runomancy.common.runelogic.RuneFormations;
 import com.tacosupremes.runomancy.gui.GuiHandler;
 import com.tacosupremes.runomancy.gui.Pages;
@@ -54,6 +55,7 @@ public class Runomancy {
     	RuneFormations.addEffect(new RuneEffectPlantGrower());
     	RuneFormations.addEffect(new RuneEffectFurnaceGen());
     	RuneFormations.addEffect(new RuneEffectMiner());
+    	RuneFormations.addEffect(new RuneEffectWell());
     	ModBlocks.preInit();
 		
     }

@@ -1,0 +1,18 @@
+{
+  "variants": {
+   "mode=0": { "model": "runomancy:waterRune" },
+    "mode=1": { "model": "runomancy:waterRuneWell", "y": 180},
+    "mode=2": {
+      "model": "runomancy:waterRuneWell",
+      "y": 270
+    },
+    "mode=3": {
+      "model": "runomancy:waterRuneWell"
+    },
+    "mode=4": {
+      "model": "runomancy:waterRuneWell",
+      "y": 90
+    }
+
+  }
+}

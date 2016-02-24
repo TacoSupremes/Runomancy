@@ -7,6 +7,7 @@ import com.tacosupremes.runomancy.common.block.rune.BlockEarthRune;
 import com.tacosupremes.runomancy.common.block.rune.BlockEndRune;
 import com.tacosupremes.runomancy.common.block.rune.BlockFireRune;
 import com.tacosupremes.runomancy.common.block.rune.BlockObsidianRune;
+import com.tacosupremes.runomancy.common.block.rune.BlockWaterRune;
 import com.tacosupremes.runomancy.common.item.ItemRunicWand;
 import com.tacosupremes.runomancy.common.item.ModItems;
 import com.tacosupremes.runomancy.common.power.block.BlockPowerStorage;
@@ -47,6 +48,8 @@ public class ModBlocks {
 	public static final int endRuneCount = RuneFormations.effects.size();
 	public static final int fireCount = 6;
 	public static final int earthCount = 7;
+
+	public static final int waterCount = 5;
 	
 	public static void preInit(){
 	
@@ -57,6 +60,8 @@ public class ModBlocks {
 		fireRune = new BlockFireRune();
 		
 		earthRune = new BlockEarthRune();
+		
+		waterRune = new BlockWaterRune();
 		
 		powerTorch = new BlockPowerTorch();
 		
