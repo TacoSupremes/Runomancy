@@ -25,6 +25,7 @@ public class ModRecipes {
 	public static Map<String, ItemStack[]> shapeless = new HashMap<String, ItemStack[]>();
 	public static Map<String, ItemStack[]> shaped = new HashMap<String, ItemStack[]>();
 
+	//TODO IMPLEMENT OREDICTIONARY
 	
 	
 	public static void postInit(){
@@ -37,6 +38,8 @@ public class ModRecipes {
 		addShapelessRecipe(new ItemStack(ModBlocks.endRune,2), w, new ItemStack(Items.ender_pearl));
 		addShapelessRecipe(new ItemStack(ModBlocks.obsidianRune,2), w, new ItemStack(Blocks.obsidian));
 		addShapelessRecipe(new ItemStack(ModBlocks.fireRune,2), w, new ItemStack(Items.lava_bucket));
+		addShapelessRecipe(new ItemStack(ModBlocks.waterRune,2), w, new ItemStack(Items.water_bucket));
+		addShapelessRecipe(new ItemStack(ModBlocks.earthRune,2), w, new ItemStack(Blocks.sapling));
 		
 		addShapedRecipe(new ItemStack(ModItems.runicPickaxe,1,ModItems.runicPickaxe.getMaxDamage()-1), "RRR"," S "," S ", 'R', new ItemStack(ModItems.runicIngot), 'S', new ItemStack(Items.stick));
 		addShapedRecipe(new ItemStack(ModItems.runicAxe,1,ModItems.runicPickaxe.getMaxDamage()-1), " RR"," SR"," S ", 'R', new ItemStack(ModItems.runicIngot), 'S', new ItemStack(Items.stick));

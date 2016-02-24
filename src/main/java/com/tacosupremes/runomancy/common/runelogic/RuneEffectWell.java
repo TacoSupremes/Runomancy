@@ -15,6 +15,8 @@ import net.minecraft.world.World;
 
 public class RuneEffectWell implements IFunctionalRuneEffect {
 
+	
+	
 	@Override
 	public void doEffect(World w, BlockPos pos, TileEndRune te, NBTTagCompound nbt) {
 		
@@ -27,6 +29,11 @@ public class RuneEffectWell implements IFunctionalRuneEffect {
 					if(x == 0 || z == 0)
 						continue;
 					
+					if(w.getBlockState(pos.add(x, 0, z)).getBlock().getMetaFromState(w.getBlockState(pos.add(x,0,z))) != 7 && te.power >= this.getCost())
+					w.spawnParticle(EnumParticleTypes.SNOW_SHOVEL, pos.getX() + x + 0.5D + w.rand.nextDouble() / 4 - w.rand.nextDouble() / 4, pos.getY() + 0.3 + w.getBlockState(pos.add(x, 0, z)).getBlock().getMetaFromState(w.getBlockState(pos.add(x,0,z))) * 0.1D, pos.getZ() + z + 0.5D + w.rand.nextDouble()/4 - w.rand.nextDouble()/4, 0, 0, 0, 0);
+					else
+						continue;
+					
 					if(te.ticks %40 != 0)
 						continue;
 				
@@ -34,8 +41,7 @@ public class RuneEffectWell implements IFunctionalRuneEffect {
 						return;
 					
 		if(w.getBlockState(pos.add(x, 0, z)).getBlock().isAir(w, pos.add(x, 0, z)) && w.getBlockState(pos.add(x, 0, z)).getBlock() != Blocks.snow_layer){
-			w.spawnParticle(EnumParticleTypes.SNOW_SHOVEL, pos.getX() + x +0.5D, pos.getY() + 0.1, pos.getZ() + z + 0.5D, 0, 0, 0, 0);
-			if(!w.isRemote)
+				if(!w.isRemote)
 			w.setBlockState(pos.add(x,0,z), Blocks.snow_layer.getDefaultState());
 			
 			te.power -= this.getCost();
@@ -64,7 +70,6 @@ public class RuneEffectWell implements IFunctionalRuneEffect {
 				
 			
 		if(w.getBlockState(pos.add(x, 0, z)).getValue(BlockSnow.LAYERS) != 8){
-			w.spawnParticle(EnumParticleTypes.SNOW_SHOVEL, pos.getX() + x +0.5D, pos.getY() + 0.1 + ((double)w.getBlockState(pos.add(x, 0, z)).getValue(BlockSnow.LAYERS)/8D), pos.getZ() + z + 0.5D, 0, 0, 0, 0);
 					
 			if(!w.isRemote)
 			w.setBlockState(pos.add(x, 0, z), w.getBlockState(pos.add(x, 0, z)).withProperty(BlockSnow.LAYERS,w.getBlockState(pos.add(x, 0, z)).getValue(BlockSnow.LAYERS)+1));
@@ -150,14 +155,14 @@ public class RuneEffectWell implements IFunctionalRuneEffect {
 	@Override
 	public int getPowerCapacity() {
 
-		return 100;
+		return 200;
 
 	}
 
 	@Override
 	public int getTransferRate() {
 
-		return 20;
+		return 40;
 
 	}
 
