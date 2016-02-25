@@ -12,6 +12,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
@@ -32,54 +34,56 @@ public class RecipePage extends Page {
 
 	int sx,sy;
 	
-	
 	@Override
 	public void initPage(int x, int y, int w, int h, GuiModBook g) {
 		
 		super.initPage(x, y, w, h, g);
 	
 		sx = x+ w / 2 - 27;
+		
 		sy = y+40;
 	
-		
-		
-		
 	}
-
-	
 
 	@Override
 	public void draw(int mx, int my, float tick) {
 		
-		
 		GL11.glPushMatrix();
-		
-		
-				
 		
 		this.drawRecipe(sx, sy, mx, my);
 		
-		
 		int index = 0;
+		
 		int wx = 1;
+		
 		int wy = 1;
 		
 		int wd =3;
 		
-		for(ItemStack wis : ModRecipes.getRecipe(item)){
+		for(ItemStack[] wis : ModRecipes.getRecipe(item)){
+			
+			ItemStack ac;
+			
+			
+			if(wis.length == 1)
+				ac = wis[0];
+			else{
+				
+				ac = wis[ore[index]];
+			}
 			
 			
 			
 			
 			index ++;
 			wx+=18;
+			
 			int ssx = index == 1 || index == 4 || index == 7 ? sx : sx+wx-18;
+			
 			int ex =index == 1 || index == 4 || index == 7 ? sx+wx : sx+ wx;
 			
-			//int ssx = sx;
-			//int ex = sx+wx;
-			if((ssx < mx && mx < ex) && (my > wy+sy && my <wy+19+sy) && wis != null)
-				this.g.drawTooltip(wis, mx, my);
+			if((ssx < mx && mx < ex) && (my > wy+sy && my <wy+19+sy) && ac != null)
+				this.g.drawTooltip(ac, mx, my);
 			
 			if(index % wd == 0){
 			
@@ -88,22 +92,30 @@ public class RecipePage extends Page {
 			
 			}
 			
-			
-			
-			
-			
-			
 		}
 		
 		GL11.glPopMatrix();
 		
 	}
 	
-	int m = 0;
+	int[] m = new int[]{0,0,0,
+						0,0,0,
+						0,0,0};
+	
+	int[] ore = new int[]{0,0,0,
+						  0,0,0,
+						  0,0,0};
+	
+	int ticks = 0;
+	
 	private void drawRecipe(int s, int t, int mx, int my) {
-		ItemStack[] l = ModRecipes.getRecipe(item);
+		
+		ticks++;
+		
+		ItemStack[][] l = ModRecipes.getRecipe(item);
 		
 		GL11.glColor4f(1F, 1F, 1F, 1F);
+		
 		Minecraft.getMinecraft().renderEngine.bindTexture(texture);
 		
 		g.drawModalRectWithCustomSizedTexture(s, t, 0, 0, 54, 54, 54, 54);
@@ -112,16 +124,40 @@ public class RecipePage extends Page {
 		if(l != null){
 			
 			int index = 0;
+			
 			int x = 1;
+			
 			int y = 1;
 			
 			int d =3;
+			
 			RenderHelper.enableGUIStandardItemLighting();
-			for(ItemStack is2 : l){
+			
+			for(ItemStack[] isa : l){
 				
+				boolean isString = false;
 				
+				ItemStack is2;
 				
-				ItemStack is = new ItemStack(is2.getItem(),1,is2.getItemDamage() != OreDictionary.WILDCARD_VALUE ? is2.getItemDamage() : m);
+				if(isa.length == 1)
+					is2 = isa[0];
+				else{
+					
+					isString = true;
+					
+					is2 = isa[ore[index]];
+				}
+					
+				if(is2 == null){
+				
+					index ++;
+					
+					x+=18;
+							
+					continue;
+				}
+				
+				ItemStack is = new ItemStack(is2.getItem(),1,is2.getItemDamage() != OreDictionary.WILDCARD_VALUE ? is2.getItemDamage() : m[index]);
 				
 				
 			
@@ -130,21 +166,31 @@ public class RecipePage extends Page {
 			Minecraft.getMinecraft().getRenderItem().renderItemOverlays(Minecraft.getMinecraft().fontRendererObj, is, s+x, t+y);
 			
 			if(is2.getItemDamage() == OreDictionary.WILDCARD_VALUE){
-				if(m == is2.getMaxDamage())
-					m = 0;
+				if(m[index] == is2.getMaxDamage())
+					m[index] = 0;
 				else	
-					m++;
+					m[index]++;
 				
 			}
 			
+			if(isString && ticks %40 == 0){
+				
+					if(ore[index] == (isa.length-1)){
+						ore[index] = 0;
+					
+				}else{
+					ore[index] ++;
+				}
+			
+			}
+			
 			index ++;
-			x+=18;
-			
-			
+			x += 18;
+				
 			if(index % d == 0){
 			
 			x = 1;
-			y+=18;
+			y += 18;
 			
 			}
 			
@@ -176,9 +222,17 @@ public class RecipePage extends Page {
 		
 		int wd =3;
 		
-		for(ItemStack wis : ModRecipes.getRecipe(item)){
+		for(ItemStack[] wis : ModRecipes.getRecipe(item)){
 			
+			ItemStack ac;
 			
+			if(wis.length == 1)
+				
+				ac = wis[0];
+			else{
+				
+				ac = wis[ore[index]];
+			}
 			
 			index ++;
 			wx+=19;
@@ -189,8 +243,8 @@ public class RecipePage extends Page {
 			//int ex = sx+wx;
 			if((ssx < mx && mx < ex) && (my > wy+sy && my <wy+19+sy)){
 			
-				if(GuiModBook.hasEntry(wis)){
-					g.changePage(wis.getUnlocalizedName());
+				if(GuiModBook.hasEntry(ac)){
+					g.changePage(ac.getUnlocalizedName());
 				}
 				//	System.out.println(wis.getUnlocalizedName());
 			}
@@ -200,22 +254,10 @@ public class RecipePage extends Page {
 			wy+=16;
 			
 			}
-			
-			
-			
-		
-			
-			
-			
+				
 		}
 		
-		
-		
-		
 	}
-
-
-	
 
 	@Override
 	public String returnPage() {

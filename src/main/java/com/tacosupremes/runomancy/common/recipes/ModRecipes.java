@@ -14,16 +14,19 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.ShapedRecipes;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 public class ModRecipes {
 	
 	
 	public static List<RuneChargerRecipe> rcr = new ArrayList<RuneChargerRecipe>();
-	public static Map<String, ItemStack[]> shapeless = new HashMap<String, ItemStack[]>();
-	public static Map<String, ItemStack[]> shaped = new HashMap<String, ItemStack[]>();
+	public static Map<String, ItemStack[][]> shapeless = new HashMap<String, ItemStack[][]>();
+	public static Map<String, ItemStack[][]> shaped = new HashMap<String, ItemStack[][]>();
 
 	//TODO IMPLEMENT OREDICTIONARY
 	
@@ -39,7 +42,7 @@ public class ModRecipes {
 		addShapelessRecipe(new ItemStack(ModBlocks.obsidianRune,2), w, new ItemStack(Blocks.obsidian));
 		addShapelessRecipe(new ItemStack(ModBlocks.fireRune,2), w, new ItemStack(Items.lava_bucket));
 		addShapelessRecipe(new ItemStack(ModBlocks.waterRune,2), w, new ItemStack(Items.water_bucket));
-		addShapelessRecipe(new ItemStack(ModBlocks.earthRune,2), w, new ItemStack(Blocks.sapling));
+		addShapelessOreDictRecipe(new ItemStack(ModBlocks.earthRune,2), w, "treeSapling","stairWood");
 		
 		addShapedRecipe(new ItemStack(ModItems.runicPickaxe,1,ModItems.runicPickaxe.getMaxDamage()-1), "RRR"," S "," S ", 'R', new ItemStack(ModItems.runicIngot), 'S', new ItemStack(Items.stick));
 		addShapedRecipe(new ItemStack(ModItems.runicAxe,1,ModItems.runicPickaxe.getMaxDamage()-1), " RR"," SR"," S ", 'R', new ItemStack(ModItems.runicIngot), 'S', new ItemStack(Items.stick));
@@ -52,7 +55,21 @@ public class ModRecipes {
 		GameRegistry.addShapelessRecipe(itemStack, (Object[])w);
 		ItemStack is2 = new ItemStack(itemStack.getItem(),1,itemStack.getItemDamage());
 		
-		shapeless.put(is2.getUnlocalizedName(), w);
+		ItemStack[][] ls = new ItemStack[w.length][1];
+		
+		int index = 0;
+		for(ItemStack is : w){
+			
+			ls[index][0] = is;
+			index++;
+			
+		}
+		
+		shapeless.put(is2.getUnlocalizedName(), ls);
+		
+		System.out.println(ls);
+		
+		
 		
 	}
 	
@@ -130,12 +147,20 @@ public class ModRecipes {
 
 	        ItemStack is2 = new ItemStack(stack.getItem(),1,stack.getItemDamage());
 			
+	        ItemStack[][] ls = new ItemStack[aitemstack.length][1];
+			
+			int index = 0;
+			for(ItemStack is : aitemstack){
+				
+				ls[index][0] = is;
+				index++;
+			}
 	        
-	        shaped.put(is2.getUnlocalizedName(), aitemstack);
+	        shaped.put(is2.getUnlocalizedName(), ls);
 	      
 	    }
 
-	public static ItemStack[] getRecipe(ItemStack item) {
+	public static ItemStack[][] getRecipe(ItemStack item) {
 		
 	ItemStack is2 = new ItemStack(item.getItem(), 1, item.getItemDamage());
 
@@ -148,7 +173,58 @@ public class ModRecipes {
 	}
 		
 	
-	
+	private static void addOreDictRecipe(ItemStack output, Object... recipe) {
+		CraftingManager.getInstance().getRecipeList().add(new ShapedOreRecipe(output, recipe));
+	}
+
+	private static void addShapelessOreDictRecipe(ItemStack output, Object... recipe) {
+		
+		
+		ItemStack[][] ns = new ItemStack[recipe.length][1]; 
+		
+		int index = 0;
+		
+		List<String> ls = new ArrayList<String>();
+		
+		for(Object o : recipe){
+			
+			if(o instanceof ItemStack){
+				
+				ns[index][0] = (ItemStack)o;
+				index++;
+				continue;
+			}else if(o instanceof String){
+				
+				ls.add((String)o);
+				continue;
+				
+				
+			}
+			
+		}
+		
+		if(ls.isEmpty()){
+			
+		System.err.println("USE NORMAL SHAPELESSRECIPE");
+			return;
+		}else{
+			
+			for(String s : ls){
+				
+				
+				
+				ns[index] = OreDictionary.getOres(s).toArray(new ItemStack[OreDictionary.getOres(s).size()]);
+				index++;
+				
+			}
+			
+			
+		}
+		  ItemStack is2 = new ItemStack(output.getItem(),1,output.getItemDamage());
+		  
+		 shapeless.put(is2.getUnlocalizedName(), ns);
+		CraftingManager.getInstance().getRecipeList().add(new ShapelessOreRecipe(output, recipe));
+	}
 	
 	
 	
