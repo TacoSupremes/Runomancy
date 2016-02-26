@@ -1,6 +1,8 @@
 package com.tacosupremes.runomancy.common;
 
 
+import java.util.Random;
+
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.item.ModItems;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
@@ -43,11 +45,15 @@ public class Runomancy {
     @Instance(LibMisc.MODID)
     public static Runomancy instance;
     
+    
+    public static Random rand;
+    
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
     	tab = new RTab();	
   
+    	rand = new Random();
     	ModItems.preInit();
     	RuneFormations.addEffect(new RuneEffectRepair());
     	RuneFormations.addEffect(new RuneEffectSolarGen());
@@ -76,7 +82,21 @@ public class Runomancy {
     	LibMisc.Ores.postInit();
     	Pages.postInit();
     	RuneFormations.makePages();
+    	
+   
 		
+    }
+    
+    public static int randInt(int max, int exclude){
+    	
+    	int i = rand.nextInt(max);
+    	
+    	while(i == exclude)
+    		i = rand.nextInt(max);
+    	
+    		
+    	
+    	return i;
     }
     
     public class RTab extends CreativeTabs {

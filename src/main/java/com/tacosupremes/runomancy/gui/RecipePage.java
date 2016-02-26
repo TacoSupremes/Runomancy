@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
+import com.tacosupremes.runomancy.common.Runomancy;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
 import com.tacosupremes.runomancy.common.recipes.ModRecipes;
 import com.tacosupremes.runomancy.gui.buttons.TextButton;
@@ -64,7 +65,7 @@ public class RecipePage extends Page {
 			
 			ItemStack ac;
 			
-			
+			if(wis != null){
 			if(wis.length == 1)
 				ac = wis[0];
 			else{
@@ -72,7 +73,8 @@ public class RecipePage extends Page {
 				ac = wis[ore[index]];
 			}
 			
-			
+			}else
+				ac = null;
 			
 			
 			index ++;
@@ -106,7 +108,7 @@ public class RecipePage extends Page {
 						  0,0,0,
 						  0,0,0};
 	
-	int ticks = 0;
+	int ticks = 39;
 	
 	private void drawRecipe(int s, int t, int mx, int my) {
 		
@@ -138,7 +140,8 @@ public class RecipePage extends Page {
 				boolean isString = false;
 				
 				ItemStack is2;
-				
+				if(isa != null){
+					
 				if(isa.length == 1)
 					is2 = isa[0];
 				else{
@@ -147,16 +150,11 @@ public class RecipePage extends Page {
 					
 					is2 = isa[ore[index]];
 				}
-					
-				if(is2 == null){
 				
-					index ++;
-					
-					x+=18;
-							
-					continue;
-				}
-				
+				}else
+					is2 = null;
+			
+				if(is2 != null){
 				ItemStack is = new ItemStack(is2.getItem(),1,is2.getItemDamage() != OreDictionary.WILDCARD_VALUE ? is2.getItemDamage() : m[index]);
 				
 				
@@ -175,14 +173,17 @@ public class RecipePage extends Page {
 			
 			if(isString && ticks %40 == 0){
 				
-					if(ore[index] == (isa.length-1)){
-						ore[index] = 0;
+				if(isa.length > 1){
+				
 					
-				}else{
-					ore[index] ++;
-				}
+					ore[index] = Runomancy.randInt(isa.length, ore[index]);
+		
 			
 			}
+				
+		}
+			
+		}
 			
 			index ++;
 			x += 18;
@@ -226,6 +227,7 @@ public class RecipePage extends Page {
 			
 			ItemStack ac;
 			
+			if(wis != null){
 			if(wis.length == 1)
 				
 				ac = wis[0];
@@ -233,6 +235,8 @@ public class RecipePage extends Page {
 				
 				ac = wis[ore[index]];
 			}
+			}else
+				ac = null;
 			
 			index ++;
 			wx+=19;

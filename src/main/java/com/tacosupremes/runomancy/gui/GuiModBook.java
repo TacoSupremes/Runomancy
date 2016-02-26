@@ -179,6 +179,10 @@ public class GuiModBook extends GuiScreen {
 	
 	public static boolean hasEntry(ItemStack item){
 		
+		
+		if(item == null)
+			return false;
+		
 		String s = "runomancy."+item.getUnlocalizedName().substring(5)+".entry";
 		
 		return StatCollector.translateToLocal(s) != s;

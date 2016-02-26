@@ -28,7 +28,7 @@ public class ModRecipes {
 	public static Map<String, ItemStack[][]> shapeless = new HashMap<String, ItemStack[][]>();
 	public static Map<String, ItemStack[][]> shaped = new HashMap<String, ItemStack[][]>();
 
-	//TODO IMPLEMENT OREDICTIONARY
+	
 	
 	
 	public static void postInit(){
@@ -42,12 +42,12 @@ public class ModRecipes {
 		addShapelessRecipe(new ItemStack(ModBlocks.obsidianRune,2), w, new ItemStack(Blocks.obsidian));
 		addShapelessRecipe(new ItemStack(ModBlocks.fireRune,2), w, new ItemStack(Items.lava_bucket));
 		addShapelessRecipe(new ItemStack(ModBlocks.waterRune,2), w, new ItemStack(Items.water_bucket));
-		addShapelessOreDictRecipe(new ItemStack(ModBlocks.earthRune,2), w, "treeSapling","stairWood");
+		addShapelessOreDictRecipe(new ItemStack(ModBlocks.earthRune,2), w, "treeSapling","stairWood", "record");
 		
 		addShapedRecipe(new ItemStack(ModItems.runicPickaxe,1,ModItems.runicPickaxe.getMaxDamage()-1), "RRR"," S "," S ", 'R', new ItemStack(ModItems.runicIngot), 'S', new ItemStack(Items.stick));
-		addShapedRecipe(new ItemStack(ModItems.runicAxe,1,ModItems.runicPickaxe.getMaxDamage()-1), " RR"," SR"," S ", 'R', new ItemStack(ModItems.runicIngot), 'S', new ItemStack(Items.stick));
-		addShapedRecipe(new ItemStack(ModItems.runicShovel,1,ModItems.runicPickaxe.getMaxDamage()-1), " R "," S "," S ", 'R', new ItemStack(ModItems.runicIngot), 'S', new ItemStack(Items.stick));
-		addShapedRecipe(new ItemStack(ModItems.runicHoe,1,ModItems.runicPickaxe.getMaxDamage()-1), " RR"," S "," S ", 'R', new ItemStack(ModItems.runicIngot), 'S', new ItemStack(Items.stick));
+		addShapedRecipe(new ItemStack(ModItems.runicAxe,1,ModItems.runicAxe.getMaxDamage()-1), "RR ","RS "," S ", 'R', new ItemStack(ModItems.runicIngot), 'S', new ItemStack(Items.stick));
+		addShapedRecipe(new ItemStack(ModItems.runicShovel,1,ModItems.runicShovel.getMaxDamage()-1), " R "," S "," S ", 'R', new ItemStack(ModItems.runicIngot), 'S', new ItemStack(Items.stick));
+		addShapedRecipe(new ItemStack(ModItems.runicHoe,1,ModItems.runicHoe.getMaxDamage()-1), " RR"," S "," S ", 'R', new ItemStack(ModItems.runicIngot), 'S', new ItemStack(Items.stick));
 		
 	}
 
@@ -67,7 +67,7 @@ public class ModRecipes {
 		
 		shapeless.put(is2.getUnlocalizedName(), ls);
 		
-		System.out.println(ls);
+		//System.out.println(ls);
 		
 		
 		
@@ -173,8 +173,64 @@ public class ModRecipes {
 	}
 		
 	
-	private static void addOreDictRecipe(ItemStack output, Object... recipe) {
-		CraftingManager.getInstance().getRecipeList().add(new ShapedOreRecipe(output, recipe));
+	private static void addOreDictRecipe(ItemStack output, Object... r) {	
+		
+		CraftingManager.getInstance().getRecipeList().add(new ShapedOreRecipe(output, r));
+		
+		List<ItemStack[]> l = new ArrayList<ItemStack[]>();
+		
+		int sCount = 0;
+		for(int i = 0; i< r.length; i++){
+			
+			if(sCount == 3)
+				break;
+			
+			if(r[i] instanceof String){
+				sCount++;
+				for(char c : ((String)r[i]).toCharArray()){
+					
+					if(c == ' '){
+						l.add(null);
+						continue;
+					}
+					for(int i2 = 0; i2< r.length; i2++){
+						
+						if(!(r[i2] instanceof Character))
+							continue;
+						
+						if(((Character)r[i2]) == c){
+							
+							if(r[i2+1] instanceof ItemStack){
+								l.add(new ItemStack[]{(ItemStack)r[i2+1]});
+							}else{
+								l.add(OreDictionary.getOres((String)r[i2+1]).toArray(new ItemStack[OreDictionary.getOres((String)r[i2+1]).size()]));
+							}
+							
+							continue;
+							
+						}else if(i2 != r.length-1)
+							continue;
+						else{
+							
+							System.err.println("RIP RUN");
+							
+							return;
+							
+							}
+						
+					}
+					
+				}
+				
+			}
+			
+			
+		}
+		
+		  ItemStack is2 = new ItemStack(output.getItem(),1,output.getItemDamage());
+		
+		shaped.put(is2.getUnlocalizedName(), l.toArray(new ItemStack[l.size()][9]));
+		
 	}
 
 	private static void addShapelessOreDictRecipe(ItemStack output, Object... recipe) {
