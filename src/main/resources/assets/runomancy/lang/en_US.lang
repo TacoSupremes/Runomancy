@@ -19,10 +19,16 @@ tile.battery.name=Runic Battery
 runomancy.contains=Currently contains
 runomancy.bound=Bound to
 runomancy.empty=Empty
+runomancy.active=Active
+runomancy.inactive=Inactive
 runomancy.press=Press
 runomancy.shift=Shift
 runomancy.moreInfo=For More Info
 runomancy.health=Health
+runomancy.runic=Runic
+runomancy.ability=Ability
+runomancy.power=Power
+
 
 runomancy.table=Table of Contents
 runomancy.recipe=Recipe

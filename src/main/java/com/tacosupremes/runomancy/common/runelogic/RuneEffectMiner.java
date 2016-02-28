@@ -145,7 +145,7 @@ public class RuneEffectMiner implements IFunctionalRuneEffect {
 	@Override
 	public int getPowerCapacity() {
 		
-		return 1000;
+		return 2000;
 	}
 
 	@Override

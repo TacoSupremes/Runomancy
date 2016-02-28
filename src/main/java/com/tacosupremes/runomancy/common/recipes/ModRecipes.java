@@ -35,14 +35,20 @@ public class ModRecipes {
 		
 		ItemStack w = new ItemStack(ModItems.runicWand,1, OreDictionary.WILDCARD_VALUE);
 			
+		
+		addShapedRecipe(new ItemStack(ModItems.runicWand), "  E"," S ","S  ", 'E', new ItemStack(ModItems.enderShard), 'S', new ItemStack(Items.stick));
+		addShapelessRecipe(new ItemStack(ModItems.enderShard, 4), new ItemStack(Items.ender_pearl));
+		
 		rcr.add(new RuneChargerRecipe(new ItemStack(ModItems.runicIngot), new ItemStack(Items.iron_ingot, 1), 300));			
 		rcr.add(new RuneChargerRecipe(new ItemStack(ModBlocks.powerTorch), new ItemStack(Blocks.torch, 1), 0));
 		
-		addShapelessRecipe(new ItemStack(ModBlocks.endRune,2), w, new ItemStack(Items.ender_pearl));
+		addShapelessRecipe(new ItemStack(ModBlocks.endRune), w, new ItemStack(ModItems.enderShard));
 		addShapelessRecipe(new ItemStack(ModBlocks.obsidianRune,2), w, new ItemStack(Blocks.obsidian));
 		addShapelessRecipe(new ItemStack(ModBlocks.fireRune,2), w, new ItemStack(Items.lava_bucket));
 		addShapelessRecipe(new ItemStack(ModBlocks.waterRune,2), w, new ItemStack(Items.water_bucket));
-		addShapelessOreDictRecipe(new ItemStack(ModBlocks.earthRune,2), w, "treeSapling","stairWood", "record");
+		addShapelessOreDictRecipe(new ItemStack(ModBlocks.earthRune,2), w, "treeSapling");
+		addShapelessRecipe(new ItemStack(ModItems.modBook), new ItemStack(ModItems.enderShard), new ItemStack(Items.book));
+		
 		
 		addShapedRecipe(new ItemStack(ModItems.runicPickaxe,1,ModItems.runicPickaxe.getMaxDamage()-1), "RRR"," S "," S ", 'R', new ItemStack(ModItems.runicIngot), 'S', new ItemStack(Items.stick));
 		addShapedRecipe(new ItemStack(ModItems.runicAxe,1,ModItems.runicAxe.getMaxDamage()-1), "RR ","RS "," S ", 'R', new ItemStack(ModItems.runicIngot), 'S', new ItemStack(Items.stick));

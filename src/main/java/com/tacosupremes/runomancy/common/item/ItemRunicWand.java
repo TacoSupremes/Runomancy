@@ -22,7 +22,7 @@ public class ItemRunicWand extends ItemMod implements IPageGiver {
 		
 		
 		
-		return is;
+		return is.getItemDamage() == is.getMaxDamage()-1 ? null : new ItemStack(is.getItem(), 1, is.getItemDamage()+1);
 	}
 
 

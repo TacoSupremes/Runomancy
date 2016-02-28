@@ -28,8 +28,11 @@ public class RuneEffectRepair implements IFunctionalRuneEffect {
 		int y = pos.getY();
 		int z = pos.getZ();
 		
-		if(te.power <this.getCost())
-			return;
+		
+		
+		
+		
+		
 		
 		  List<EntityItem> entities = (List<EntityItem>) w.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.fromBounds(x, y, z, x + 1, y + 1F, z + 1));
 	        for (EntityItem entity : entities) {
@@ -64,15 +67,17 @@ public class RuneEffectRepair implements IFunctionalRuneEffect {
 	        			if(te.power >= r.getCost()){
 	        				te.power-=r.getCost();
 	        				if(is.stackSize == 1)
-	        				entity.setEntityItemStack(r.getOut());
+	        				entity.setEntityItemStack(r.getOut().copy());
 	        				else{
 	        					
 	        					EntityItem ent = new EntityItem(w);
-	        					ent.setEntityItemStack(r.getOut());
+	        					ent.setEntityItemStack(r.getOut().copy());
 	        					RuneEffectFurnace.setVelocity(ent, 0, 0.1D, 0);
-	        					is.stackSize--;
-	        					entity.setEntityItemStack(is);
-	        					ent.setPosition(entity.posX, entity.posY, entity.posZ);
+	        					
+	        					entity.setEntityItemStack(is.copy().splitStack(is.stackSize-1));
+	        					
+	        					ent.setPosition(entity.posX, entity.posY+0.1, entity.posZ);
+	        					ent.motionY = 0.4D;
 	        					if(!w.isRemote)
 	        						w.spawnEntityInWorld(ent);
 	        					
@@ -80,8 +85,9 @@ public class RuneEffectRepair implements IFunctionalRuneEffect {
 	        					
 	        				}
 	        				break;
-	        			}
-	        		}
+	        			}else
+	        				break;
+	        		}		
 	        		
 	        	}
 	        }
@@ -122,18 +128,18 @@ public class RuneEffectRepair implements IFunctionalRuneEffect {
 	@Override
 	public int getPowerCapacity() {
 		
-		return 750;
+		return 1500;
 	}
 
 	@Override
 	public int getTransferRate() {
 		
-		return 75;
+		return 125;
 	}
 	@Override
 	public int getCost(){
 		
-		return 150;
+		return 250;
 	}
 	
 	@Override

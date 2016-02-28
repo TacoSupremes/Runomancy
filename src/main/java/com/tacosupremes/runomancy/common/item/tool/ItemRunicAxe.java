@@ -24,6 +24,8 @@ import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
@@ -81,9 +83,9 @@ public class ItemRunicAxe extends ItemAxe implements IPageGiver{
 	public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> l) {
 		
 		
-	l.add(new ItemStack(item,1,1));
-	l.add(new ItemStack(item,1,item.getMaxDamage()-1));
-		
+		l.add(new ItemStack(item,1,0));
+		l.add(new ItemStack(item,1,item.getMaxDamage()-1));
+			
 		
 	}
 
@@ -95,6 +97,9 @@ public class ItemRunicAxe extends ItemAxe implements IPageGiver{
 		
 			if(stack.getItemDamage() == stack.getMaxDamage()-1)
 				return true;
+			
+			
+			
 		
 		
 		return super.onBlockDestroyed(stack, worldIn, blockIn, pos, playerIn);
@@ -136,7 +141,57 @@ public class ItemRunicAxe extends ItemAxe implements IPageGiver{
 	}
 	
 	
+	@Override
+	public ItemStack onItemRightClick(ItemStack is, World w, EntityPlayer player) {
+		 
+		 
+		 if(!is.hasTagCompound()){
+			 is.setTagCompound(new NBTTagCompound());
+			 is.getTagCompound().setBoolean("ACTIVE", false);
+		 }
+		 
+		 
+		 if(player.isSneaking()){
+			 
+			 if(is.getTagCompound().getBoolean("ACTIVE"))
+				 is.getTagCompound().setBoolean("ACTIVE", false);
+			 else
+				 is.getTagCompound().setBoolean("ACTIVE", true);
+			 
+			 player.swingItem();
+			 
+		 }
+			 
+			 
+		
+		return super.onItemRightClick(is, w, player);
+		
+	}
+	 
+	 
+	 
+	 @Override
+	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+		
+		 if(!stack.hasTagCompound())
+				return;
+		 
+		
+			if(stack.getTagCompound().getBoolean("ACTIVE"))
+				tooltip.add(EnumChatFormatting.GREEN + StatCollector.translateToLocal("runomancy.runic") + " " + StatCollector.translateToLocal("runomancy.power") + " " + StatCollector.translateToLocal("runomancy.active"));
+			else
+				tooltip.add(EnumChatFormatting.RED + StatCollector.translateToLocal("runomancy.runic") + " " + StatCollector.translateToLocal("runomancy.power") + " " + StatCollector.translateToLocal("runomancy.inactive"));
+			
+	 }	
+
+
+
+	@Override
+		public boolean hasEffect(ItemStack stack) {
 	
+		 return stack.hasTagCompound() ? stack.isItemEnchanted() ? true : stack.getItemDamage() == stack.getMaxDamage()-1 ? false : stack.getTagCompound().getBoolean("ACTIVE") : false;
+		}
+
 	
 	
 	

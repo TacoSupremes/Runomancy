@@ -30,7 +30,7 @@ public class ModItems {
 
 	public static Item runicPickaxe;
 	
-	public static ToolMaterial runic = EnumHelper.addToolMaterial("runic", 3, 75, 7.1F, 2, 32);
+	public static ToolMaterial runic = EnumHelper.addToolMaterial("runic", 3, 75, 9.1F, 2, 32);
 
 	public static Item levitateRune;
 	
