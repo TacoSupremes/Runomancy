@@ -109,7 +109,7 @@ public class ItemRunicHoe extends ItemHoe implements IPageGiver {
 							
 						}
 						
-						stack.damageItem(1, player);
+						stack.damageItem(2, player);
 						
 						
 					}
@@ -245,7 +245,29 @@ public class ItemRunicHoe extends ItemHoe implements IPageGiver {
 			 return stack.hasTagCompound() ? stack.isItemEnchanted() ? true : stack.getItemDamage() == stack.getMaxDamage()-1 ? false : stack.getTagCompound().getBoolean("ACTIVE") : false;
 			}
 
-	
+		@Override
+		 public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
+		    {
+			
+				if(stack.getItemDamage() <= stack.getMaxDamage() - 3)
+		        stack.damageItem(2, attacker);
+				
+		        return true;
+		    }
+		
+		@Override
+		public void onUpdate(ItemStack is, World w, Entity entity, int itemSlot, boolean isSelected) {
+			
+			 if(!is.hasTagCompound())
+					return;
+			 
+			
+				if(is.getTagCompound().getBoolean("ACTIVE") && is.getItemDamage() == is.getMaxDamage() - 1){
+					
+					is.getTagCompound().setBoolean("ACTIVE", false); 
+					
+				}
+		}
 	
 
 }

@@ -24,13 +24,11 @@ public class ModItems {
 	
 	public static List<Item> nitems = new ArrayList<Item>();
 	
-	
-	
 	public static Item runicWand;
 
 	public static Item runicPickaxe;
 	
-	public static ToolMaterial runic = EnumHelper.addToolMaterial("runic", 3, 75, 9.1F, 2, 32);
+	public static ToolMaterial runic = EnumHelper.addToolMaterial("runic", 3, 750, 9.1F, 2, 32);
 
 	public static Item levitateRune;
 	

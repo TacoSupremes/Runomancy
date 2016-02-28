@@ -1,6 +1,10 @@
 package com.tacosupremes.runomancy.common.utils;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import com.tacosupremes.runomancy.common.power.block.tile.IPowerNode;
+import com.tacosupremes.runomancy.common.power.block.tile.IPowerTile;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -8,6 +12,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
@@ -161,7 +166,212 @@ public static MovingObjectPosition raytraceEntityPlayerLook(EntityPlayer player,
     return null;
   }
 
+  
+  
+  public static List<BlockPos> getConnectedBlocks(World w, BlockPos pos, int r, IBlockState ib){
+		
+	  return getConnectedBlocks(w, pos, null, null, true, r, ib);
+  }
+  
+  private static List<BlockPos> getConnectedBlocks(World w, BlockPos pos, List<BlockPos> b, List<String> s, boolean firstTime, int r, IBlockState ib){
+		
+		
+		if(firstTime){
+			
+			List<BlockPos> b2 = new ArrayList<BlockPos>();
+			List<String> s2 = new ArrayList<String>();
+			
+			for(int xD = -r;xD<=r;xD++){
+				for(int yD = -r;yD<=r;yD++){
+					for(int zD = -r;zD<=r;zD++){
+						
+						if(xD==0 &&yD==0&&zD==0)
+							continue;
+						
+						BlockPos bp = pos.add(xD, yD, zD);
+					
+						
+						if(w.getBlockState(bp).getBlock() == ib.getBlock() && ib.getBlock().getMetaFromState(ib) == w.getBlockState(bp).getBlock().getMetaFromState(w.getBlockState(bp))){
+							
+							
+							b2.add(bp);
+							s2.add(bp.toString());
+							continue;
+						}
+						
+						
+						
+						
+						
+						
+						
+				}
+				
+				}
+			}
+				
+			return getConnectedBlocks(w, pos, b2, s2, false, r, ib);
+			}else{
+				
+				boolean blocksAdded = false;
+				
+				
+				for(int i=0; i<b.size();i++){
+					
+					BlockPos pos2 = b.get(i);
+				for(int xD = -r;xD<=r;xD++){
+					for(int yD = -r;yD<=r;yD++){
+						for(int zD = -r;zD<=r;zD++){
+							
+							if(xD==0 &&yD==0&&zD==0)
+								continue;
+							
+							
+							BlockPos bp = pos2.add(xD, yD, zD);
+						
+							
+							if(s.contains(bp.toString()))
+								continue;
+							
+					
+							if(w.getBlockState(bp).getBlock() == ib.getBlock() && ib.getBlock().getMetaFromState(ib) == w.getBlockState(bp).getBlock().getMetaFromState(w.getBlockState(bp))){
+								
+								
+								b.add(bp);
+								s.add(bp.toString());
+								blocksAdded = true;
+								continue;
+							}
+							
+							
+							
+							
+							
+							
+							
+					}
+					
+					}
+				}
+				
+				}
+				
+				
+				
+				
+				if(blocksAdded)
+					return getConnectedBlocks(w, pos, b, s, false, r, ib);
+				
+			}
+		
+		return b;
+		
+	}
 
-
+  public static List<BlockPos> getConnectedLogs(World w, BlockPos pos, int r){
+		
+	  return getConnectedLogs(w, pos, null, null, true, r);
+  }
+  
+  private static List<BlockPos> getConnectedLogs(World w, BlockPos pos, List<BlockPos> b, List<String> s, boolean firstTime, int r){
+		
+		
+		if(firstTime){
+			
+			List<BlockPos> b2 = new ArrayList<BlockPos>();
+			List<String> s2 = new ArrayList<String>();
+			
+			for(int xD = -r;xD<=r;xD++){
+				for(int yD = -r;yD<=r;yD++){
+					for(int zD = -r;zD<=r;zD++){
+						
+						if(xD==0 &&yD==0&&zD==0)
+							continue;
+						
+						BlockPos bp = pos.add(xD, yD, zD);
+					
+						
+						if(w.getBlockState(bp).getBlock().isWood(w,bp)){
+							
+							
+							b2.add(bp);
+							s2.add(bp.toString());
+							continue;
+						}
+						
+						
+						
+						
+						
+						
+						
+				}
+				
+				}
+			}
+				
+			return getConnectedLogs(w, pos, b2, s2, false, r);
+			}else{
+				
+				boolean blocksAdded = false;
+				
+				
+				for(int i=0; i<b.size();i++){
+					
+					BlockPos pos2 = b.get(i);
+				for(int xD = -r;xD<=r;xD++){
+					for(int yD = -r;yD<=r;yD++){
+						for(int zD = -r;zD<=r;zD++){
+							
+							if(xD==0 &&yD==0&&zD==0)
+								continue;
+							
+							
+							BlockPos bp = pos2.add(xD, yD, zD);
+						
+							
+							if(s.contains(bp.toString()))
+								continue;
+							
+					
+							if(w.getBlockState(bp).getBlock().isWood(w,bp)){
+										
+								
+								b.add(bp);
+								s.add(bp.toString());
+								blocksAdded = true;
+								continue;
+							}
+							
+							
+							
+							
+							
+							
+							
+					}
+					
+					}
+				}
+				
+				}
+				
+				
+				
+				
+				if(blocksAdded)
+					return getConnectedLogs(w, pos, b, s, false, r);
+				
+				
+				
+			}
+			
+			
+		
+		
+		
+		return b;
+		
+	}
 
 }

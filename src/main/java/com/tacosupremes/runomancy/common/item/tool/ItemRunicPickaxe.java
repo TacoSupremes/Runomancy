@@ -79,6 +79,10 @@ public class ItemRunicPickaxe extends ItemPickaxe implements IPageGiver {
 	@Override
 	public boolean onBlockDestroyed(ItemStack stack, World w, Block block, BlockPos pos, EntityLivingBase player) {
 		
+		if(stack.getItemDamage() == stack.getMaxDamage())
+			stack.setItemDamage(stack.getMaxDamage()-1);
+	 
+		
 			if(stack.getItemDamage() == stack.getMaxDamage()-1)
 				return true;
 			
@@ -86,7 +90,8 @@ public class ItemRunicPickaxe extends ItemPickaxe implements IPageGiver {
 				if(stack.getItemDamage() >= stack.getMaxDamage() - 5)
 					stack.setItemDamage(stack.getMaxDamage()-1);
 				else
-					stack.setItemDamage(stack.getItemDamage()+5);
+					stack.setItemDamage(stack.getItemDamage()+5);	
+				return true;
 			}
 		return super.onBlockDestroyed(stack, w, block, pos, player);
 	}
@@ -311,7 +316,99 @@ public class ItemRunicPickaxe extends ItemPickaxe implements IPageGiver {
 	    }
 	
 	
+	@Override
+	 public boolean hitEntity(ItemStack is, EntityLivingBase target, EntityLivingBase attacker)
+	    {
+		
+			if(is.getItemDamage() <= is.getMaxDamage() - 3)
+	        is.damageItem(2, attacker);
+			
+	        return true;
+	    }
+
+	@Override
+	public void onUpdate(ItemStack is, World w, Entity entity, int itemSlot, boolean isSelected) {
+		
+		 if(!is.hasTagCompound())
+				return;
+		 
+		 if(is.getItemDamage() == is.getMaxDamage())
+				is.setItemDamage(is.getMaxDamage()-1);
+		 
+		 
+			if(is.getTagCompound().getBoolean("ACTIVE") && is.getItemDamage() == is.getMaxDamage() - 1){
+				
+ is.getTagCompound().setBoolean("ACTIVE", false);
+				 
+				 
+				 if(EnchantmentHelper.getFortuneModifier((EntityPlayer) entity) > 3){
+					 
+					 NBTTagList nl = is.getEnchantmentTagList();
+					 
+					 for (int i = 0; i < nl.tagCount(); ++i)
+			            {
+			                int j = nl.getCompoundTagAt(i).getShort("id");
+			                
+			                if(j == Enchantment.fortune.effectId){
+			                	nl.getCompoundTagAt(i).setShort("lvl", (short)(EnchantmentHelper.getFortuneModifier((EntityPlayer) entity) - 3));
+			                	break;
+			                }
+			                
+			              
+			            }
+					 
+					 is.setTagInfo("ench", nl);
+					 
+					 
+				 }else{
+					 
+					 NBTTagList nl = is.getEnchantmentTagList();
+						
+					 
+					 for (int i = 0; i < nl.tagCount(); ++i)
+			            {
+			                int j = nl.getCompoundTagAt(i).getShort("id");
+			                
+			                if(j == Enchantment.fortune.effectId){
+			                	nl.removeTag(i);
+			                	break;
+			                }
+			                
+			              
+			            }
+					 
+					 is.setTagInfo("ench", nl);
+					 
+					 
+				 }
+				 
+				 if(is.getTagCompound().getBoolean("SILK")){
+					 
+					 NBTTagList nl = is.getEnchantmentTagList();
+						
+						NBTTagCompound nbt = new NBTTagCompound();
+						
+						nbt.setShort("id", (short)Enchantment.silkTouch.effectId);
+						nbt.setShort("lvl", (short)1);
+						nl.appendTag(nbt);
+						is.setTagInfo("ench", nl);
+						is.getTagCompound().setBoolean("SILK", false);
+					 
+				 }
+				 
+				 if(is.getEnchantmentTagList().hasNoTags())
+					 is.getTagCompound().removeTag("ench");
+				 
+			 }
+				
+				
+			}
+				
+		
+	}
+	
+	
 	
 	
 
-}
+

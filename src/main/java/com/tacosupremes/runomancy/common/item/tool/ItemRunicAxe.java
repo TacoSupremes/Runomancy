@@ -5,6 +5,7 @@ import java.util.List;
 import com.tacosupremes.runomancy.common.Runomancy;
 import com.tacosupremes.runomancy.common.item.ModItems;
 import com.tacosupremes.runomancy.common.power.PowerHelper;
+import com.tacosupremes.runomancy.common.utils.BlockUtils;
 import com.tacosupremes.runomancy.gui.Categories;
 import com.tacosupremes.runomancy.gui.IPageGiver;
 import com.tacosupremes.runomancy.gui.ItemPage;
@@ -49,7 +50,7 @@ public class ItemRunicAxe extends ItemAxe implements IPageGiver{
 	@Override
 	public float getStrVsBlock(ItemStack stack, Block block) {
 	
-		return stack.getItemDamage() == stack.getMaxDamage()-1 ? super.getStrVsBlock(stack, block) / 12F :super.getStrVsBlock(stack, block);
+		return stack.getItemDamage() == stack.getMaxDamage()-1 ? super.getStrVsBlock(stack, block) / 12F : super.getStrVsBlock(stack, block);
 	}
 
 	
@@ -98,14 +99,54 @@ public class ItemRunicAxe extends ItemAxe implements IPageGiver{
 			if(stack.getItemDamage() == stack.getMaxDamage()-1)
 				return true;
 			
-			
+		
 			
 		
 		
 		return super.onBlockDestroyed(stack, worldIn, blockIn, pos, playerIn);
 	}
+	
+	
+	
 
 
+
+	@Override
+	public boolean onBlockStartBreak(ItemStack is, BlockPos pos, EntityPlayer player) {
+		
+		World w = player.getEntityWorld();
+		
+		if(!w.getBlockState(pos).getBlock().isWood(w, pos))
+			return false;
+		
+		if(is.hasTagCompound()){
+			
+			if(is.getTagCompound().getBoolean("ACTIVE")){
+				
+				List<BlockPos> bl = BlockUtils.getConnectedLogs(w, pos, 1);
+				
+				if(bl == null || bl.isEmpty())
+					return false;
+				
+				for(BlockPos bp : bl){
+					
+					if(is.getItemDamage() != is.getMaxDamage()-3)
+						is.setItemDamage(is.getItemDamage()+3);
+					else
+						break;
+					
+					w.getBlockState(bp).getBlock().dropBlockAsItem(w, bp, w.getBlockState(bp), 0);
+					
+					w.setBlockToAir(bp);
+					
+				}
+				
+			}
+		}
+		
+		return super.onBlockStartBreak(is, pos, player);
+		
+	}
 
 	@Override
 	public Page getPage() {
@@ -113,8 +154,6 @@ public class ItemRunicAxe extends ItemAxe implements IPageGiver{
 		return new ItemPage(new ItemStack(this, 1, this.getMaxDamage() - 1 ));
 		
 	}
-
-
 
 	@Override
 	public Categories getCategories() {
@@ -193,7 +232,29 @@ public class ItemRunicAxe extends ItemAxe implements IPageGiver{
 		}
 
 	
+	@Override
+	 public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
+	    {
+		
+			if(stack.getItemDamage() <= stack.getMaxDamage() - 3)
+	        stack.damageItem(2, attacker);
+			
+	        return true;
+	    }
 	
+	@Override
+	public void onUpdate(ItemStack is, World w, Entity entity, int itemSlot, boolean isSelected) {
+		
+		 if(!is.hasTagCompound())
+				return;
+		 
+		
+			if(is.getTagCompound().getBoolean("ACTIVE") && is.getItemDamage() == is.getMaxDamage() - 1){
+				
+				is.getTagCompound().setBoolean("ACTIVE", false); 
+				
+			}
+	}
 	
 
 }
