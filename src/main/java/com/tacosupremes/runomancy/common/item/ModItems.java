@@ -28,7 +28,7 @@ public class ModItems {
 
 	public static Item runicPickaxe;
 	
-	public static ToolMaterial runic = EnumHelper.addToolMaterial("runic", 3, 750, 9.1F, 2, 32);
+	public static ToolMaterial runic = EnumHelper.addToolMaterial("runic", 3, 750, 9.1F, 2.5F, 32);
 
 	public static Item levitateRune;
 	
@@ -40,6 +40,8 @@ public class ModItems {
 
 	public static Item runicHoe;
 	
+	public static Item runicSword;
+	
 	public static Item modBook;
 	
 	public static Item soulGem;
@@ -47,6 +49,10 @@ public class ModItems {
 	public static Item hungerTablet;
 	
 	public static Item enderShard;
+	
+	public static Item fluidGem;
+	
+	public static Item mobRepeller;
 	
 	public static void preInit(){
 		
@@ -63,6 +69,8 @@ public class ModItems {
 		hungerTablet = new ItemHungerTablet();
 	
 		levitateRune = new ItemLevitateRune();
+		
+		mobRepeller = new ItemRunicShield();
 		
 		enderShard = new ItemEnderShard();
 		

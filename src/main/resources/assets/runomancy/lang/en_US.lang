@@ -8,6 +8,8 @@ item.runicHoe.name=Runic Hoe
 item.runicIngot.name=Runic Ingot
 item.modBook.name=Runic Tome
 item.hungerRune.name=Hunger Rune
+item.soulGem.name=Soul Gem
+item.enderShard.name=Ender Shard
 
 tile.endRune.name=End Rune
 tile.obsidianRune.name=Obsidian Rune
