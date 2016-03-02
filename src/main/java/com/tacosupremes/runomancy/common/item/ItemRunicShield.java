@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 public class ItemRunicShield extends ItemMod implements IPageGiver {
 
 	public ItemRunicShield() {
-		super("mobRepeller");
+		super("runicShield");
 		this.setMaxDamage(1000);
 		
 	}
