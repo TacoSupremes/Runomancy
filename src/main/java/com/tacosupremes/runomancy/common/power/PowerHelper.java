@@ -330,7 +330,45 @@ public static int addPower(World w, BlockPos pos, int amountFill, int r, boolean
 		
 		return null;
 	}
-	
 
+	public static BlockPos getTorch(World w, BlockPos pos, int r) {
+		
+		for(int xD = -r;xD<=r;xD++){
+			for(int yD = -r;yD<=r;yD++){
+				for(int zD = -r;zD<=r;zD++){
+					
+					if(xD==0 &&yD==0&&zD==0)
+						continue;
+					
+					BlockPos bp = pos.add(xD, yD, zD);
+					TileEntity tile = w.getTileEntity(bp);
+					
+					if(tile == null || !(tile instanceof IPowerNode || tile instanceof IPowerTile))
+						continue;
+					
+					if(tile instanceof IPowerTile){
+						
+					return bp;
+						
+					}
+					
+					if(tile instanceof IPowerNode){
+						
+						return bp;
+					
+					}
+					
+				}
+				
+			}
+					
+		}
+		
+		
+		return null;
+		
+	
+	
+	}
 
 }

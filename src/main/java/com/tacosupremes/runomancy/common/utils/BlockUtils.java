@@ -6,6 +6,7 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -290,5 +291,52 @@ public static int getMeta(World w, BlockPos pos){
 		return b;
 		
 	}
+  
+  
+  public static void drawLine(World w, BlockPos start, BlockPos end){
+	  
+	  boolean xN = start.getX() > end.getX();
+	  boolean yN = start.getY() > end.getY();
+	  boolean zN = start.getZ() > end.getZ();
+	
+	  int x = start.getX();
+	  int y = start.getY();
+	  int z = start.getZ();
+	  
+	  while(x != end.getX() || y != end.getY() || z != end.getZ()){
+			
+		if(x != end.getX()){
+			  if(xN)
+				  x--;
+			  else
+				  x++;
+		}
+		
+		if(y !=end.getY()){
+			  if(yN)
+				  y--;
+			  else
+				  y++;
+		}
+		
+		if(z != end.getZ()){
+			  if(zN)
+				  z--;
+			  else
+				  z++;
+		}
+		
+		if(w.rand.nextBoolean())
+	  w.spawnParticle(EnumParticleTypes.REDSTONE, x+0.5, y+0.5, z+0.5, 0, 0, 0, 0);
+		
+	  System.out.println(x+":"+z);
+	  
+	
+	  	}
+	  
+	  w.spawnParticle(EnumParticleTypes.REDSTONE, end.getX()+0.5, end.getY()+0.5, end.getZ()+0.5, 0, 0, 0, 0);
+	  w.spawnParticle(EnumParticleTypes.REDSTONE, start.getX()+0.5, start.getY()+0.5, start.getZ()+0.5, 0, 0, 0, 0);
+		
+  	}
 
 }
