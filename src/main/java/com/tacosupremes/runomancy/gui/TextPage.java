@@ -1,12 +1,10 @@
 package com.tacosupremes.runomancy.gui;
 
-import java.util.List;
-
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 
 public class TextPage extends Page {
 
@@ -51,11 +49,11 @@ public class TextPage extends Page {
 		
 		FontRenderer f = Minecraft.getMinecraft().fontRendererObj;
 	
-	String s = StatCollector.translateToLocal("runomancy."+ this.name + ".entry");
+	String s = I18n.translateToLocal("runomancy."+ this.name + ".entry");
 	
 	//ItemPage.drawTextSplit(s, f, x+16, y+32, w-32, 0);
 	
-	String n = StatCollector.translateToLocal("runomancy."+ListPage.removeNumbers(name));
+	String n = I18n.translateToLocal("runomancy."+ListPage.removeNumbers(name));
 	f.drawString(n, x + w / 2 - f.getStringWidth(n) / 2, y+16, 0);
 	
 	

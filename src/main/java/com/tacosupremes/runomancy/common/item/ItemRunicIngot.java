@@ -5,7 +5,6 @@ import com.tacosupremes.runomancy.gui.IPageGiver;
 import com.tacosupremes.runomancy.gui.ItemPage;
 import com.tacosupremes.runomancy.gui.Page;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class ItemRunicIngot extends ItemMod implements IPageGiver{

@@ -16,12 +16,6 @@ public class BlockMod extends Block {
 		ModBlocks.blocks.add(this);
 	}
 
-	@Override
-	public int getRenderType() {
-	
-		return 3;
-	}
-	
 	
 	
 }

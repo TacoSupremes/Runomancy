@@ -4,7 +4,7 @@ import com.tacosupremes.runomancy.common.Runomancy;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemMod extends Item{
@@ -48,7 +48,7 @@ public class ItemMod extends Item{
 		
 		
 		
-		return StatCollector.translateToLocal(this.getUnlocalizedName(stack).replace(String.valueOf(stack.getMetadata()), "")+".name");
+		return I18n.translateToLocal(this.getUnlocalizedName(stack).replace(String.valueOf(stack.getMetadata()), "")+".name");
 	}
 	
 	

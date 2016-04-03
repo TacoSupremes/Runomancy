@@ -7,14 +7,12 @@ import java.util.Map;
 
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.item.ModItems;
-import com.tacosupremes.runomancy.common.lib.LibMisc;
 import com.tacosupremes.runomancy.common.recipes.ModRecipes;
 import com.tacosupremes.runomancy.common.recipes.RuneChargerRecipe;
 import com.tacosupremes.runomancy.common.runelogic.RuneFormations;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import scala.actors.threadpool.Arrays;
 
 public class Pages {

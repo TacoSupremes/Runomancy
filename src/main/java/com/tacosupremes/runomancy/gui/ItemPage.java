@@ -5,9 +5,7 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import com.tacosupremes.runomancy.common.block.rune.IRune;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
-import com.tacosupremes.runomancy.common.recipes.ModRecipes;
 import com.tacosupremes.runomancy.gui.buttons.TextButton;
 
 import net.minecraft.block.Block;
@@ -16,10 +14,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraft.util.text.translation.I18n;
 
 public class ItemPage extends Page {
 
@@ -47,9 +42,9 @@ public class ItemPage extends Page {
 		
 		if(!hasInit){
 			
-		this.buttons.add(new TextButton(0, x + w / 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(StatCollector.translateToLocal("runomancy.recipe")) / 2 , y+h-40, StatCollector.translateToLocal("runomancy.recipe")));
+		this.buttons.add(new TextButton(0, x + w / 2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(I18n.translateToLocal("runomancy.recipe")) / 2 , y+h-40, I18n.translateToLocal("runomancy.recipe")));
 		
-		buttons.add(new TextButton(LibMisc.GuiIDs.Buttons.BACK, x+w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(StatCollector.translateToLocal("runomancy.back"))/2, y+(h-24), StatCollector.translateToLocal("runomancy.back")));
+		buttons.add(new TextButton(LibMisc.GuiIDs.Buttons.BACK, x+w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(I18n.translateToLocal("runomancy.back"))/2, y+(h-24), I18n.translateToLocal("runomancy.back")));
 		
 		}
 		hasInit = true;
@@ -88,11 +83,11 @@ public class ItemPage extends Page {
 		
 			FontRenderer f = Minecraft.getMinecraft().fontRendererObj;
 		
-		String s = StatCollector.translateToLocal("runomancy."+item.getUnlocalizedName().substring(5) + ".entry");
+		String s = I18n.translateToLocal("runomancy."+item.getUnlocalizedName().substring(5) + ".entry");
 		
 		drawTextSplit(s, f, x+16, y+32, w-32, 0);
 		
-		String n = StatCollector.translateToLocal(item.getUnlocalizedName() + ".name");
+		String n = I18n.translateToLocal(item.getUnlocalizedName() + ".name");
 		f.drawString(n, x + w / 2 - f.getStringWidth(n) / 2, y+16, 0);
 		
 		

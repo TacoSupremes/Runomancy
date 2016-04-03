@@ -4,7 +4,7 @@ import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
 
 import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public interface IRuneEffect {

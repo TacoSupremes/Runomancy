@@ -5,7 +5,7 @@ import com.tacosupremes.runomancy.common.recipes.RuneChargerRecipe;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 
 public class RuneChargerPage extends Page {
 
@@ -21,7 +21,7 @@ public class RuneChargerPage extends Page {
 
 	@Override
 	public void draw(int mx, int my, float ticks) {
-		String str = StatCollector.translateToLocal(LibMisc.MODID+"."+"chargerRecipe");
+		String str = I18n.translateToLocal(LibMisc.MODID+"."+"chargerRecipe");
 		Minecraft.getMinecraft().fontRendererObj.drawString(str, x + w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(str)/2,y+16, 0);
 		
 		RenderHelper.enableGUIStandardItemLighting();

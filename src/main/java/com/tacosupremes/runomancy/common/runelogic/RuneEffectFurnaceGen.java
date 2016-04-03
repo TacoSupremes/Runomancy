@@ -9,14 +9,12 @@ import com.tacosupremes.runomancy.common.lib.LibMisc;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class RuneEffectFurnaceGen implements IRuneEffect {
 
@@ -45,8 +43,8 @@ public class RuneEffectFurnaceGen implements IRuneEffect {
 			return;
 		}
 		
-		  List<EntityItem> entities = (List<EntityItem>) w.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.fromBounds(x, y, z, x+1, y + 0.3F, z+1));
-	        for (EntityItem entity : entities) {
+		  List<EntityItem> entities = (List<EntityItem>) w.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(x - 1, y - 1, z - 1, x + 2, y + 0.3F, z + 2));
+		       for (EntityItem entity : entities) {
 	        	
 	        	ItemStack is = entity.getEntityItem().copy();
 	        	

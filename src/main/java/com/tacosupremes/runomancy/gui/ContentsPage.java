@@ -7,7 +7,7 @@ import com.tacosupremes.runomancy.gui.buttons.TextButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 
 public class ContentsPage extends Page{
 	
@@ -31,7 +31,7 @@ public class ContentsPage extends Page{
 		//final int end = Pages.getAvailableID()+3;
 		if(!hasInit){
 		for(int i = 0; i<=5;i++){
-		this.buttons.add(new TextButton(i, x+16, y+32+16*(in), StatCollector.translateToLocal("runomancy.cat"+(i == 0 ? "" : i))));
+		this.buttons.add(new TextButton(i, x+16, y+32+16*(in), I18n.translateToLocal("runomancy.cat"+(i == 0 ? "" : i))));
 		in++;
 		}
 		}
@@ -64,7 +64,7 @@ public class ContentsPage extends Page{
 		GL11.glPushMatrix();
 		
 		FontRenderer f = Minecraft.getMinecraft().fontRendererObj;
-		String s = StatCollector.translateToLocal("runomancy.table");
+		String s = I18n.translateToLocal("runomancy.table");
 		
 		f.drawString(s, x + w / 2 - f.getStringWidth(s) / 2 , y+16, 0);
 		

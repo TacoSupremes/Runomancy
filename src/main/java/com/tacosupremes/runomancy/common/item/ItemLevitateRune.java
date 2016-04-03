@@ -2,8 +2,6 @@ package com.tacosupremes.runomancy.common.item;
 
 import java.util.Random;
 
-import com.tacosupremes.runomancy.common.power.PowerHelper;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

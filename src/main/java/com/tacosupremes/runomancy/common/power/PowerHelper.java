@@ -1,15 +1,15 @@
 package com.tacosupremes.runomancy.common.power;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import com.tacosupremes.runomancy.common.power.block.tile.IPowerNode;
 import com.tacosupremes.runomancy.common.power.block.tile.IPowerTile;
+
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class PowerHelper {

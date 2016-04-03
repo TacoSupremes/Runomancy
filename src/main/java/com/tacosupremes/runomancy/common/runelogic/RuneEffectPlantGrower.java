@@ -3,22 +3,18 @@ package com.tacosupremes.runomancy.common.runelogic;
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
-import com.tacosupremes.runomancy.common.utils.BlockUtils;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockCactus;
-import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockNetherWart;
 import net.minecraft.block.BlockReed;
-import net.minecraft.block.BlockSapling;
 import net.minecraft.block.BlockStem;
 import net.minecraft.block.IGrowable;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 
@@ -46,7 +42,7 @@ public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 			
 			
 			
-			if(b.isAir(w, bp) || b == null || b == Blocks.grass || b == Blocks.tallgrass || b == Blocks.red_flower || b == Blocks.yellow_flower || b instanceof BlockStem)
+			if(b.isAir(w.getBlockState(bp), w, bp) || b == null || b == Blocks.grass || b == Blocks.tallgrass || b == Blocks.red_flower || b == Blocks.yellow_flower || b instanceof BlockStem)
 				continue;
 			
 			if(b instanceof IGrowable){
@@ -76,7 +72,7 @@ public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 				
 				boolean canGrow = false;
 				
-				canGrow = w.getBlockState(bp.up()).getBlock().isAir(w, bp.up()); 
+				canGrow = w.getBlockState(bp.up()).getBlock().isAir(w.getBlockState(bp.up()), w, bp.up()); 
 				
 				if(canGrow)
 					canGrow = w.getBlockState(bp.down(2)).getBlock() != b;

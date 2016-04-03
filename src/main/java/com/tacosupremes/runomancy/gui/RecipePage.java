@@ -1,7 +1,5 @@
 package com.tacosupremes.runomancy.gui;
 
-import java.util.List;
-
 import org.lwjgl.opengl.GL11;
 
 import com.tacosupremes.runomancy.common.Runomancy;
@@ -10,15 +8,10 @@ import com.tacosupremes.runomancy.common.recipes.ModRecipes;
 import com.tacosupremes.runomancy.gui.buttons.TextButton;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class RecipePage extends Page {
@@ -279,7 +272,7 @@ public class RecipePage extends Page {
 	@Override
 	public void init() {
 		
-		buttons.add(new TextButton(LibMisc.GuiIDs.Buttons.BACK, x+w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(StatCollector.translateToLocal("runomancy.back"))/2, y+(h-24), StatCollector.translateToLocal("runomancy.back")));
+		buttons.add(new TextButton(LibMisc.GuiIDs.Buttons.BACK, x+w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(I18n.translateToLocal("runomancy.back"))/2, y+(h-24), I18n.translateToLocal("runomancy.back")));
 		
 		
 	}

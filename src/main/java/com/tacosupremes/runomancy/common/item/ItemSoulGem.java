@@ -2,6 +2,7 @@ package com.tacosupremes.runomancy.common.item;
 
 import java.util.List;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
 import com.tacosupremes.runomancy.common.Runomancy;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
 import com.tacosupremes.runomancy.gui.Categories;
@@ -12,28 +13,19 @@ import com.tacosupremes.runomancy.gui.Page;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemMonsterPlacer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.stats.StatList;
-import net.minecraft.tileentity.MobSpawnerBaseLogic;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityMobSpawner;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -78,55 +70,56 @@ public class ItemSoulGem extends ItemMod implements IPageGiver {
 	public void addInformation(ItemStack is, EntityPlayer player, List<String> l, boolean advanced) {
 		
 		if(!is.hasTagCompound() || !is.getTagCompound().hasKey("NAME")){
-			l.add(StatCollector.translateToLocal(LibMisc.MODID + "." + "empty"));
+			l.add(I18n.translateToLocal(LibMisc.MODID + "." + "empty"));
 			return;
 		}
 		
 		EntityLiving e = (EntityLiving)EntityList.createEntityByName(is.getTagCompound().getString("NAME"), player.worldObj);
 		e.readFromNBT(is.getSubCompound("ENBT", false));
 		
-		String n = StatCollector.translateToLocal("entity." + is.getTagCompound().getString("NAME")+".name");
+		String n = I18n.translateToLocal("entity." + is.getTagCompound().getString("NAME")+".name");
 		
 		
-		l.add(StatCollector.translateToLocal("runomancy.contains") + " : "+(e.hasCustomName() ? e.getCustomNameTag() + " (" + n + ")" : n));
+		l.add(I18n.translateToLocal("runomancy.contains") + " : "+(e.hasCustomName() ? e.getCustomNameTag() + " (" + n + ")" : n));
 		
 	if(Runomancy.proxy.isShiftDown()){
-		l.add(StatCollector.translateToLocal("runomancy.health")+" : "+ e.getHealth() + " / " + e.getMaxHealth());
+		l.add(I18n.translateToLocal("runomancy.health")+" : "+ e.getHealth() + " / " + e.getMaxHealth());
 	}else
-		l.add(StatCollector.translateToLocal("runomancy.press")+" "+EnumChatFormatting.GREEN+StatCollector.translateToLocal("runomancy." + "shift")+" "+EnumChatFormatting.GRAY+StatCollector.translateToLocal("runomancy." + "moreInfo"));
+		l.add(I18n.translateToLocal("runomancy.press")+" "+ChatFormatting.GREEN+I18n.translateToLocal("runomancy." + "shift")+" "+ChatFormatting.GRAY+I18n.translateToLocal("runomancy." + "moreInfo"));
 				
 	
 		
 	}
-
-	@Override
-	public boolean itemInteractionForEntity(ItemStack is, EntityPlayer player, EntityLivingBase e) {
-		
-		if(!is.hasTagCompound())
-			is.setTagCompound(new NBTTagCompound());
-		
-		
-		if(is.getTagCompound().hasKey("NAME"))
-			return false;
-		
-		is.getTagCompound().setString("NAME", EntityList.getEntityString(e));
-		
-		NBTTagCompound nbt = new NBTTagCompound();
-		
-		e.writeToNBT(nbt);
-		
-		is.getTagCompound().setTag("ENBT", nbt);
 	
-		e.setDead();
+	
+	 @Override
+	public boolean itemInteractionForEntity(ItemStack is, EntityPlayer playerIn, EntityLivingBase e,
+			EnumHand hand) {
 		
+		 
+		 
+		 if(!is.hasTagCompound())
+				is.setTagCompound(new NBTTagCompound());
+			
+			
+			if(is.getTagCompound().hasKey("NAME"))
+				return false;
+			
+			is.getTagCompound().setString("NAME", EntityList.getEntityString(e));
+			
+			NBTTagCompound nbt = new NBTTagCompound();
+			
+			e.writeToNBT(nbt);
+			
+			is.getTagCompound().setTag("ENBT", nbt);
 		
-		return true;
+			e.setDead();
+			
+		return super.itemInteractionForEntity(is, playerIn, e, hand);
 		
 	}
 
-	
-	
-	 public boolean onItemUse(ItemStack is, EntityPlayer player, World w, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
+	public boolean onItemUse(ItemStack is, EntityPlayer player, World w, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
 	    {
 	        if (w.isRemote)
 	        {
@@ -177,7 +170,7 @@ public class ItemSoulGem extends ItemMod implements IPageGiver {
 	        }
 	        else
 	        {
-	            MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(w, player, true);
+	            RayTraceResult movingobjectposition = this.getMovingObjectPositionFromPlayer(w, player, true);
 
 	            if (movingobjectposition == null)
 	            {
@@ -185,7 +178,7 @@ public class ItemSoulGem extends ItemMod implements IPageGiver {
 	            }
 	            else
 	            {
-	                if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+	                if (movingobjectposition.typeOfHit == RayTraceResult.Type.BLOCK)
 	                {
 	                    BlockPos blockpos = movingobjectposition.getBlockPos();
 

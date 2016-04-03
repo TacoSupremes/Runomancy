@@ -9,7 +9,7 @@ import com.tacosupremes.runomancy.gui.buttons.TextButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 
 public class EffectPage extends Page {
 
@@ -28,11 +28,11 @@ public class EffectPage extends Page {
 		FontRenderer f = Minecraft.getMinecraft().fontRendererObj;
 	
 	
-	String s = StatCollector.translateToLocal(effect.getName() + ".entry");
+	String s = I18n.translateToLocal(effect.getName() + ".entry");
 
 	ItemPage.drawTextSplit(s, f, x+16, y+32, w-32, 0);
 	
-	String n = StatCollector.translateToLocal(effect.getName());
+	String n = I18n.translateToLocal(effect.getName());
 	f.drawString(n, x + w / 2 - f.getStringWidth(n) / 2, y+16, 0);
 	
 	
@@ -57,7 +57,7 @@ public class EffectPage extends Page {
 	@Override
 	public void init() {
 		
-		String s = StatCollector.translateToLocal("runomancy.viewFormation");
+		String s = I18n.translateToLocal("runomancy.viewFormation");
 		
 		if(!this.hasInit)
 		this.buttons.add(new TextButton(0, x+w/2-Minecraft.getMinecraft().fontRendererObj.getStringWidth(s) / 2, y+h-30, s));
@@ -68,7 +68,7 @@ public class EffectPage extends Page {
 	@Override
 	public void initButtons() {
 		
-		String s = StatCollector.translateToLocal("runomancy.viewFormation");
+		String s = I18n.translateToLocal("runomancy.viewFormation");
 	
 		this.buttons.get(0).xPosition = x+w/2-Minecraft.getMinecraft().fontRendererObj.getStringWidth(s) / 2;
 		this.buttons.get(0).yPosition = y+h-40;

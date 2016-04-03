@@ -3,14 +3,12 @@ package com.tacosupremes.runomancy.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.lwjgl.opengl.GL11;
-
 import com.tacosupremes.runomancy.common.lib.LibMisc;
 import com.tacosupremes.runomancy.gui.buttons.TextButton;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 
 public abstract class Page{
 	
@@ -67,11 +65,11 @@ public abstract class Page{
 	public void init(){
 		
 	if(this.needsSubPage() && !hasInit)
-		this.buttons.add(new TextButton(LibMisc.GuiIDs.Buttons.NEXT, x+w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(StatCollector.translateToLocal("runomancy.next"))/2 + 35, y+(h-24), StatCollector.translateToLocal("runomancy.next")));
+		this.buttons.add(new TextButton(LibMisc.GuiIDs.Buttons.NEXT, x+w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(I18n.translateToLocal("runomancy.next"))/2 + 35, y+(h-24), I18n.translateToLocal("runomancy.next")));
 	
 		
 		if(needsBackButton() && !hasInit)
-			this.buttons.add(new TextButton(LibMisc.GuiIDs.Buttons.BACK, x+w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(StatCollector.translateToLocal("runomancy.back"))/2  - (this.sp == null ? 0 : 35), y+(h-24), StatCollector.translateToLocal("runomancy.back")));
+			this.buttons.add(new TextButton(LibMisc.GuiIDs.Buttons.BACK, x+w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(I18n.translateToLocal("runomancy.back"))/2  - (this.sp == null ? 0 : 35), y+(h-24), I18n.translateToLocal("runomancy.back")));
 		hasInit = true;
 		this.initButtons();
 	}
@@ -105,14 +103,14 @@ public abstract class Page{
 		
 			
 			if(g.id == LibMisc.GuiIDs.Buttons.NEXT){
-				g.xPosition =  x+w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(StatCollector.translateToLocal("runomancy.next"))/2 + 35;
+				g.xPosition =  x+w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(I18n.translateToLocal("runomancy.next"))/2 + 35;
 				g.yPosition = y+(h-24);
 				
 				continue;
 			}
 			
 			if(g.id == LibMisc.GuiIDs.Buttons.BACK){
-				g.xPosition =  x+w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(StatCollector.translateToLocal("runomancy.back"))/2 - (this.sp == null ? 0 : 35);
+				g.xPosition =  x+w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(I18n.translateToLocal("runomancy.back"))/2 - (this.sp == null ? 0 : 35);
 				g.yPosition = y+(h-24);
 				
 				continue;

@@ -5,20 +5,18 @@ import com.tacosupremes.runomancy.common.block.rune.IRune;
 import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
 import com.tacosupremes.runomancy.common.power.block.tile.IPowerNode;
-import com.tacosupremes.runomancy.common.power.block.tile.IPowerTile;
 import com.tacosupremes.runomancy.common.utils.InventoryHelper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockStaticLiquid;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.IFluidBlock;
@@ -169,10 +167,10 @@ public class RuneEffectMiner implements IFunctionalRuneEffect {
 		if(w.getTileEntity(pos) != null)
 			return false;
 		
-		if(b.getBlockHardness(w, pos) < 0)
+		if(b.getBlockHardness(w.getBlockState(pos), w, pos) < 0)
 			return false;
 		
-		if(w.getBlockState(pos).getBlock().isAir(w, pos) || FluidRegistry.lookupFluidForBlock(w.getBlockState(pos).getBlock()) != null || w.getBlockState(pos).getBlock() instanceof BlockStaticLiquid || w.getBlockState(pos).getBlock() instanceof BlockLiquid || w.getBlockState(pos).getBlock() instanceof IFluidBlock)
+		if(w.getBlockState(pos).getBlock().isAir(w.getBlockState(pos), w, pos) || FluidRegistry.lookupFluidForBlock(w.getBlockState(pos).getBlock()) != null || w.getBlockState(pos).getBlock() instanceof BlockStaticLiquid || w.getBlockState(pos).getBlock() instanceof BlockLiquid || w.getBlockState(pos).getBlock() instanceof IFluidBlock)
 			return false;
 		
 		

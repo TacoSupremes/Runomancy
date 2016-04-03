@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
 import com.tacosupremes.runomancy.gui.buttons.ItemButton;
 import com.tacosupremes.runomancy.gui.buttons.TextButton;
@@ -14,10 +13,9 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 
 public class ItemListPage extends Page {
 	
@@ -301,19 +299,19 @@ private List<Block> copyBL(List<Block> ol) {
 			
 		if(bl == null){
 		for(int i = 0; i<l.size();i++){
-		this.buttons.add(new ItemButton(i, x+16, y+32+16*i, StatCollector.translateToLocal(l.get(i).getUnlocalizedName() +".name"), l.get(i)));
+		this.buttons.add(new ItemButton(i, x+16, y+32+16*i, I18n.translateToLocal(l.get(i).getUnlocalizedName() +".name"), l.get(i)));
 		
 		}
 		}else{
 			
 			for(int i = 0; i<bl.size();i++){
-				this.buttons.add(new ItemButton(i, x+16, y+32+16*i, StatCollector.translateToLocal(bl.get(i).getUnlocalizedName() +".name"), bl.get(i)));
+				this.buttons.add(new ItemButton(i, x+16, y+32+16*i, I18n.translateToLocal(bl.get(i).getUnlocalizedName() +".name"), bl.get(i)));
 				
 				}
 			
 		}
 		
-		buttons.add(new TextButton(LibMisc.GuiIDs.Buttons.BACK, x+w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(StatCollector.translateToLocal("runomancy.back"))/2, y+(h-24), StatCollector.translateToLocal("runomancy.back")));
+		buttons.add(new TextButton(LibMisc.GuiIDs.Buttons.BACK, x+w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(I18n.translateToLocal("runomancy.back"))/2, y+(h-24), I18n.translateToLocal("runomancy.back")));
 		
 		}
 		
@@ -354,7 +352,7 @@ private List<Block> copyBL(List<Block> ol) {
 		GL11.glPushMatrix();
 		
 		FontRenderer f = Minecraft.getMinecraft().fontRendererObj;
-		String s = StatCollector.translateToLocal(LibMisc.MODID +"."+ ListPage.removeNumbers(this.name).toLowerCase());
+		String s = I18n.translateToLocal(LibMisc.MODID +"."+ ListPage.removeNumbers(this.name).toLowerCase());
 		
 		f.drawString(s, x + w / 2 - f.getStringWidth(s) / 2 , y+16, 0);
 		

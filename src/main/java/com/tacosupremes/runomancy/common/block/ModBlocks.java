@@ -8,17 +8,13 @@ import com.tacosupremes.runomancy.common.block.rune.BlockEndRune;
 import com.tacosupremes.runomancy.common.block.rune.BlockFireRune;
 import com.tacosupremes.runomancy.common.block.rune.BlockObsidianRune;
 import com.tacosupremes.runomancy.common.block.rune.BlockWaterRune;
-import com.tacosupremes.runomancy.common.item.ItemRunicWand;
 import com.tacosupremes.runomancy.common.item.ModItems;
 import com.tacosupremes.runomancy.common.power.block.BlockPowerStorage;
 import com.tacosupremes.runomancy.common.power.block.BlockPowerTorch;
-import com.tacosupremes.runomancy.common.power.block.tile.TilePowerStorage;
 import com.tacosupremes.runomancy.common.runelogic.RuneFormations;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
 public class ModBlocks {
 	

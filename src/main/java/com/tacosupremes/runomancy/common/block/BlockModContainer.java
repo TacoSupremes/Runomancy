@@ -4,7 +4,9 @@ import com.tacosupremes.runomancy.common.Runomancy;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public abstract class BlockModContainer extends BlockContainer {
@@ -21,13 +23,11 @@ public abstract class BlockModContainer extends BlockContainer {
 	protected abstract Class<? extends TileEntity> tile();
 
 	
-	@Override
-	public int getRenderType() {
-	
-		return 3;
-	}
-	
-	
+
+	 public EnumBlockRenderType getRenderType(IBlockState state)
+	    {
+	        return EnumBlockRenderType.MODEL;
+	    }
 	
 	
 

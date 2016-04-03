@@ -5,8 +5,6 @@ import java.util.List;
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
-import com.tacosupremes.runomancy.common.power.PowerHelper;
-import com.tacosupremes.runomancy.common.power.block.tile.IPowerTile;
 import com.tacosupremes.runomancy.common.recipes.ModRecipes;
 import com.tacosupremes.runomancy.common.recipes.RuneChargerRecipe;
 
@@ -14,9 +12,9 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class RuneEffectRepair implements IFunctionalRuneEffect {
@@ -34,8 +32,8 @@ public class RuneEffectRepair implements IFunctionalRuneEffect {
 		
 		
 		
-		  List<EntityItem> entities = (List<EntityItem>) w.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.fromBounds(x, y, z, x + 1, y + 1F, z + 1));
-	        for (EntityItem entity : entities) {
+		  List<EntityItem> entities = (List<EntityItem>) w.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(x - 1, y - 1, z - 1, x + 2, y + 0.3F, z + 2));
+		        for (EntityItem entity : entities) {
 	        	
 	        	if(!entity.isCollided)
 	        		continue;

@@ -2,14 +2,13 @@ package com.tacosupremes.runomancy.common.block.rune;
 
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.gui.Categories;
-import com.tacosupremes.runomancy.gui.GuiModBook;
 import com.tacosupremes.runomancy.gui.ItemPage;
 import com.tacosupremes.runomancy.gui.Page;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
@@ -53,9 +52,9 @@ public static final PropertyInteger mode = PropertyInteger.create("mode",0, ModB
         return state.getValue(mode);
     }
 
-    protected BlockState createBlockState()
+    protected BlockStateContainer createBlockState()
     {
-        return new BlockState(this, new IProperty[] {mode});
+        return new BlockStateContainer(this, new IProperty[] {mode});
     }
 
 	@Override

@@ -2,23 +2,21 @@ package com.tacosupremes.runomancy.common.item;
 
 import java.util.List;
 
+import com.mojang.realmsclient.gui.ChatFormatting;
 import com.tacosupremes.runomancy.gui.Categories;
 import com.tacosupremes.runomancy.gui.IPageGiver;
 import com.tacosupremes.runomancy.gui.ItemPage;
 import com.tacosupremes.runomancy.gui.Page;
 
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemHungerTablet extends ItemMod implements IPageGiver{
 
@@ -42,11 +40,18 @@ public class ItemHungerTablet extends ItemMod implements IPageGiver{
 
 
 
+
+	
+	
+
+
 	@Override
-	public ItemStack onItemRightClick(ItemStack is, World worldIn, EntityPlayer playerIn) {
+	public ActionResult<ItemStack> onItemRightClick(ItemStack is, World worldIn, EntityPlayer playerIn,
+			EnumHand hand) {
+		
 		
 		if(!playerIn.isSneaking())
-			return is;
+			return super.onItemRightClick(is, worldIn, playerIn, hand);
 		
 		if(is.getItemDamage() < 1)
 			is.setItemDamage(1);
@@ -54,15 +59,9 @@ public class ItemHungerTablet extends ItemMod implements IPageGiver{
 			is.setItemDamage(0);
 		
 		
-		return super.onItemRightClick(is, worldIn, playerIn);
+		return super.onItemRightClick(is, worldIn, playerIn, hand);
+		
 	}
-
-
-
-	
-
-	
-	
 
 
 	@Override
@@ -157,13 +156,13 @@ public class ItemHungerTablet extends ItemMod implements IPageGiver{
 			return;
 		
 		
-			l.add(StatCollector.translateToLocal("runomancy.contains") + ": "+is.getTagCompound().getInteger("H"));
+			l.add(I18n.translateToLocal("runomancy.contains") + ": "+is.getTagCompound().getInteger("H"));
 			
 			
 			if(is.getItemDamage() == 1)
-				l.add("Food Absorption: " + EnumChatFormatting.GREEN + "Active");
+				l.add("Food Absorption: " + ChatFormatting.GREEN + "Active");
 			else
-				l.add("Food Absorption: " + EnumChatFormatting.RED + "Inactive");
+				l.add("Food Absorption: " + ChatFormatting.RED + "Inactive");
 		
 	}
 

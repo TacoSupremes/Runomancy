@@ -5,10 +5,9 @@ import com.tacosupremes.runomancy.common.power.block.BlockPowerStorage;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
-import net.minecraft.world.World;
 
 public class TilePowerStorage extends TileEntity implements IPowerTile, ITickable{
 	
@@ -45,11 +44,11 @@ public class TilePowerStorage extends TileEntity implements IPowerTile, ITickabl
 	public Packet getDescriptionPacket() {
 		NBTTagCompound nbt = new NBTTagCompound();
         this.writeCustomNBT(nbt);
-        return new S35PacketUpdateTileEntity(this.getPos(), -999, nbt);
+        return new SPacketUpdateTileEntity(this.getPos(), -999, nbt);
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
 		super.onDataPacket(net, pkt);		
 		this.readCustomNBT(pkt.getNbtCompound());
 	}

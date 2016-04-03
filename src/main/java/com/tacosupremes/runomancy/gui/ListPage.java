@@ -11,8 +11,7 @@ import com.tacosupremes.runomancy.gui.buttons.TextButton;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.item.Item;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 
 public class ListPage extends Page {
 	
@@ -113,7 +112,7 @@ public class ListPage extends Page {
 		int in = 0;
 		//final int end = Pages.getAvailableID()+3;
 		for(int i = 0; i< l.size();i++){
-		this.buttons.add(new TextButton(i, x+16, y+32+16*(in), StatCollector.translateToLocal(l.get(i))));
+		this.buttons.add(new TextButton(i, x+16, y+32+16*(in), I18n.translateToLocal(l.get(i))));
 		in++;
 		}
 		
@@ -150,7 +149,7 @@ public class ListPage extends Page {
 		GL11.glPushMatrix();
 		
 		FontRenderer f = Minecraft.getMinecraft().fontRendererObj;
-		String s = StatCollector.translateToLocal(LibMisc.MODID+"."+ListPage.removeNumbers(name).toLowerCase());
+		String s = I18n.translateToLocal(LibMisc.MODID+"."+ListPage.removeNumbers(name).toLowerCase());
 		
 		f.drawString(s, x + w / 2 - f.getStringWidth(s) / 2 , y+16, 0);
 		

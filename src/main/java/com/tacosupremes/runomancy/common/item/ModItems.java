@@ -3,16 +3,15 @@ package com.tacosupremes.runomancy.common.item;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tacosupremes.runomancy.common.Runomancy;
 import com.tacosupremes.runomancy.common.item.tool.ItemRunicAxe;
 import com.tacosupremes.runomancy.common.item.tool.ItemRunicHoe;
 import com.tacosupremes.runomancy.common.item.tool.ItemRunicPickaxe;
 import com.tacosupremes.runomancy.common.item.tool.ItemRunicShovel;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
-import net.minecraft.block.Block;
+
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.model.ModelBakery;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.util.ResourceLocation;
@@ -28,7 +27,7 @@ public class ModItems {
 
 	public static Item runicPickaxe;
 	
-	public static ToolMaterial runic = EnumHelper.addToolMaterial("runic", 3, 750, 9.1F, 2.5F, 32);
+	public static ToolMaterial runic = ToolMaterial.DIAMOND;/*TODO: FIGURE OUT HOW TO FIX Material*/ //EnumHelper.addToolMaterial("runic", 3, 750, 9.1F, 2.5F, 32);
 
 	public static Item levitateRune;
 	

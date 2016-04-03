@@ -6,24 +6,17 @@ import java.util.List;
 import com.tacosupremes.runomancy.common.block.rune.IRune;
 import com.tacosupremes.runomancy.common.power.PowerHelper;
 import com.tacosupremes.runomancy.common.power.block.tile.IPowerNode;
-import com.tacosupremes.runomancy.common.power.block.tile.IPowerTile;
-import com.tacosupremes.runomancy.common.runelogic.IFunctionalRuneEffect;
 import com.tacosupremes.runomancy.common.runelogic.IRuneEffect;
 import com.tacosupremes.runomancy.common.runelogic.RuneFormations;
-import com.tacosupremes.runomancy.common.utils.BlockUtils;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.Vec3i;
+import net.minecraft.util.math.BlockPos;
 
 public class TileEndRune extends TileEntity implements ITickable, IPowerNode {
 
@@ -267,11 +260,11 @@ public class TileEndRune extends TileEntity implements ITickable, IPowerNode {
 	public Packet getDescriptionPacket() {
 		NBTTagCompound nbt = new NBTTagCompound();
         this.writeCustomNBT(nbt);
-        return new S35PacketUpdateTileEntity(this.getPos(), -999, nbt);
+        return new SPacketUpdateTileEntity(this.getPos(), -999, nbt);
 	}
 
 	@Override
-	public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
 		super.onDataPacket(net, pkt);		
 		this.readCustomNBT(pkt.getNbtCompound());
 	}

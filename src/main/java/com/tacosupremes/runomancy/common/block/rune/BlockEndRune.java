@@ -1,10 +1,8 @@
 package com.tacosupremes.runomancy.common.block.rune;
 
-import com.tacosupremes.runomancy.common.block.BlockModContainer;
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
 import com.tacosupremes.runomancy.gui.Categories;
-import com.tacosupremes.runomancy.gui.GuiModBook;
 import com.tacosupremes.runomancy.gui.IPageGiver;
 import com.tacosupremes.runomancy.gui.ItemPage;
 import com.tacosupremes.runomancy.gui.Page;
@@ -12,12 +10,11 @@ import com.tacosupremes.runomancy.gui.Page;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -60,35 +57,7 @@ public class BlockEndRune extends BlockContainerRune implements IPageGiver{
 		super.breakBlock(w, pos, state);
 	}
 
-	@SideOnly(Side.CLIENT)
-    public EnumWorldBlockLayer getBlockLayer()
-    {
-        return EnumWorldBlockLayer.CUTOUT_MIPPED;
-    }
-
-	@Override
-	public boolean isNormalCube() {
-		
-		return false;
-	}
-
-	@Override
-	public boolean isOpaqueCube() {
-		
-		return false;
-	}
-
-	@Override
-	public boolean isFullBlock() {
-		
-		return false;
-	}
-
-	@Override
-	public boolean isFullCube() {
-		
-		return false;
-	}
+	
 	
 	@SideOnly(Side.CLIENT)
     public IBlockState getStateForEntityRender(IBlockState state)
@@ -114,9 +83,9 @@ public class BlockEndRune extends BlockContainerRune implements IPageGiver{
         return state.getValue(mode);
     }
 
-    protected BlockState createBlockState()
+    protected BlockStateContainer createBlockState()
     {
-        return new BlockState(this, new IProperty[] {mode});
+        return new BlockStateContainer(this, new IProperty[] {mode});
     }
 
 	@Override

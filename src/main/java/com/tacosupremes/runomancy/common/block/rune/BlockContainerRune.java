@@ -1,18 +1,18 @@
 package com.tacosupremes.runomancy.common.block.rune;
 
-import com.tacosupremes.runomancy.common.block.BlockMod;
 import com.tacosupremes.runomancy.common.block.BlockModContainer;
 import com.tacosupremes.runomancy.common.block.ModBlocks;
-import com.tacosupremes.runomancy.common.item.ModItems;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.BlockPos;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -21,43 +21,44 @@ public abstract class BlockContainerRune extends BlockModContainer implements IR
 
 	public BlockContainerRune(Material materialIn, String s) {
 		super(materialIn, s);
-		this.setBlockBounds(0.1F, 0.0F, 0.1F, 0.9F, 0.1F, 0.9F);
+	//	this.setBlockBounds(0.1F, 0.0F, 0.1F, 0.9F, 0.1F, 0.9F);
+		
 		ModBlocks.runes.add(this);
 	}
 
 	@SideOnly(Side.CLIENT)
-    public EnumWorldBlockLayer getBlockLayer()
+    public BlockRenderLayer getBlockLayer()
     {
-        return EnumWorldBlockLayer.CUTOUT_MIPPED;
+        return BlockRenderLayer.CUTOUT_MIPPED;
     }
 
 	@Override
-	public boolean isNormalCube() {
+	public boolean isNormalCube(IBlockState state) {
 		
 		return false;
 	}
 
 	@Override
-	public boolean isOpaqueCube() {
+	public boolean isOpaqueCube(IBlockState state) {
 		
 		return false;
 	}
 
 	@Override
-	public boolean isFullBlock() {
+	public boolean isFullBlock(IBlockState state) {
 		
 		return false;
 	}
 
 	@Override
-	public boolean isFullCube() {
+	public boolean isFullCube(IBlockState state) {
 		
 		return false;
 	}
 	
 	 public boolean canPlaceBlockAt(World worldIn, BlockPos pos)
 	    {
-	        return worldIn.getBlockState(pos.down()).getBlock().isSideSolid(worldIn, pos.down(), EnumFacing.UP);
+	        return worldIn.getBlockState(pos.down()).getBlock().isSideSolid(worldIn.getBlockState(pos.down()), worldIn, pos.down(), EnumFacing.UP);
 	    }
 
 	    /**
@@ -90,11 +91,42 @@ public abstract class BlockContainerRune extends BlockModContainer implements IR
 	        BlockPos down = pos.down();
 	        Block soil = worldIn.getBlockState(down).getBlock();
 	        
-	        return soil.isSideSolid(worldIn, down, EnumFacing.UP);
+	        return soil.isSideSolid(worldIn.getBlockState(down), worldIn, down, EnumFacing.UP);
 	    }
+
+		@Override
+		public TileEntity createNewTileEntity(World worldIn, int meta) {
+			
+			return null;
+			
+		}
+
+		@Override
+		public IBlockState getStateWithMode(IBlockState state, int i) {
+			
+			return null;
+			
+		}
+
+		@Override
+		protected Class<? extends TileEntity> tile() {
+			
+			return null;
+			
+		}
+
+		@Override
+		public boolean isVisuallyOpaque() {
+			
+			return false;
+			
+		}
 	    
 		
+		 public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+		    {
+		      return new AxisAlignedBB(0.1D, 0.0D, 0.1D, 0.9D, 0.1D, 0.9D);
+		    }
 
-
-	
+		
 }

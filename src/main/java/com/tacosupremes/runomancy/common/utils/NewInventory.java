@@ -3,7 +3,7 @@ package com.tacosupremes.runomancy.common.utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IChatComponent;
+import net.minecraft.util.text.ITextComponent;
 
 
 	public class NewInventory implements IInventory{
@@ -35,12 +35,7 @@ import net.minecraft.util.IChatComponent;
 			return false;
 		}
 
-		@Override
-		public IChatComponent getDisplayName() {
-			
-			return null;
-		}
-
+	
 		@Override
 		public int getSizeInventory() {
 			
@@ -140,6 +135,14 @@ import net.minecraft.util.IChatComponent;
 			
 			
 			return is;
+		}
+
+
+		@Override
+		public ITextComponent getDisplayName() {
+			
+			return null;
+			
 		}
 		
 	}

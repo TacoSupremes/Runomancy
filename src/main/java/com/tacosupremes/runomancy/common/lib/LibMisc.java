@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.tacosupremes.runomancy.common.utils.BlockUtils;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;

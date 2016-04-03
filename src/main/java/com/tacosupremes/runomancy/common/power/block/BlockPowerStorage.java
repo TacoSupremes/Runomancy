@@ -1,16 +1,15 @@
 package com.tacosupremes.runomancy.common.power.block;
 
 import com.tacosupremes.runomancy.common.block.BlockModContainer;
-import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.power.block.tile.TilePowerStorage;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockState;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumWorldBlockLayer;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -40,9 +39,9 @@ public class BlockPowerStorage extends BlockModContainer{
 	}
 
 	@Override
-	public EnumWorldBlockLayer getBlockLayer() {
+	public BlockRenderLayer getBlockLayer() {
 		
-		return EnumWorldBlockLayer.CUTOUT;
+		return BlockRenderLayer.CUTOUT;
 		
 	}
 
@@ -70,9 +69,9 @@ public class BlockPowerStorage extends BlockModContainer{
         return state.getValue(mode);
     }
 
-    protected BlockState createBlockState()
+    protected BlockStateContainer createBlockState()
     {
-        return new BlockState(this, new IProperty[] {mode});
+        return new BlockStateContainer(this, new IProperty[] {mode});
     }
 
 	

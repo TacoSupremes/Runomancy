@@ -4,13 +4,12 @@ import org.lwjgl.opengl.GL11;
 
 import com.tacosupremes.runomancy.common.block.rune.IRune;
 import com.tacosupremes.runomancy.common.runelogic.IRuneEffect;
-import com.tacosupremes.runomancy.common.runelogic.RuneFormations;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 
 public class FormationPage extends Page {
 
@@ -26,7 +25,7 @@ public class FormationPage extends Page {
 	
 		int s = (int)Math.sqrt(effect.getNeededBlocks().length);
 		
-		String str = StatCollector.translateToLocal(effect.getName());
+		String str = I18n.translateToLocal(effect.getName());
 		
 		Minecraft.getMinecraft().fontRendererObj.drawString(str, x +w/2 - Minecraft.getMinecraft().fontRendererObj.getStringWidth(str) / 2, y+20, 0);
 		

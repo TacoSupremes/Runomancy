@@ -1,42 +1,15 @@
 package com.tacosupremes.runomancy.gui;
 
-import java.awt.Desktop;
 import java.io.IOException;
-import java.net.URI;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
-import java.util.Queue;
 
 import org.lwjgl.opengl.GL11;
 
-import com.tacosupremes.runomancy.common.block.rune.IRune;
-import com.tacosupremes.runomancy.common.lib.LibMisc;
-import com.tacosupremes.runomancy.common.runelogic.IRuneEffect;
-import com.tacosupremes.runomancy.common.runelogic.RuneEffectRepair;
-import com.tacosupremes.runomancy.proxy.ClientProxy;
-
-import net.java.games.input.Keyboard;
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatAllowedCharacters;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
+import net.minecraft.util.text.translation.I18n;
 
 public class GuiModBook extends GuiScreen {
 
@@ -185,7 +158,7 @@ public class GuiModBook extends GuiScreen {
 		
 		String s = "runomancy."+item.getUnlocalizedName().substring(5)+".entry";
 		
-		return StatCollector.translateToLocal(s) != s;
+		return I18n.translateToLocal(s) != s;
 		
 	}
 	
@@ -207,12 +180,12 @@ public class GuiModBook extends GuiScreen {
 	                    net.minecraftforge.client.event.GuiScreenEvent.ActionPerformedEvent.Pre event = new net.minecraftforge.client.event.GuiScreenEvent.ActionPerformedEvent.Pre(this, guibutton, this.buttonList);
 	                    if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event))
 	                        break;
-	                    guibutton = event.button;
+	                    guibutton = event.getButton();
 	                  //  this.selectedButton = guibutton;
 	                    guibutton.playPressSound(this.mc.getSoundHandler());
 	                    this.actionPerformed(guibutton);
 	                    if (this.equals(this.mc.currentScreen))
-	                        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.GuiScreenEvent.ActionPerformedEvent.Post(this, event.button, this.buttonList));
+	                        net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.client.event.GuiScreenEvent.ActionPerformedEvent.Post(this, event.getButton(), this.buttonList));
 	                
 	                return;
 	                }

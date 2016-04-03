@@ -8,9 +8,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockSnow;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class RuneEffectWell implements IFunctionalRuneEffect {
@@ -40,7 +39,7 @@ public class RuneEffectWell implements IFunctionalRuneEffect {
 					if(te.power < this.getCost())
 						return;
 					
-		if(w.getBlockState(pos.add(x, 0, z)).getBlock().isAir(w, pos.add(x, 0, z)) && w.getBlockState(pos.add(x, 0, z)).getBlock() != Blocks.snow_layer){
+		if(w.getBlockState(pos.add(x, 0, z)).getBlock().isAir(w.getBlockState(pos.add(x, 0, z)),w, pos.add(x, 0, z)) && w.getBlockState(pos.add(x, 0, z)).getBlock() != Blocks.snow_layer){
 				if(!w.isRemote)
 			w.setBlockState(pos.add(x,0,z), Blocks.snow_layer.getDefaultState());
 			
@@ -93,7 +92,7 @@ public class RuneEffectWell implements IFunctionalRuneEffect {
 					continue;
 			
 		
-	if(w.getBlockState(pos.add(x, -1, z)).getBlock().isAir(w, pos.add(x, -1, z))){
+	if(w.getBlockState(pos.add(x, -1, z)).getBlock().isAir(w.getBlockState(pos.add(x,-1,z)),w, pos.add(x, -1, z))){
 		if(!w.isRemote)
 		w.setBlockState(pos.add(x,-1,z), Blocks.water.getDefaultState());
 	}
