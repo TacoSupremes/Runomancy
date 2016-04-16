@@ -8,6 +8,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class BlockUtils {
@@ -293,50 +294,36 @@ public static int getMeta(World w, BlockPos pos){
 	}
   
   
-  public static void drawLine(World w, BlockPos start, BlockPos end){
+ 
+  
+  public static void drawLine(World w, Vector3 start, Vector3 end){
 	  
-	  boolean xN = start.getX() > end.getX();
-	  boolean yN = start.getY() > end.getY();
-	  boolean zN = start.getZ() > end.getZ();
-	
-	  int x = start.getX();
-	  int y = start.getY();
-	  int z = start.getZ();
+	  double i = 0;
 	  
-	  while(x != end.getX() || y != end.getY() || z != end.getZ()){
-			
-		if(x != end.getX()){
-			  if(xN)
-				  x--;
-			  else
-				  x++;
-		}
-		
-		if(y !=end.getY()){
-			  if(yN)
-				  y--;
-			  else
-				  y++;
-		}
-		
-		if(z != end.getZ()){
-			  if(zN)
-				  z--;
-			  else
-				  z++;
-		}
-		
-		if(w.rand.nextBoolean())
-	  w.spawnParticle(EnumParticleTypes.REDSTONE, x+0.5, y+0.5, z+0.5, 0, 0, 0, 0);
-		
-	  System.out.println(x+":"+z);
 	  
-	
-	  	}
-	  
-	  w.spawnParticle(EnumParticleTypes.REDSTONE, end.getX()+0.5, end.getY()+0.5, end.getZ()+0.5, 0, 0, 0, 0);
-	  w.spawnParticle(EnumParticleTypes.REDSTONE, start.getX()+0.5, start.getY()+0.5, start.getZ()+0.5, 0, 0, 0, 0);
+	 double vectorLength = Math.sqrt(Math.pow((start.getX()-end.getX()),2)+Math.pow((start.getY()-end.getY()),2)+Math.pow((start.getZ()-end.getZ()),2));
+	 
+	 while (i <= vectorLength){
+		 
+		 double xD = end.getX() - start.getX();
+		 double yD = end.getY() - start.getY();
+		 double zD = end.getZ() - start.getZ();
+		 
+		 double dL = i / vectorLength;
+		 
+		 xD *= dL;
+		 yD *= dL;
+		 zD *= dL;
 		
-  	}
+		 w.spawnParticle(EnumParticleTypes.REDSTONE, start.getX()+xD,start.getY()+yD,start.getZ()+zD, 0, 0, 0, 0);
+			 
+		 
+		 i++;
+	 }
+	  
+	  
+	  
+  }
+
 
 }
