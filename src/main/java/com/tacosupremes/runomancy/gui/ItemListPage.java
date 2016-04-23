@@ -18,18 +18,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.translation.I18n;
 
 public class ItemListPage extends Page {
-	
-	
-	
-	
-
-	
 
 	private List<Item> l;
+	
 	private List<Block> bl;
 	
 	public ItemListPage(List<Item> l2, String s) {
-super(s);
+		super(s);
 		
 		if(l2.size() > 8){
 			
@@ -44,13 +39,7 @@ super(s);
 				
 				if(tl.size() < 7 && !tla){
 				
-				
 				tl.add(i);
-			
-				
-				
-				
-				
 				
 				}else{
 					if(!tla){

@@ -296,7 +296,7 @@ public static int getMeta(World w, BlockPos pos){
   
  
   
-  public static void drawLine(World w, Vector3 start, Vector3 end){
+  public static void drawLine(World w, Vector3 start, Vector3 end, EnumParticleTypes type){
 	  
 	  double i = 0;
 	  
@@ -315,7 +315,7 @@ public static int getMeta(World w, BlockPos pos){
 		 yD *= dL;
 		 zD *= dL;
 		
-		 w.spawnParticle(EnumParticleTypes.REDSTONE, start.getX()+xD,start.getY()+yD,start.getZ()+zD, 0, 0, 0, 0);
+		 w.spawnParticle(type, start.getX()+xD,start.getY()+yD,start.getZ()+zD, 0, 0, 0, 0);
 			 
 		 
 		 i++;

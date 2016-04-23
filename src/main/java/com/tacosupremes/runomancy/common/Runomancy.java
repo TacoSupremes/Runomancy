@@ -52,6 +52,7 @@ public class Runomancy {
     	tab = new RTab();	
   
     	rand = new Random();
+    	
     	ModItems.preInit();
     	RuneFormations.addEffect(new RuneEffectRepair());
     	RuneFormations.addEffect(new RuneEffectSolarGen());

@@ -154,11 +154,13 @@ public class TileEndRune extends TileEntity implements ITickable, IPowerNode {
 							
 							
 							this.power += PowerHelper.drainPower(this.getWorld(), pos, this.getEffect().getTransferRate(), RuneFormations.getRange(getEffect())+3, true);
-							BlockUtils.drawLine(getWorld(), Vector3.fromBlockPos(PowerHelper.getTorch(getWorld(), this.getPos(), RuneFormations.getRange(getEffect())+3)).add(0.5D, 1.1D, 0.5D), Vector3.fromBlockPos(pos).add(0.5D));
+		//					BlockUtils.drawLine(getWorld(), Vector3.fromBlockPos(PowerHelper.getTorch(getWorld(), this.getPos(), RuneFormations.getRange(getEffect())+3)).add(0.5D, 1.1D, 0.5D), Vector3.fromBlockPos(pos).add(0.5D));
+							PowerHelper.drawTorchLines(getWorld(), getPos(), RuneFormations.getRange(getEffect())+3, true);
 						}else{
 						
 							this.power += PowerHelper.drainPower(this.getWorld(), pos, this.getEffect().getTransferRate()/2, RuneFormations.getRange(getEffect())+3, true);
-							BlockUtils.drawLine(getWorld(), Vector3.fromBlockPos(PowerHelper.getTorch(getWorld(), this.getPos(), RuneFormations.getRange(getEffect())+3)).add(0.5D, 1.1D, 0.5D), Vector3.fromBlockPos(pos).add(0.5D));
+		//					BlockUtils.drawLine(getWorld(), Vector3.fromBlockPos(PowerHelper.getTorch(getWorld(), this.getPos(), RuneFormations.getRange(getEffect())+3)).add(0.5D, 1.1D, 0.5D), Vector3.fromBlockPos(pos).add(0.5D));
+							PowerHelper.drawTorchLines(getWorld(), getPos(), RuneFormations.getRange(getEffect())+3, true);
 							
 						}
 						
@@ -170,10 +172,11 @@ public class TileEndRune extends TileEntity implements ITickable, IPowerNode {
 					
 				}else{
 					
-					if(this.power > 0 && PowerHelper.addPower(this.getWorld(), pos, this.getEffect().getTransferRate(), RuneFormations.getRange(getEffect())+3, false)!=-1){
+					if(this.power > 0 && PowerHelper.addPower(this.getWorld(), pos, this.getEffect().getTransferRate(), RuneFormations.getRange(getEffect())+3, false) > 0){
 						
 						this.power-=PowerHelper.addPower(this.getWorld(), pos, this.getEffect().getTransferRate(), RuneFormations.getRange(getEffect())+3, true);
-						BlockUtils.drawLine(getWorld(), Vector3.fromBlockPos(pos).add(0.5D), Vector3.fromBlockPos(PowerHelper.getTorch(getWorld(), this.getPos(), RuneFormations.getRange(getEffect())+3)).add(0.5D, 0.6D, 0.5D));
+				//		BlockUtils.drawLine(getWorld(), Vector3.fromBlockPos(pos).add(0.5D), Vector3.fromBlockPos(PowerHelper.getTorch(getWorld(), this.getPos(), RuneFormations.getRange(getEffect())+3)).add(0.5D, 0.6D, 0.5D));
+						PowerHelper.drawTorchLines(getWorld(), getPos(), RuneFormations.getRange(getEffect())+3, false);
 						
 					}
 					

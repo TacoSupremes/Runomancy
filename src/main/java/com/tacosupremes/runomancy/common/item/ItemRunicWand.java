@@ -1,5 +1,8 @@
 package com.tacosupremes.runomancy.common.item;
 
+import java.util.List;
+
+import com.tacosupremes.runomancy.common.power.PowerHelper;
 import com.tacosupremes.runomancy.common.utils.BlockUtils;
 import com.tacosupremes.runomancy.common.utils.Vector3;
 import com.tacosupremes.runomancy.gui.Categories;
@@ -66,52 +69,15 @@ public class ItemRunicWand extends ItemMod implements IPageGiver {
 		return null;
 		
 	}
-	
-	
-
-	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack is, World w, EntityPlayer player,
-			EnumHand hand) {
-		
-		  RayTraceResult raytraceresult = this.getMovingObjectPositionFromPlayer(w, player, false);
-		  
-		  if(raytraceresult == null)
-			  return super.onItemRightClick(is, w, player, hand);
-			  
-			BlockPos bp = raytraceresult.getBlockPos();
-			
-			BlockUtils.drawLine(w, Vector3.fromEntity(player).add(0, player.eyeHeight, 0), Vector3.fromBlockPos(bp));
-		  
-		
-		return super.onItemRightClick(is, w, player, hand);
-		
-	}
 
 	@Override
 	public EnumActionResult onItemUse(ItemStack is, EntityPlayer player, World w, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		
-		if(!is.hasTagCompound())
-			is.setTagCompound(new NBTTagCompound());
 		
-		  RayTraceResult raytraceresult = this.getMovingObjectPositionFromPlayer(w, player, false);
-		     
-		
-		if(player.isSneaking()){
-			is.getTagCompound().setInteger("X", pos.getX());
-			is.getTagCompound().setInteger("Y", pos.getY());
-			is.getTagCompound().setInteger("Z", pos.getZ());
-		}else{
-			if(is.getTagCompound().hasKey("X"))
-			BlockUtils.drawLine(w, Vector3.fromBlockPos(pos).add(0.5D), new Vector3(is.getTagCompound().getInteger("X")+0.5D,is.getTagCompound().getInteger("Y")+1.5D,is.getTagCompound().getInteger("Z")+0.5D));
-		}
+		//TODO: Make This work as a Wrench. Click on torch to See all connections
 		
 		return super.onItemUse(is, player, w, pos, hand, facing, hitX, hitY, hitZ);
 		
 	}
 	
-	
-	
-	
-	
-
 }
