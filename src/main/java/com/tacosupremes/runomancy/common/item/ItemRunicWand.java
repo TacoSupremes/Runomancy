@@ -85,8 +85,15 @@ public class ItemRunicWand extends ItemMod implements IPageGiver {
 			BlockPos zF = null;
 			
 			
-			
-			for(int x = 1; x<= 64; x++){
+		int r = 64;
+				
+			for(int x = -r; x<= r; x++){
+				
+				if(x == 0)
+					continue;
+				
+				if(xF != null)
+					break;
 				
 				if(w.getBlockState(pos.add(x, 0, 0)).getBlock() == ModBlocks.marker){
 					xF = pos.add(x, 0, 0);
@@ -95,7 +102,14 @@ public class ItemRunicWand extends ItemMod implements IPageGiver {
 					
 			}
 			
-			for(int y = 1; y<= 64; y++){
+			for(int y = -r; y<= r; y++){
+				
+				if(y == 0)
+					continue;
+				
+				if(yF != null)
+					break;
+				
 				
 				if(w.getBlockState(pos.add(0, y, 0)).getBlock() == ModBlocks.marker){
 					yF = pos.add(0, y, 0);
@@ -104,14 +118,51 @@ public class ItemRunicWand extends ItemMod implements IPageGiver {
 					
 			}
 
-			for(int z = 1; z<= 64; z++){
-	
+			for(int z = -r; z<= r; z++){
+				
+				if(z == 0)
+					continue;
+				if(zF != null)
+					break;
+				
+				
 	if(w.getBlockState(pos.add(0, 0, z)).getBlock() == ModBlocks.marker){
 		zF = pos.add(0, 0, z);
 		break;
 	}
 	
 			}
+			
+			
+			System.out.println("XF" + xF +":" + "ZF" + ":" + zF);
+		
+			
+			if(xF != null  && yF != null && zF != null){
+				
+				BlockUtils.drawLine(w, Vector3.fromBlockPos(pos), Vector3.fromBlockPos(xF), EnumParticleTypes.REDSTONE);
+				BlockUtils.drawLine(w, Vector3.fromBlockPos(pos), Vector3.fromBlockPos(zF), EnumParticleTypes.REDSTONE);
+				
+				BlockPos corner = new BlockPos(xF.getX(), xF.getY(), zF.getZ());
+				BlockUtils.drawLine(w, Vector3.fromBlockPos(xF), Vector3.fromBlockPos(corner), EnumParticleTypes.REDSTONE);
+				BlockUtils.drawLine(w, Vector3.fromBlockPos(zF), Vector3.fromBlockPos(corner),  EnumParticleTypes.REDSTONE);
+			
+				Vector3 yo = new Vector3(0,Math.abs(xF.getY()-yF.getY()), 0);
+				
+				BlockUtils.drawLine(w, Vector3.fromBlockPos(pos).add(yo), Vector3.fromBlockPos(xF).add(yo), EnumParticleTypes.REDSTONE);
+				BlockUtils.drawLine(w, Vector3.fromBlockPos(pos).add(yo), Vector3.fromBlockPos(zF).add(yo), EnumParticleTypes.REDSTONE);
+				
+			
+				BlockUtils.drawLine(w, Vector3.fromBlockPos(xF).add(yo), Vector3.fromBlockPos(corner).add(yo), EnumParticleTypes.REDSTONE);
+				BlockUtils.drawLine(w, Vector3.fromBlockPos(zF).add(yo), Vector3.fromBlockPos(corner).add(yo),  EnumParticleTypes.REDSTONE);
+			
+				BlockUtils.drawLine(w, Vector3.fromBlockPos(pos).add(yo), Vector3.fromBlockPos(pos), EnumParticleTypes.REDSTONE);
+				BlockUtils.drawLine(w, Vector3.fromBlockPos(corner).add(yo), Vector3.fromBlockPos(corner), EnumParticleTypes.REDSTONE);
+				BlockUtils.drawLine(w, Vector3.fromBlockPos(xF).add(yo), Vector3.fromBlockPos(xF), EnumParticleTypes.REDSTONE);
+				BlockUtils.drawLine(w, Vector3.fromBlockPos(zF).add(yo), Vector3.fromBlockPos(zF), EnumParticleTypes.REDSTONE);
+				
+				return super.onItemUse(is, player, w, pos, hand, facing, hitX, hitY, hitZ);
+			}
+			
 	if(xF != null && zF != null){
 		
 		BlockUtils.drawLine(w, Vector3.fromBlockPos(pos), Vector3.fromBlockPos(xF), EnumParticleTypes.REDSTONE);
@@ -120,14 +171,29 @@ public class ItemRunicWand extends ItemMod implements IPageGiver {
 		BlockPos corner = new BlockPos(xF.getX(), xF.getY(), zF.getZ());
 		BlockUtils.drawLine(w, Vector3.fromBlockPos(xF), Vector3.fromBlockPos(corner), EnumParticleTypes.REDSTONE);
 		BlockUtils.drawLine(w, Vector3.fromBlockPos(zF), Vector3.fromBlockPos(corner),  EnumParticleTypes.REDSTONE);
-		
+	
+		return super.onItemUse(is, player, w, pos, hand, facing, hitX, hitY, hitZ);
 	}
 		
 
 			
+		if(xF != null){
 			
+			BlockUtils.drawLine(w, Vector3.fromBlockPos(pos), Vector3.fromBlockPos(xF), EnumParticleTypes.REDSTONE);
 			
+		}
+		
+		if(yF != null){
 			
+			BlockUtils.drawLine(w, Vector3.fromBlockPos(pos), Vector3.fromBlockPos(yF), EnumParticleTypes.REDSTONE);
+			
+		}
+			
+		if(zF != null){
+			
+			BlockUtils.drawLine(w, Vector3.fromBlockPos(pos), Vector3.fromBlockPos(zF), EnumParticleTypes.REDSTONE);
+			
+		}		
 			
 			
 			
