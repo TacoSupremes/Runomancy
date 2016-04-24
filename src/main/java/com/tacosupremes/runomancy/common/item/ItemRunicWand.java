@@ -30,7 +30,7 @@ public class ItemRunicWand extends ItemMod implements IPageGiver {
 		this.setMaxDamage(250);
 		this.setContainerItem(this);
 		
-		
+		//TODO : MAKE THIS FUNCTION AS RULER
 	}
 
 	@Override
@@ -78,138 +78,7 @@ public class ItemRunicWand extends ItemMod implements IPageGiver {
 		
 		
 		
-		if(w.getBlockState(pos).getBlock() == ModBlocks.marker){
-			
-			BlockPos xF = null;
-			BlockPos yF = null;
-			BlockPos zF = null;
-			
-			
-		int r2 = 64;
-				for(int r = -64;r <=64;r++){
-			for(int x = -r; x<= r; x++){
-				
-				if(x == 0)
-					continue;
-				
-				if(Math.abs(x) != r)
-					continue;
-				
-				if(xF != null)
-					break;
-				
-				if(w.getBlockState(pos.add(x, 0, 0)).getBlock() == ModBlocks.marker){
-					xF = pos.add(x, 0, 0);
-					break;
-				}
-					
-			}
-			
-			for(int y = -r; y<= r; y++){
-				
-				if(y == 0)
-					continue;
-				
-				if(Math.abs(y) != r)
-					continue;
-				
-				if(yF != null)
-					break;
-				
-				
-				if(w.getBlockState(pos.add(0, y, 0)).getBlock() == ModBlocks.marker){
-					yF = pos.add(0, y, 0);
-					break;
-				}
-					
-			}
-
-			for(int z = -r; z<= r; z++){
-				
-				if(z == 0)
-					continue;
-				
-				if(Math.abs(z) != r)
-					continue;
-				
-				
-				if(zF != null)
-					break;
-				
-				
-	if(w.getBlockState(pos.add(0, 0, z)).getBlock() == ModBlocks.marker){
-		zF = pos.add(0, 0, z);
-		break;
-	}
-	
-			}
-	}
-			
-			System.out.println("XF" + xF +":" + "ZF" + ":" + zF);
 		
-			
-			if(xF != null  && yF != null && zF != null){
-				
-				BlockUtils.drawLine(w, Vector3.fromBlockPos(pos), Vector3.fromBlockPos(xF), EnumParticleTypes.REDSTONE);
-				BlockUtils.drawLine(w, Vector3.fromBlockPos(pos), Vector3.fromBlockPos(zF), EnumParticleTypes.REDSTONE);
-				
-				BlockPos corner = new BlockPos(xF.getX(), xF.getY(), zF.getZ());
-				BlockUtils.drawLine(w, Vector3.fromBlockPos(xF), Vector3.fromBlockPos(corner), EnumParticleTypes.REDSTONE);
-				BlockUtils.drawLine(w, Vector3.fromBlockPos(zF), Vector3.fromBlockPos(corner),  EnumParticleTypes.REDSTONE);
-			
-				Vector3 yo = new Vector3(0,Math.abs(xF.getY()-yF.getY()), 0);
-				
-				BlockUtils.drawLine(w, Vector3.fromBlockPos(pos).add(yo), Vector3.fromBlockPos(xF).add(yo), EnumParticleTypes.REDSTONE);
-				BlockUtils.drawLine(w, Vector3.fromBlockPos(pos).add(yo), Vector3.fromBlockPos(zF).add(yo), EnumParticleTypes.REDSTONE);
-				
-			
-				BlockUtils.drawLine(w, Vector3.fromBlockPos(xF).add(yo), Vector3.fromBlockPos(corner).add(yo), EnumParticleTypes.REDSTONE);
-				BlockUtils.drawLine(w, Vector3.fromBlockPos(zF).add(yo), Vector3.fromBlockPos(corner).add(yo),  EnumParticleTypes.REDSTONE);
-			
-				BlockUtils.drawLine(w, Vector3.fromBlockPos(pos).add(yo), Vector3.fromBlockPos(pos), EnumParticleTypes.REDSTONE);
-				BlockUtils.drawLine(w, Vector3.fromBlockPos(corner).add(yo), Vector3.fromBlockPos(corner), EnumParticleTypes.REDSTONE);
-				BlockUtils.drawLine(w, Vector3.fromBlockPos(xF).add(yo), Vector3.fromBlockPos(xF), EnumParticleTypes.REDSTONE);
-				BlockUtils.drawLine(w, Vector3.fromBlockPos(zF).add(yo), Vector3.fromBlockPos(zF), EnumParticleTypes.REDSTONE);
-				
-				return super.onItemUse(is, player, w, pos, hand, facing, hitX, hitY, hitZ);
-			}
-			
-	if(xF != null && zF != null){
-		
-		BlockUtils.drawLine(w, Vector3.fromBlockPos(pos), Vector3.fromBlockPos(xF), EnumParticleTypes.REDSTONE);
-		BlockUtils.drawLine(w, Vector3.fromBlockPos(pos), Vector3.fromBlockPos(zF), EnumParticleTypes.REDSTONE);
-		
-		BlockPos corner = new BlockPos(xF.getX(), xF.getY(), zF.getZ());
-		BlockUtils.drawLine(w, Vector3.fromBlockPos(xF), Vector3.fromBlockPos(corner), EnumParticleTypes.REDSTONE);
-		BlockUtils.drawLine(w, Vector3.fromBlockPos(zF), Vector3.fromBlockPos(corner),  EnumParticleTypes.REDSTONE);
-	
-		return super.onItemUse(is, player, w, pos, hand, facing, hitX, hitY, hitZ);
-	}
-		
-
-			
-		if(xF != null){
-			
-			BlockUtils.drawLine(w, Vector3.fromBlockPos(pos), Vector3.fromBlockPos(xF), EnumParticleTypes.REDSTONE);
-			
-		}
-		
-		if(yF != null){
-			
-			BlockUtils.drawLine(w, Vector3.fromBlockPos(pos), Vector3.fromBlockPos(yF), EnumParticleTypes.REDSTONE);
-			
-		}
-			
-		if(zF != null){
-			
-			BlockUtils.drawLine(w, Vector3.fromBlockPos(pos), Vector3.fromBlockPos(zF), EnumParticleTypes.REDSTONE);
-			
-		}		
-			
-			
-			
-			
-		}
 		
 		if(w.getBlockState(pos).getBlock() == ModBlocks.powerTorch){
 			

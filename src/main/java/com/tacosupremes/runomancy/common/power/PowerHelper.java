@@ -331,7 +331,7 @@ public static int addPower(World w, BlockPos pos, int amountFill, int r, boolean
 	
 	
 
-	public static List<BlockPos> getTorches(World w, BlockPos pos, int r, List<BlockPos> b, List<String> sb) {
+	public static List<BlockPos> getTorches(World w, BlockPos pos, int r2, List<BlockPos> b, List<String> sb) {
 		
 		
 		if(b == null){
@@ -339,8 +339,8 @@ public static int addPower(World w, BlockPos pos, int amountFill, int r, boolean
 			sb = new ArrayList<String>();
 		}
 		
-		boolean added = false;
-		
+		int r = 1;
+		while(r < r2){
 		for(int xD = -r;xD<=r;xD++){
 			for(int yD = -r;yD<=r;yD++){
 				for(int zD = -r;zD<=r;zD++){
@@ -384,8 +384,10 @@ public static int addPower(World w, BlockPos pos, int amountFill, int r, boolean
 					
 		}
 		
-		if(added)
-		return getTorches(w,pos,r,b,sb);
+		r++;
+		
+	}
+		
 		
 		return b;
 	

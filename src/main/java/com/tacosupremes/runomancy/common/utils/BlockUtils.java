@@ -334,19 +334,6 @@ public static int getMeta(World w, BlockPos pos){
 
   }
   
-  public static List<BlockPos> getBlocksInRadius(BlockPos bp, int r, boolean cube){
-	  
-	  List<BlockPos> l = new ArrayList<BlockPos>();
-	  
-	  for(int i = 1; i<= r; i++){
-		  l.add(bp.add(r, cube ? r : 0, r));
-		  l.add(bp.add(-r, cube ? -r : 0, -r));
-		  l.add(bp.add(r, cube ? r : 0, r));
-		  l.add(bp.add(r, cube ? r : 0, r));
-	  }
-	  
-	  return l;
-  }
-
+ 
 
 }

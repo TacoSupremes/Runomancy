@@ -38,6 +38,8 @@ public class ModBlocks {
 	
 	public static Block airRune;
 	
+	public static Block soulRune;
+	
 	public static Block marker;
 
 	
