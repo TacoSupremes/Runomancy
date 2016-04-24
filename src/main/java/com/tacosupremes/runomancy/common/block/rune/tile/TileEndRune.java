@@ -73,6 +73,9 @@ public class TileEndRune extends TileEntity implements ITickable, IPowerNode {
 		
 		ticks++;
 		
+		if(PowerHelper.isBlockPowered(this.getWorld(), getPos()))
+			return;
+		
 		if(rEffect == null)
 			rEffect = new NBTTagCompound();
 		
@@ -148,19 +151,19 @@ public class TileEndRune extends TileEntity implements ITickable, IPowerNode {
 				
 				if(this.power < this.getEffect().getPowerCapacity()){
 				
-					if(PowerHelper.getTotalAvailablePower(this.getWorld(), getPos(), RuneFormations.getRange(getEffect())+3) > 0){
+					if(PowerHelper.getTotalAvailablePower(this.getWorld(), getPos(), getRange()) > 0){
 					
 						if(((double)(this.power)/((double)(this.getEffect().getPowerCapacity())) < 0.25D)){
 							
 							
-							this.power += PowerHelper.drainPower(this.getWorld(), pos, this.getEffect().getTransferRate(), RuneFormations.getRange(getEffect())+3, true);
-		//					BlockUtils.drawLine(getWorld(), Vector3.fromBlockPos(PowerHelper.getTorch(getWorld(), this.getPos(), RuneFormations.getRange(getEffect())+3)).add(0.5D, 1.1D, 0.5D), Vector3.fromBlockPos(pos).add(0.5D));
-							PowerHelper.drawTorchLines(getWorld(), getPos(), RuneFormations.getRange(getEffect())+3, true);
+							this.power += PowerHelper.drainPower(this.getWorld(), pos, this.getEffect().getTransferRate(), getRange(), true);
+		//					BlockUtils.drawLine(getWorld(), Vector3.fromBlockPos(PowerHelper.getTorch(getWorld(), this.getPos(), getRange())).add(0.5D, 1.1D, 0.5D), Vector3.fromBlockPos(pos).add(0.5D));
+		//					PowerHelper.drawTorchLines(getWorld(), getPos(), getRange(), true);
 						}else{
 						
-							this.power += PowerHelper.drainPower(this.getWorld(), pos, this.getEffect().getTransferRate()/2, RuneFormations.getRange(getEffect())+3, true);
-		//					BlockUtils.drawLine(getWorld(), Vector3.fromBlockPos(PowerHelper.getTorch(getWorld(), this.getPos(), RuneFormations.getRange(getEffect())+3)).add(0.5D, 1.1D, 0.5D), Vector3.fromBlockPos(pos).add(0.5D));
-							PowerHelper.drawTorchLines(getWorld(), getPos(), RuneFormations.getRange(getEffect())+3, true);
+							this.power += PowerHelper.drainPower(this.getWorld(), pos, this.getEffect().getTransferRate()/2, getRange(), true);
+		//					BlockUtils.drawLine(getWorld(), Vector3.fromBlockPos(PowerHelper.getTorch(getWorld(), this.getPos(), getRange())).add(0.5D, 1.1D, 0.5D), Vector3.fromBlockPos(pos).add(0.5D));
+		//					PowerHelper.drawTorchLines(getWorld(), getPos(), getRange(), true);
 							
 						}
 						
@@ -172,11 +175,11 @@ public class TileEndRune extends TileEntity implements ITickable, IPowerNode {
 					
 				}else{
 					
-					if(this.power > 0 && PowerHelper.addPower(this.getWorld(), pos, this.getEffect().getTransferRate(), RuneFormations.getRange(getEffect())+3, false) > 0){
+					if(this.power > 0 && PowerHelper.addPower(this.getWorld(), pos, this.getEffect().getTransferRate(), getRange(), false) > 0){
 						
-						this.power-=PowerHelper.addPower(this.getWorld(), pos, this.getEffect().getTransferRate(), RuneFormations.getRange(getEffect())+3, true);
-				//		BlockUtils.drawLine(getWorld(), Vector3.fromBlockPos(pos).add(0.5D), Vector3.fromBlockPos(PowerHelper.getTorch(getWorld(), this.getPos(), RuneFormations.getRange(getEffect())+3)).add(0.5D, 0.6D, 0.5D));
-						PowerHelper.drawTorchLines(getWorld(), getPos(), RuneFormations.getRange(getEffect())+3, false);
+						this.power-=PowerHelper.addPower(this.getWorld(), pos, this.getEffect().getTransferRate(), getRange(), true);
+				//		BlockUtils.drawLine(getWorld(), Vector3.fromBlockPos(pos).add(0.5D), Vector3.fromBlockPos(PowerHelper.getTorch(getWorld(), this.getPos(), getRange())).add(0.5D, 0.6D, 0.5D));
+				//		PowerHelper.drawTorchLines(getWorld(), getPos(), getRange(), false);
 						
 					}
 					
@@ -291,13 +294,12 @@ public class TileEndRune extends TileEntity implements ITickable, IPowerNode {
 	@Override
 	public int getRange() {
 		
-		return 7;
+		return RuneFormations.getRange(getEffect())+3;
 		
 	}
 
 
-
-
+	
 
 
 }

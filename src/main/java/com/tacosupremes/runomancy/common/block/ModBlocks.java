@@ -37,6 +37,8 @@ public class ModBlocks {
 	public static Block waterRune;
 	
 	public static Block airRune;
+	
+	public static Block marker;
 
 	
 	
@@ -62,6 +64,8 @@ public class ModBlocks {
 		powerTorch = new BlockPowerTorch();
 		
 		powerStorage = new BlockPowerStorage();
+		
+		marker = new BlockMarker();
 	}
 	
 	public static void registerRenders(){

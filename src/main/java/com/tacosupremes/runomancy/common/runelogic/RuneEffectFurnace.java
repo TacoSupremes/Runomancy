@@ -50,14 +50,14 @@ public class RuneEffectFurnace implements IFunctionalRuneEffect {
 	        			spawnParticleOnEntity(EnumParticleTypes.FLAME, entity);
 	        			
 	        			if(is.stackSize == 1)
-	        				entity.setEntityItemStack(result.splitStack(1));
+	        				entity.setEntityItemStack(result.copy());
 	        			else{
 	        				is.stackSize--;
 	        				entity.setEntityItemStack(is);
-	        				EntityItem ent = new EntityItem(w);
-	        				ent.setPosition(entity.posX,entity.posY,entity.posZ);
+	        				EntityItem ent = new EntityItem(w,entity.posX,entity.posY+0.1D,entity.posZ);
+	        				//ent.setPosition(entity.posX,entity.posY,entity.posZ);
 	        				this.setVelocity(ent, 0, 0.1D, 0);
-	        				ent.setEntityItemStack(result.splitStack(1));
+	        				ent.setEntityItemStack(new ItemStack(result.getItem(),1, result.getItemDamage()));
 	        				if(!w.isRemote){
 	        					w.spawnEntityInWorld(ent);
 	        				}
