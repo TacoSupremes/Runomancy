@@ -85,11 +85,14 @@ public class ItemRunicWand extends ItemMod implements IPageGiver {
 			BlockPos zF = null;
 			
 			
-		int r = 64;
-				
+		int r2 = 64;
+				for(int r = -64;r <=64;r++){
 			for(int x = -r; x<= r; x++){
 				
 				if(x == 0)
+					continue;
+				
+				if(Math.abs(x) != r)
 					continue;
 				
 				if(xF != null)
@@ -107,6 +110,9 @@ public class ItemRunicWand extends ItemMod implements IPageGiver {
 				if(y == 0)
 					continue;
 				
+				if(Math.abs(y) != r)
+					continue;
+				
 				if(yF != null)
 					break;
 				
@@ -122,6 +128,11 @@ public class ItemRunicWand extends ItemMod implements IPageGiver {
 				
 				if(z == 0)
 					continue;
+				
+				if(Math.abs(z) != r)
+					continue;
+				
+				
 				if(zF != null)
 					break;
 				
@@ -132,7 +143,7 @@ public class ItemRunicWand extends ItemMod implements IPageGiver {
 	}
 	
 			}
-			
+	}
 			
 			System.out.println("XF" + xF +":" + "ZF" + ":" + zF);
 		
