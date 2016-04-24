@@ -53,6 +53,8 @@ public class ModItems {
 	
 	public static Item mobRepeller;
 	
+	public static Item builderScroll;
+	
 	public static void preInit(){
 		
 		runicWand = new ItemRunicWand();
@@ -78,6 +80,8 @@ public class ModItems {
 		runicIngot = new ItemRunicIngot();
 		
 		modBook = new ItemModBook();
+		
+		builderScroll = new ItemBuilderScroll();
 	}
 	
 	public static void registerRenders(){

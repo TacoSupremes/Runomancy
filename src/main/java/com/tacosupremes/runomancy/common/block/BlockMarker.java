@@ -11,6 +11,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -81,9 +82,10 @@ public class BlockMarker extends BlockModContainer {
 	@Override
 	public boolean onBlockActivated(World w, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 		
+		if(heldItem == null)
+			return false;
 		
-		
-		if(heldItem != null && heldItem.getItem() == ModItems.runicWand){
+		if(heldItem.getItem() == ModItems.runicWand){
 		w.setBlockState(pos, state.withProperty(active, true));
 		
 		TileMarker te = (TileMarker)w.getTileEntity(pos);
@@ -159,6 +161,59 @@ if(w.getBlockState(pos.add(0, 0, z)).getBlock() == ModBlocks.marker){
 			te.zF = zF;
 		
 		}
+		
+		
+		if(heldItem.getItem() == ModItems.builderScroll && state.getValue(active)){
+			
+			TileMarker te = (TileMarker)w.getTileEntity(pos);
+			heldItem.setItemDamage(1);
+			heldItem.setTagCompound(new NBTTagCompound());
+			
+			NBTTagCompound b = new NBTTagCompound();
+			
+			NBTTagCompound meta = new NBTTagCompound();
+			
+			int xO = te.xF.getX()-pos.getX();
+			int yO = te.yF.getY()-pos.getY();
+			int zO = te.zF.getZ()-pos.getZ();
+			int x_ = 0;
+			int y_ = 0;
+			int z_ = 0;
+			int index = 0;
+			while(y_ != yO){
+				while(x_ != zO){
+					while(z_ != zO){
+						if(!w.getBlockState(pos.add(x_, y_, z_)).getBlock().isAir(w.getBlockState(pos.add(x_, y_, z_)), w, pos.add(x_, y_, z_))){
+					b.setString("BLOCK"+index, w.getBlockState(pos.add(x_, y_, z_)).getBlock().getRegistryName());
+					meta.setInteger("META"+index, w.getBlockState(pos.add(x_, y_, z_)).getBlock().getMetaFromState(w.getBlockState(pos.add(x_, y_, z_))));
+						}else{
+							b.setString("BLOCK"+index,"AIR");
+							meta.setInteger("META"+index, -1);
+							
+						}
+				if(zO > 0)	
+					z_++;
+				else
+					z_--;
+				
+				index++;
+				}
+				
+					if(xO > 0)	
+						x_++;
+					else
+						x_--;
+			}
+				if(yO > 0)	
+					y_++;
+				else
+					y_--;
+		}
+			
+			heldItem.getTagCompound().setTag("BLOCKS", b);
+			heldItem.getTagCompound().setTag("META", meta);
+			
+	}
 		
 		return super.onBlockActivated(w, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
 		

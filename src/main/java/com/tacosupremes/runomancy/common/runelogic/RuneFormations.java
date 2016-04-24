@@ -13,7 +13,7 @@ public class RuneFormations {
 	public static List<String> functionalEffects = new ArrayList<String>();	
 	public static List<String> generatingEffects = new ArrayList<String>();
 	
-	//TODO:PUMP/OREDICTIONARYTHING/SPAWNER?
+	//TODO:Runic Ward Variable SIZE 32 by 32     PUMP/OREDICTIONARYTHING/SPAWNER?
 	
 	public static void addEffect(IRuneEffect i){
 		effects.add(i);

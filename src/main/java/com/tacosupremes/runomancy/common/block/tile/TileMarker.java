@@ -33,18 +33,19 @@ public class TileMarker extends TileEntity implements ITickable {
 			zF = null;
 			
 			
-		
+		if(xF == null && yF == null && zF == null)
+			this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).getBlock().getStateFromMeta(0));
 		
 		
 		
 		if(xF != null  && yF != null && zF != null){
 			
-			BlockUtils.drawLine(w, Vector3.fromBlockPos(pos).add(0.5D, 0.5D, 0.5D), Vector3.fromBlockPos(xF).add(0.5D, 0.5D, 0.5D).add(0.5D, 0.5D, 0.5D), EnumParticleTypes.REDSTONE);
-			BlockUtils.drawLine(w, Vector3.fromBlockPos(pos).add(0.5D, 0.5D, 0.5D), Vector3.fromBlockPos(zF).add(0.5D, 0.5D, 0.5D).add(0.5D, 0.5D, 0.5D), EnumParticleTypes.REDSTONE);
+			BlockUtils.drawLine(w, Vector3.fromBlockPos(pos).add(0.5D, 0.5D, 0.5D), Vector3.fromBlockPos(xF).add(0.5D, 0.5D, 0.5D), EnumParticleTypes.REDSTONE);
+			BlockUtils.drawLine(w, Vector3.fromBlockPos(pos).add(0.5D, 0.5D, 0.5D), Vector3.fromBlockPos(zF).add(0.5D, 0.5D, 0.5D), EnumParticleTypes.REDSTONE);
 			
 			BlockPos corner = new BlockPos(xF.getX(), xF.getY(), zF.getZ());
-			BlockUtils.drawLine(w, Vector3.fromBlockPos(xF).add(0.5D, 0.5D, 0.5D).add(0.5D, 0.5D, 0.5D), Vector3.fromBlockPos(corner), EnumParticleTypes.REDSTONE);
-			BlockUtils.drawLine(w, Vector3.fromBlockPos(zF).add(0.5D, 0.5D, 0.5D).add(0.5D, 0.5D, 0.5D), Vector3.fromBlockPos(corner),  EnumParticleTypes.REDSTONE);
+			BlockUtils.drawLine(w, Vector3.fromBlockPos(xF).add(0.5D, 0.5D, 0.5D), Vector3.fromBlockPos(corner).add(0.5D, 0.5D, 0.5D), EnumParticleTypes.REDSTONE);
+			BlockUtils.drawLine(w, Vector3.fromBlockPos(zF).add(0.5D, 0.5D, 0.5D), Vector3.fromBlockPos(corner).add(0.5D, 0.5D, 0.5D),  EnumParticleTypes.REDSTONE);
 		
 			Vector3 yo = new Vector3(0,Math.abs(xF.getY()-yF.getY()), 0);
 			
@@ -52,11 +53,11 @@ public class TileMarker extends TileEntity implements ITickable {
 			BlockUtils.drawLine(w, Vector3.fromBlockPos(pos).add(0.5D, 0.5D, 0.5D).add(yo), Vector3.fromBlockPos(zF).add(0.5D, 0.5D, 0.5D).add(yo), EnumParticleTypes.REDSTONE);
 			
 		
-			BlockUtils.drawLine(w, Vector3.fromBlockPos(xF).add(0.5D, 0.5D, 0.5D).add(yo), Vector3.fromBlockPos(corner).add(yo), EnumParticleTypes.REDSTONE);
-			BlockUtils.drawLine(w, Vector3.fromBlockPos(zF).add(0.5D, 0.5D, 0.5D).add(yo), Vector3.fromBlockPos(corner).add(yo),  EnumParticleTypes.REDSTONE);
+			BlockUtils.drawLine(w, Vector3.fromBlockPos(xF).add(0.5D, 0.5D, 0.5D).add(yo), Vector3.fromBlockPos(corner).add(yo).add(0.5D, 0.5D, 0.5D), EnumParticleTypes.REDSTONE);
+			BlockUtils.drawLine(w, Vector3.fromBlockPos(zF).add(0.5D, 0.5D, 0.5D).add(yo), Vector3.fromBlockPos(corner).add(yo).add(0.5D, 0.5D, 0.5D),  EnumParticleTypes.REDSTONE);
 		
 			BlockUtils.drawLine(w, Vector3.fromBlockPos(pos).add(0.5D, 0.5D, 0.5D).add(yo), Vector3.fromBlockPos(pos).add(0.5D, 0.5D, 0.5D), EnumParticleTypes.REDSTONE);
-			BlockUtils.drawLine(w, Vector3.fromBlockPos(corner).add(yo), Vector3.fromBlockPos(corner), EnumParticleTypes.REDSTONE);
+			BlockUtils.drawLine(w, Vector3.fromBlockPos(corner).add(yo).add(0.5D, 0.5D, 0.5D), Vector3.fromBlockPos(corner).add(0.5D, 0.5D, 0.5D), EnumParticleTypes.REDSTONE);
 			BlockUtils.drawLine(w, Vector3.fromBlockPos(xF).add(0.5D, 0.5D, 0.5D).add(yo), Vector3.fromBlockPos(xF).add(0.5D, 0.5D, 0.5D), EnumParticleTypes.REDSTONE);
 			BlockUtils.drawLine(w, Vector3.fromBlockPos(zF).add(0.5D, 0.5D, 0.5D).add(yo), Vector3.fromBlockPos(zF).add(0.5D, 0.5D, 0.5D), EnumParticleTypes.REDSTONE);
 			
@@ -188,7 +189,17 @@ if(yF != null && zF != null){
 		this.readCustomNBT(pkt.getNbtCompound());
 	}
 
+	public boolean isArea3D(){
+		
+		return xF != null && yF != null && zF != null;
+	}
 	
+	
+	
+	public boolean isArea(){
+		
+		return xF != null && yF != null || xF != null && zF != null || yF != null && zF != null;
+	}
 	
 	
 }

@@ -10,6 +10,7 @@ import com.tacosupremes.runomancy.gui.IPageGiver;
 import com.tacosupremes.runomancy.gui.ItemPage;
 import com.tacosupremes.runomancy.gui.Page;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockFence;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
@@ -258,7 +259,28 @@ public class ItemSoulGem extends ItemMod implements IPageGiver {
 
 	
 	
-	
+	public static ItemStack gemWithEntity(Entity e){
+		
+		ItemStack is = new ItemStack(ModItems.soulGem, 1,0);
+		
+		is.setTagCompound(new NBTTagCompound());
+		
+		is.getTagCompound().setString("NAME", EntityList.getEntityString(e));
+		
+		return is;
+	}
+
+	public static ItemStack gemWithEntity(Class <? extends Entity > c) {
+		
+		ItemStack is = new ItemStack(ModItems.soulGem, 1,0);
+		
+		is.setTagCompound(new NBTTagCompound());
+		
+		is.getTagCompound().setString("NAME", EntityList.func_188430_a(c));
+		
+		return is;
+		
+	}
 	 
 
 }

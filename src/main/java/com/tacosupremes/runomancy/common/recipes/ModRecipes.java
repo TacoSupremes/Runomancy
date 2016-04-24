@@ -7,9 +7,12 @@ import java.util.Map;
 
 import com.google.common.collect.Maps;
 import com.tacosupremes.runomancy.common.block.ModBlocks;
+import com.tacosupremes.runomancy.common.item.ItemSoulGem;
 import com.tacosupremes.runomancy.common.item.ModItems;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityList;
+import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -54,6 +57,9 @@ public class ModRecipes {
 		addShapedRecipe(new ItemStack(ModItems.runicShovel,1,ModItems.runicShovel.getMaxDamage()-1), " R "," S "," S ", 'R', new ItemStack(ModItems.runicIngot), 'S', new ItemStack(Items.stick));
 		addShapedRecipe(new ItemStack(ModItems.runicHoe,1,ModItems.runicHoe.getMaxDamage()-1), " RR"," S "," S ", 'R', new ItemStack(ModItems.runicIngot), 'S', new ItemStack(Items.stick));
 		
+		
+		
+		GameRegistry.addSmelting(ItemSoulGem.gemWithEntity(EntityVillager.class), new ItemStack(ModBlocks.soulRune, 2, 0), 0);
 	}
 
 	private static void addShapelessRecipe(ItemStack itemStack, ItemStack... w) {
