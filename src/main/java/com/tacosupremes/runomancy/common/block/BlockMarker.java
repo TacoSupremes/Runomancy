@@ -3,6 +3,7 @@ package com.tacosupremes.runomancy.common.block;
 import com.tacosupremes.runomancy.common.block.tile.TileMarker;
 import com.tacosupremes.runomancy.common.item.ModItems;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
@@ -173,21 +174,34 @@ if(w.getBlockState(pos.add(0, 0, z)).getBlock() == ModBlocks.marker){
 			
 			NBTTagCompound meta = new NBTTagCompound();
 			
+			NBTTagCompound dimensions = new NBTTagCompound();
+			
+			if(!te.isArea3D())
+				return false;
 			int xO = te.xF.getX()-pos.getX();
 			int yO = te.yF.getY()-pos.getY();
 			int zO = te.zF.getZ()-pos.getZ();
-			int x_ = 0;
+			
+			yO += yO < 0 ? -1 : 1;
+			
+			dimensions.setInteger("xD", xO);
+			dimensions.setInteger("yD", yO);
+			dimensions.setInteger("zD", zO);
+			
+			heldItem.getTagCompound().setTag("DIM", dimensions);
+			int x_ = xO < 0 ? -1 : 1;
 			int y_ = 0;
-			int z_ = 0;
+			int z_ = zO < 0 ? -1 : 1;
 			int index = 0;
 			while(y_ != yO){
-				while(x_ != zO){
+				while(x_ != xO){
 					while(z_ != zO){
+						System.out.println(w.getBlockState(pos.add(x_, y_, z_)).toString() + ":::" + x_ + ":" + y_ + ":" + z_);
 						if(!w.getBlockState(pos.add(x_, y_, z_)).getBlock().isAir(w.getBlockState(pos.add(x_, y_, z_)), w, pos.add(x_, y_, z_))){
-					b.setString("BLOCK"+index, w.getBlockState(pos.add(x_, y_, z_)).getBlock().getRegistryName());
+					b.setInteger("BLOCK"+index, Block.blockRegistry.getIDForObject(w.getBlockState(pos.add(x_, y_, z_)).getBlock()));
 					meta.setInteger("META"+index, w.getBlockState(pos.add(x_, y_, z_)).getBlock().getMetaFromState(w.getBlockState(pos.add(x_, y_, z_))));
 						}else{
-							b.setString("BLOCK"+index,"AIR");
+							b.setInteger("BLOCK"+index, -1);
 							meta.setInteger("META"+index, -1);
 							
 						}
@@ -198,12 +212,14 @@ if(w.getBlockState(pos.add(0, 0, z)).getBlock() == ModBlocks.marker){
 				
 				index++;
 				}
-				
+				z_ = zO < 0 ? -1 : 1;;
 					if(xO > 0)	
 						x_++;
 					else
 						x_--;
 			}
+				x_= xO < 0 ? -1 : 1;;
+				z_= zO < 0 ? -1 : 1;;
 				if(yO > 0)	
 					y_++;
 				else

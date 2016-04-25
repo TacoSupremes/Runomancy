@@ -11,7 +11,9 @@ import com.tacosupremes.runomancy.gui.IPageGiver;
 import com.tacosupremes.runomancy.gui.ItemPage;
 import com.tacosupremes.runomancy.gui.Page;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
@@ -85,6 +87,7 @@ public class ItemRunicWand extends ItemMod implements IPageGiver {
 			PowerHelper.drawTorchLines(w, pos, 5, false);
 			
 		}
+		
 		
 		return super.onItemUse(is, player, w, pos, hand, facing, hitX, hitY, hitZ);
 		
