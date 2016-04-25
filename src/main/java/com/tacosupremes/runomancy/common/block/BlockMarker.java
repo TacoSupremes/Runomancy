@@ -176,13 +176,15 @@ if(w.getBlockState(pos.add(0, 0, z)).getBlock() == ModBlocks.marker){
 			
 			NBTTagCompound dimensions = new NBTTagCompound();
 			
-			if(!te.isArea3D())
+			if(!te.isArea())
 				return false;
-			int xO = te.xF.getX()-pos.getX();
-			int yO = te.yF.getY()-pos.getY();
-			int zO = te.zF.getZ()-pos.getZ();
 			
-			yO += yO < 0 ? -1 : 1;
+			
+			int xO = te.xF == null ? 0 : te.xF.getX()-pos.getX();
+			int yO = te.yF == null ? 0 : te.yF.getY()-pos.getY();
+			int zO = te.zF == null ? 0 : te.zF.getZ()-pos.getZ();
+			
+			yO += yO == 0 ? 0 : yO < 0 ? -1 : 1;
 			
 			dimensions.setInteger("xD", xO);
 			dimensions.setInteger("yD", yO);

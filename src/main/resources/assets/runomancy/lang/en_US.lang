@@ -21,6 +21,7 @@ tile.battery.name=Runic Battery
 runomancy.contains=Currently contains
 runomancy.bound=Bound to
 runomancy.empty=Empty
+runomancy.blank=Blank
 runomancy.active=Active
 runomancy.inactive=Inactive
 runomancy.press=Press

@@ -1,5 +1,8 @@
 package com.tacosupremes.runomancy.common.item;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 
 import net.minecraft.block.Block;
@@ -9,13 +12,14 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 
 public class ItemBuilderScroll extends ItemMod{
 
 	public ItemBuilderScroll() {
 		super("builderScroll", 1);
-		
+		this.setMaxStackSize(1);
 	}
 	
 	
@@ -85,12 +89,77 @@ public class ItemBuilderScroll extends ItemMod{
 								
 								
 							}
+
+
+
+
+	@Override
+	public void addInformation(ItemStack stack, EntityPlayer player, List<String> t, boolean advanced) {
+		
+		if(stack.getItemDamage() == 0){
+			
+			t.add(I18n.translateToLocal("runomancy.blank"));
+			
+		}else{
+			
+			List<ItemStack> bl = new ArrayList<ItemStack>();
+			List<String> bl2 = new ArrayList<String>();
+			List<String> bl3 = new ArrayList<String>();
+				
+			for(int i = 0; i<= stack.getTagCompound().getCompoundTag("BLOCKS").getSize(); i++){
+				int iD = stack.getTagCompound().getCompoundTag("BLOCKS").getInteger("BLOCK"+i);
+				if(iD <= 0)
+					continue;
+				
+				int meta = stack.getTagCompound().getCompoundTag("META").getInteger("META"+i);
+				ItemStack bo = new ItemStack(Block.getBlockById(iD).getStateFromMeta(meta).getBlock(), 1, meta);
+				
+				if(bo.getItem() == null)
+					continue;
+				
+				bl.add(bo);
+				
+				
+				
+				if(!bl2.contains(bo.getDisplayName()))
+				bl2.add(bo.getDisplayName());
+				bl3.add(bo.getDisplayName());
+				
+			}
+			
+			if(bl.isEmpty())
+				return;
+			
+			
+			
+			for(String s : bl2){
+				int count = 0;
+				for(String m : bl3){
+					
+					if(s.equals(m))
+						count ++;
+					
+					
+					
+					
+				}
+				
+				t.add(count +"x" + s);
+				
+				
+				
+			}
+			
+			
+			
+		}
+		
+	}
 					
 					
 
-		
-	
-	
 	
 
 }
+
+
