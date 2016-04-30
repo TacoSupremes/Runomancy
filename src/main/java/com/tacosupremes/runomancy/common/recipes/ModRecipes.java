@@ -29,6 +29,8 @@ public class ModRecipes {
 	public static List<RuneChargerRecipe> rcr = new ArrayList<RuneChargerRecipe>();
 	public static Map<String, ItemStack[][]> shapeless = new HashMap<String, ItemStack[][]>();
 	public static Map<String, ItemStack[][]> shaped = new HashMap<String, ItemStack[][]>();
+	public static Map<String, ItemStack> furnace = new HashMap<String, ItemStack>();
+
 
 	
 	
@@ -57,9 +59,9 @@ public class ModRecipes {
 		addShapedRecipe(new ItemStack(ModItems.runicShovel,1,ModItems.runicShovel.getMaxDamage()-1), " R "," S "," S ", 'R', new ItemStack(ModItems.runicIngot), 'S', new ItemStack(Items.stick));
 		addShapedRecipe(new ItemStack(ModItems.runicHoe,1,ModItems.runicHoe.getMaxDamage()-1), " RR"," S "," S ", 'R', new ItemStack(ModItems.runicIngot), 'S', new ItemStack(Items.stick));
 		
+		addFurnaceRecipe(new ItemStack(ModBlocks.marker), new ItemStack(Blocks.torch),5);
 		
-		
-		GameRegistry.addSmelting(ItemSoulGem.gemWithEntity(EntityVillager.class), new ItemStack(ModBlocks.soulRune, 2, 0), 0);
+		addFurnaceRecipe(new ItemStack(ModItems.soulGem,1,1), new ItemStack(ModBlocks.soulRune, 2, 0), 0);
 	}
 
 	private static void addShapelessRecipe(ItemStack itemStack, ItemStack... w) {
@@ -82,6 +84,14 @@ public class ModRecipes {
 		
 		
 		
+	}
+	
+	private static void addFurnaceRecipe(ItemStack result, ItemStack input, int xp){
+		
+		furnace.put(result.getUnlocalizedName(), input);
+		
+		GameRegistry.addSmelting(input, result, xp);
+
 	}
 	
 	

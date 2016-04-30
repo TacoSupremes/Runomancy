@@ -13,8 +13,7 @@ public class ItemLevitateRune extends ItemMod {
 	private Random rand;
 
 	public ItemLevitateRune() {
-		super("levitateRune", 1);
-		this.setMaxDamage(0);
+		super("levitateRune");
 		this.setMaxStackSize(1);
 		this.rand = new Random();
 		
@@ -30,7 +29,7 @@ public class ItemLevitateRune extends ItemMod {
 			
 			EntityPlayer player = (EntityPlayer)e;
 			
-			if(player.isSneaking() && player.isAirBorne && Math.abs(player.motionY) > 0){
+			if(player.isSneaking() && player.isAirBorne && Math.abs(player.motionY) > 0 && !player.isCollided){
 				
 				player.motionY /= 1.25D;
 				if(player.moveForward > 0)
@@ -69,10 +68,6 @@ public class ItemLevitateRune extends ItemMod {
 	
 	
 	
-	public boolean onDroppedByPlayer(ItemStack item, EntityPlayer player)
-    {
-        return true;
-    }
 	
 	
 

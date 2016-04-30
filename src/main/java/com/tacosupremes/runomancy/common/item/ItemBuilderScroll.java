@@ -30,16 +30,59 @@ public class ItemBuilderScroll extends ItemMod{
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		
 		if(w.getBlockState(pos).getBlock() != ModBlocks.marker)
-		buildStructure(w,pos.up(), stack);
+			buildStructure2(w,pos.up(), stack, player);
 		
 		return super.onItemUse(stack, player, w, pos, hand, facing, hitX, hitY, hitZ);
 		
 	}
 
 
+public void buildStructure2(World w, BlockPos pos, ItemStack is, EntityPlayer player){
+		
+		if(is.getItemDamage() != 1)
+			return;
+		
+		
+		
+		
+		
+		boolean xN =  is.getTagCompound().getCompoundTag("DIM").getInteger("xD") < 0;
+		boolean yN =  is.getTagCompound().getCompoundTag("DIM").getInteger("yD") < 0;
+		boolean zN =  is.getTagCompound().getCompoundTag("DIM").getInteger("zD") < 0;
+		
+		int x = xN ? -1 : 1;
+		int y = 0;
+		int z = zN ? -1 : 1;
+		for(int i = 0; i<= is.getTagCompound().getCompoundTag("BLOCKS").getSize(); i++){
+			
+			int iD = is.getTagCompound().getCompoundTag("BLOCKS").getInteger("BLOCK"+i);
+			
+			BlockPos bp = pos.add(x, y, z);
+			
+			
+			if(iD != -1){
+				
+				w.setBlockState(bp, Block.getBlockById(iD).getStateFromMeta(is.getTagCompound().getCompoundTag("META").getInteger("META"+i)));
+				
+			}
+			
+			z += zN ? -1 : 1;
+			
+			if(z == is.getTagCompound().getCompoundTag("DIM").getInteger("zD")){
+				z = zN ? -1 : 1;
+				x += xN ? -1 : 1;
+			}
+			
+			if(x == is.getTagCompound().getCompoundTag("DIM").getInteger("xD")){
+				x = xN ? -1 : 1;
+				y += yN ? -1 : 1;
+			}
+			
 
+		}
+}
 
-	public void buildStructure(World w, BlockPos pos, ItemStack is){
+	public void buildStructure(World w, BlockPos pos, ItemStack is, EntityPlayer player){
 		
 		if(is.getItemDamage() != 1)
 			return;
@@ -61,6 +104,8 @@ public class ItemBuilderScroll extends ItemMod{
 						while(x_ != xO){
 							while(z_ != zO){
 								
+								
+								
 						if(is.getTagCompound().getCompoundTag("BLOCKS").getInteger("BLOCK"+index) != -1)
 							w.setBlockState(pos.add(x_, y_, z_), Block.getBlockById(is.getTagCompound().getCompoundTag("BLOCKS").getInteger("BLOCK"+index)).getStateFromMeta(is.getTagCompound().getCompoundTag("META").getInteger("META"+index)));		
 						
@@ -71,7 +116,7 @@ public class ItemBuilderScroll extends ItemMod{
 								
 								index++;
 								}
-							z_ = zO < 0 ? -1 : 1;;
+							z_ = zO < 0 ? -1 : 1;
 									if(xO > 0)	
 										x_++;
 									else
@@ -156,7 +201,88 @@ public class ItemBuilderScroll extends ItemMod{
 		
 	}
 					
+	
+	public static boolean playerHasItemsInList(List<ItemStack> is, EntityPlayer player){
+		outer:
+		for(ItemStack n : is){
+			
+			int s = n.stackSize;
+			int cn = 0;
+			
+			for(ItemStack isp : player.inventory.mainInventory){
+				
+				
+				if(isp.getItem() == n.getItem() && isp.getItemDamage() == n.getItemDamage()){
 					
+					if(isp.stackSize >= cn)
+						continue outer;
+					else
+						cn += isp.stackSize;
+				}
+				
+			}
+			
+			if(cn < s)
+				return false;
+			
+		}
+		
+		
+		return true;
+	}
+	
+	
+	
+	public static boolean playerHasItemstack(ItemStack is, EntityPlayer player){
+		
+		int s = is.stackSize;
+		int cn = 0;
+		
+		for(ItemStack isp : player.inventory.mainInventory){
+			
+			
+			if(isp.getItem() == is.getItem() && isp.getItemDamage() == is.getItemDamage()){
+				
+				if(isp.stackSize >= cn)
+					return true;
+				else
+					cn += isp.stackSize;
+			}
+			
+		}
+		
+		if(cn < s)
+			return false;
+		
+	
+		
+		return true;
+	}
+	
+	public static void removeItems(ItemStack is, EntityPlayer player){
+		
+		
+		int i = is.stackSize;
+		
+		for(ItemStack is2 : player.inventory.mainInventory){
+			
+			if(is2.getItem() == is.getItem() && is2.getItemDamage() == is.getItemDamage()){
+				if(is2.stackSize >= i){
+					is2.stackSize -= i;
+					return;
+				}else{
+					
+					i -= is2.stackSize;
+					
+					is2 = null;
+					
+				}
+			}
+			
+		}
+		
+		
+	}
 
 	
 
