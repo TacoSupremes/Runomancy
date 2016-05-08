@@ -148,21 +148,7 @@ public static List<IPowerTile> getBlocksInRange(World w, BlockPos pos, List<IPow
 	
 
 	
-	public static int getTotalAvailablePower(World w, BlockPos pos, int r){
-		int i = 0;
-		
-		
-		List<IPowerTile> ip = getPowerSources(w, pos, r);
-		
-		if(ip == null)
-			return 0;
-		
-		for(IPowerTile it :ip){
-			i+=it.getPower();
-		}
-		
-		return i;
-	}
+	
 	
 	/*
 	public static List<IPowerTile> sortBasedOnPower(List<IPowerTile> p, boolean high){
@@ -223,9 +209,13 @@ public static List<IPowerTile> getBlocksInRange(World w, BlockPos pos, List<IPow
 	
 	public static int drainPower(World w, BlockPos pos, int amountDrain, int r, boolean doit){
 		
-		List<BlockPos> bl = getTorches(w, pos, r, null, null);
+		BlockPos bp = getBattery(w, pos, true);
 		
-		IPowerTile l = getBattery(w, bl, true); 
+		if(bp == null)
+			return -1;
+		
+		IPowerTile l = bp == null ? null : (IPowerTile)w.getTileEntity(bp);
+		
 		
 		
 		
@@ -255,19 +245,22 @@ public static List<IPowerTile> getBlocksInRange(World w, BlockPos pos, List<IPow
 				
 			}
 		
-			if(amountDrained > 0 && doit)
-				drawTorchLines(w, bl, pos, true);
+		//	if(amountDrained > 0 && doit)
+		//		drawTorchLines(w, bl, pos, true);
 		
 		return amountDrained;
 	}
 	
 public static int addPower(World w, BlockPos pos, int amountFill, int r, boolean doit){
 		
-	List<BlockPos> bl = getTorches(w, pos, r, null, null);
+	//List<BlockPos> bl = getTorches(w, pos, r, null, null);
 	
-	IPowerTile l = getBattery(w, bl, false);
+	BlockPos bp = getBattery(w, pos, false);
 	
-
+	if(bp == null)
+		return -1;
+	
+	IPowerTile l = bp == null ? null : (IPowerTile)w.getTileEntity(bp);
 	
 	if(l == null)
 		return -1;
@@ -308,8 +301,8 @@ public static int addPower(World w, BlockPos pos, int amountFill, int r, boolean
 		
 		
 		
-			if(amountFilled > 0 && doit)
-				drawTorchLines(w, bl, pos, false);
+		//	if(amountFilled > 0 && doit)
+		//		drawTorchLines(w, bl, pos, false);
 		
 		return amountFilled;
 	}
@@ -462,7 +455,7 @@ public static int addPower(World w, BlockPos pos, int amountFill, int r, boolean
 		bp.add(pos);
 		bp.addAll(bp2);
 		
-		if(bp == null || bp.isEmpty() || bp.size() == 1)
+		if(bp.size() == 1)
 			return;
 		
 		
@@ -485,7 +478,7 @@ public static void drawTorchLines(World w, List<BlockPos> bp2, BlockPos pos, boo
 		bp.add(pos);
 		bp.addAll(bp2);
 		
-		if(bp == null || bp.isEmpty() || bp.size() == 1)
+		if(bp.size() == 1)
 			return;
 		
 		
@@ -533,6 +526,80 @@ public static boolean isBlockPowered(World w, BlockPos pos){
 		  return false;
 	  }
 
+
+
+	public static BlockPos getBattery(World w, BlockPos posS, boolean drain){
+		
+		List<String> bs = new ArrayList<String>();
+		
+		List<BlockPos> bl = new ArrayList<BlockPos>();
+		
+		bl.add(posS);
+		
+		BlockPos last = null;
+		
+		for(int i = 0; i< bl.size(); i++){
+			
+			BlockPos pos = bl.get(i);
+			
+			if(!bs.isEmpty() && bs.contains(pos.toLong()))
+				continue;
+			
+			IPowerNode ip = (IPowerNode)w.getTileEntity(pos);
+			
+			if(PowerHelper.isBlockPowered(w, pos))
+				continue;
+			
+			
+			if(last != null)
+				BlockUtils.drawLine(w, Vector3.fromBlockPos(last).add(0.5D), Vector3.fromBlockPos(pos).add(0.5D), drain ? EnumParticleTypes.REDSTONE : EnumParticleTypes.SPELL_WITCH);
+			
+			if(w.getTileEntity(pos) instanceof IPowerTile){
+				
+				IPowerTile pt  = (IPowerTile)ip;
+				
+				if(drain){
+					
+					if(pt.getPower() > 0)
+						return pos;
+					
+				}else{
+					
+					if(pt.getPower() != pt.getMaxPower())
+						return pos;
+					
+				}
+					
+				
+				
+			}
+			
+			
+			
+			
+			
+			
+			bs.add(pos.toString());
+			
+			if(ip != null && ip.getLinkedBlocks() != null && !ip.getLinkedBlocks().isEmpty()){
+			for(BlockPos bp : ip.getLinkedBlocks()){
+				
+				if(bp.toString() == pos.toString() || bs.contains(bp.toString()) || w.getTileEntity(bp)  == null || !(w.getTileEntity(bp) instanceof IPowerNode))
+					continue;
+				
+				bl.add(bp);
+				
+			}
+			}
+			
+			last = pos;
+			
+			
+		}
+		
+		
+		return null;
+	}
 	
 
 }

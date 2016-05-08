@@ -1,6 +1,10 @@
 package com.tacosupremes.runomancy.common.power.block;
 
+import java.util.List;
+
 import com.tacosupremes.runomancy.common.block.BlockModContainer;
+import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
+import com.tacosupremes.runomancy.common.power.block.tile.IPowerNode;
 import com.tacosupremes.runomancy.common.power.block.tile.TilePowerStorage;
 
 import net.minecraft.block.material.Material;
@@ -91,6 +95,25 @@ public class BlockPowerStorage extends BlockModContainer{
 		
 	}
 
+	@Override
+	public void breakBlock(World w, BlockPos pos, IBlockState state) {
+		
+		
+		
+		
+		
+List<BlockPos> bpl = ((IPowerNode)w.getTileEntity(pos)).getLinkedBlocks();
+		
+		super.breakBlock(w, pos, state);
+		
+		for(BlockPos bp : bpl){
+			
+			IPowerNode k = (IPowerNode)w.getTileEntity(bp);
+			
+			k.updateLinkedBlocks();
+			
+		}
+	}
     
     
 	

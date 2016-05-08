@@ -1,7 +1,10 @@
 package com.tacosupremes.runomancy.common.block.rune;
 
+import java.util.List;
+
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
+import com.tacosupremes.runomancy.common.power.block.tile.IPowerNode;
 import com.tacosupremes.runomancy.gui.Categories;
 import com.tacosupremes.runomancy.gui.IPageGiver;
 import com.tacosupremes.runomancy.gui.ItemPage;
@@ -54,7 +57,20 @@ public class BlockEndRune extends BlockContainerRune implements IPageGiver{
 		TileEndRune te = (TileEndRune)w.getTileEntity(pos);
 		te.destroy();
 		
+		
+		List<BlockPos> bpl = ((IPowerNode)w.getTileEntity(pos)).getLinkedBlocks();
+		
 		super.breakBlock(w, pos, state);
+		
+		for(BlockPos bp : bpl){
+			
+			IPowerNode k = (IPowerNode)w.getTileEntity(bp);
+			
+			k.updateLinkedBlocks();
+			
+		}
+		
+		
 	}
 
 	

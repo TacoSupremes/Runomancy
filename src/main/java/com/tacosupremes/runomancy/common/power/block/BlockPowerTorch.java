@@ -1,9 +1,11 @@
 package com.tacosupremes.runomancy.common.power.block;
 
+import java.util.List;
 import java.util.Random;
 
 import com.google.common.base.Predicate;
 import com.tacosupremes.runomancy.common.block.BlockModContainer;
+import com.tacosupremes.runomancy.common.power.block.tile.IPowerNode;
 import com.tacosupremes.runomancy.common.power.block.tile.TilePowerTorch;
 
 import net.minecraft.block.Block;
@@ -327,6 +329,22 @@ public class BlockPowerTorch extends BlockModContainer{
         return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
     }
     
+    @Override
+	public void breakBlock(World w, BlockPos pos, IBlockState state) {
+		
+		
+    	List<BlockPos> bpl = ((IPowerNode)w.getTileEntity(pos)).getLinkedBlocks();
+		
+		super.breakBlock(w, pos, state);
+		
+		for(BlockPos bp : bpl){
+			
+			IPowerNode k = (IPowerNode)w.getTileEntity(bp);
+			
+			k.updateLinkedBlocks();
+			
+		}
+	}
     
 
     protected BlockStateContainer createBlockState()

@@ -1,5 +1,8 @@
 package com.tacosupremes.runomancy.common.power.block.tile;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.tacosupremes.runomancy.common.power.block.BlockPowerStorage;
 
 import net.minecraft.nbt.NBTTagCompound;
@@ -15,15 +18,42 @@ public class TilePowerStorage extends TileEntity implements IPowerTile, ITickabl
 	
 	public int power = 0;
 	
+	private List<BlockPos> linkedTo = new ArrayList<BlockPos>();
+	
 	private void readCustomNBT(NBTTagCompound nbt) {
 		
 		this.power = nbt.getInteger("power");
+		
+		if(nbt.hasKey("BPS")){
+			
+			for(int i = 0; i< nbt.getCompoundTag("BPS").getSize(); i++){
+				
+				
+				linkedTo.add(BlockPos.fromLong(nbt.getCompoundTag("BPS").getLong("B"+i)));
+			}
+			
+			nbt.removeTag("BPS");
+		}
 		
 	}
 	
 	private void writeCustomNBT(NBTTagCompound nbt) {
 		
 		nbt.setInteger("power", power);
+		
+		if(!linkedTo.isEmpty()){
+			
+		NBTTagCompound bt = new NBTTagCompound();
+		
+		for(int i = 0; i<linkedTo.size(); i++){
+			
+			bt.setLong("B"+i, linkedTo.get(i).toLong());
+			
+		}
+			
+		nbt.setTag("BPS", bt);
+			
+		}
 		
 	}
 	
@@ -153,6 +183,26 @@ public class TilePowerStorage extends TileEntity implements IPowerTile, ITickabl
 		
 	}
 
+	@Override
+	public List<BlockPos> getLinkedBlocks() {
+		
+		
+		return linkedTo;
+		
+	}
+
+	@Override
+	public void updateLinkedBlocks() {
+		
+		for(int i =0; i< linkedTo.size(); i++){
+			
+			if(this.getWorld().getTileEntity(linkedTo.get(i)) == null)
+				this.linkedTo.remove(i);
+			
+		}
+		
+		
+	}
 	
 	
 	

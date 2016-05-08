@@ -125,6 +125,9 @@ public class ModItems {
 	}
 	
 	public static void registerItemRender(Item i, int meta){
+		
+		if(i == null)
+			return;
 		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(i, meta, new ModelResourceLocation(LibMisc.MODID+":"+i.getUnlocalizedName().substring(5)+ (meta == 0 ? "" : String.valueOf(meta)), "inventory"));
 	}
 	

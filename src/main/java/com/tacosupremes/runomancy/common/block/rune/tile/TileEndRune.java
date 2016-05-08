@@ -32,6 +32,8 @@ public class TileEndRune extends TileEntity implements ITickable, IPowerNode {
 	
 	public int ticks = 0;
 	
+	private List<BlockPos> l = new ArrayList<BlockPos>();
+	
 	
 
 	
@@ -48,6 +50,11 @@ public class TileEndRune extends TileEntity implements ITickable, IPowerNode {
 		
 		this.rEffect = nbt.getCompoundTag("NBTE");
 		
+		for(int i =0; i<nbt.getCompoundTag("CC").getSize();i++){
+			l.add(BlockPos.fromLong(nbt.getCompoundTag("CC").getLong("L"+i)));
+				
+			}
+		nbt.removeTag("CC");
 		
     }
 
@@ -64,6 +71,12 @@ public class TileEndRune extends TileEntity implements ITickable, IPowerNode {
 		nbt.setInteger("effect", currentEffect);
 		nbt.setInteger("power", power);
 		nbt.setTag("NBTE", this.rEffect);
+		NBTTagCompound nn = new NBTTagCompound();
+		for(int i = 0; i< l.size(); i++){
+			nn.setLong("L" + i, l.get(i).toLong());
+			}
+		
+		nbt.setTag("CC", nn);
 		
     }
 	
@@ -73,8 +86,7 @@ public class TileEndRune extends TileEntity implements ITickable, IPowerNode {
 		
 		ticks++;
 		
-		if(PowerHelper.isBlockPowered(this.getWorld(), getPos()))
-			return;
+		
 		
 		if(rEffect == null)
 			rEffect = new NBTTagCompound();
@@ -147,13 +159,15 @@ public class TileEndRune extends TileEntity implements ITickable, IPowerNode {
 				return;
 			}
 			
+			if(PowerHelper.isBlockPowered(this.getWorld(), getPos()))
+				return;
+			
 			if(!this.getEffect().isGenerating()){
 				
 				if(this.power < this.getEffect().getPowerCapacity()){
 				
-					if(PowerHelper.getTotalAvailablePower(this.getWorld(), getPos(), getRange()) > 0){
 					
-						if(((double)(this.power)/((double)(this.getEffect().getPowerCapacity())) < 0.25D)){
+						if(((double)(this.power)/((double)(this.getEffect().getPowerCapacity())) < 0.25D) && PowerHelper.drainPower(this.getWorld(), getPos(), this.getEffect().getTransferRate(), getRange(), false) > 0){
 							
 							
 							this.power += PowerHelper.drainPower(this.getWorld(), pos, this.getEffect().getTransferRate(), getRange(), true);
@@ -167,7 +181,7 @@ public class TileEndRune extends TileEntity implements ITickable, IPowerNode {
 							
 						}
 						
-						}
+						
 					
 					
 						
@@ -297,6 +311,36 @@ public class TileEndRune extends TileEntity implements ITickable, IPowerNode {
 		return RuneFormations.getRange(getEffect())+3;
 		
 	}
+
+
+
+	@Override
+	public List<BlockPos> getLinkedBlocks() {
+		
+
+		
+		return l ;
+		
+	}
+
+
+
+	@Override
+	public void updateLinkedBlocks() {
+		
+		for(int i =0; i< l.size(); i++){
+			
+			if(this.getWorld().getTileEntity(l.get(i)) == null)
+				this.l.remove(i);
+			
+		}
+		
+		
+	}
+
+
+
+	
 
 
 	

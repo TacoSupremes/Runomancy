@@ -15,8 +15,9 @@ public class ItemMod extends Item{
 	
 	public ItemMod(String s, int meta){
 		this.setUnlocalizedName(s);
+		this.setRegistryName(s);
 		this.setCreativeTab(Runomancy.tab);
-		GameRegistry.registerItem(this, this.getUnlocalizedName().substring(5));
+		GameRegistry.register(this);
 		ModItems.items.add(this);
 		this.meta = meta;
 	}
