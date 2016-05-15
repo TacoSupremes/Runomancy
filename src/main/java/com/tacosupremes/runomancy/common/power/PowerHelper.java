@@ -534,9 +534,13 @@ public static boolean isBlockPowered(World w, BlockPos pos){
 		
 		List<BlockPos> bl = new ArrayList<BlockPos>();
 		
+		List<BlockPos> alts = new ArrayList<BlockPos>();
+		
+		List<Integer> altI = new ArrayList<Integer>();
+		
 		bl.add(posS);
 		
-		BlockPos last = null;
+		//BlockPos last = null;
 		
 		for(int i = 0; i< bl.size(); i++){
 			
@@ -551,8 +555,7 @@ public static boolean isBlockPowered(World w, BlockPos pos){
 				continue;
 			
 			
-			if(last != null)
-				BlockUtils.drawLine(w, Vector3.fromBlockPos(last).add(0.5D), Vector3.fromBlockPos(pos).add(0.5D), drain ? EnumParticleTypes.REDSTONE : EnumParticleTypes.SPELL_WITCH);
+		//	if(last != null)
 			
 			if(w.getTileEntity(pos) instanceof IPowerTile){
 				
@@ -560,13 +563,35 @@ public static boolean isBlockPowered(World w, BlockPos pos){
 				
 				if(drain){
 					
-					if(pt.getPower() > 0)
+					if(pt.getPower() > 0){
+						
+						BlockPos last = null;
+						for(BlockPos bpl : bl){
+							
+							if(last != null)
+							BlockUtils.drawLine(w, Vector3.fromBlockPos(last).add(0.5D), Vector3.fromBlockPos(bpl).add(0.5D), drain ? EnumParticleTypes.REDSTONE : EnumParticleTypes.SPELL_WITCH);
+							last = bpl;
+						}
+						
+						
 						return pos;
+					}
 					
 				}else{
 					
-					if(pt.getPower() != pt.getMaxPower())
+					if(pt.getPower() != pt.getMaxPower()){
+						
+						BlockPos last = null;
+						for(BlockPos bpl : bl){
+							
+							if(last != null)
+							BlockUtils.drawLine(w, Vector3.fromBlockPos(last).add(0.5D), Vector3.fromBlockPos(bpl).add(0.5D), drain ? EnumParticleTypes.REDSTONE : EnumParticleTypes.SPELL_WITCH);
+							last = bpl;
+						}
+						
+						
 						return pos;
+					}
 					
 				}
 					
@@ -582,17 +607,60 @@ public static boolean isBlockPowered(World w, BlockPos pos){
 			bs.add(pos.toString());
 			
 			if(ip != null && ip.getLinkedBlocks() != null && !ip.getLinkedBlocks().isEmpty()){
+				
+				int nm = 0;
 			for(BlockPos bp : ip.getLinkedBlocks()){
 				
 				if(bp.toString() == pos.toString() || bs.contains(bp.toString()) || w.getTileEntity(bp)  == null || !(w.getTileEntity(bp) instanceof IPowerNode))
 					continue;
 				
+				if(nm == 0){
 				bl.add(bp);
+				nm++;
+				}else{
+					
+					alts.add(bp);
+					altI.add(i);
+					
+				}
 				
 			}
 			}
 			
-			last = pos;
+			
+			
+			if(i == bl.size()-1){
+				
+				if(altI.isEmpty())
+					continue;
+				
+				
+				System.out.println("FUCKYEAH");
+				
+				
+				if(bl.isEmpty())
+					continue;
+			
+				
+				while(bl.size() != altI.get(0)+1){
+					if(bl.isEmpty())
+						break;
+					
+					bl.remove(bl.size()-1);
+					
+				}
+				
+				i = altI.get(0);
+				
+				
+				
+				bl.add(alts.get(0));
+				
+				altI.remove(0);
+				
+				alts.remove(0);
+				
+			}
 			
 			
 		}

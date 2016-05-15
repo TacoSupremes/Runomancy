@@ -165,7 +165,7 @@ public class TilePowerStorage extends TileEntity implements IPowerTile, ITickabl
 			}
 		}
 		
-		if(this.power > 12000 && this.power <= 15000){
+		if(this.power > 12000 && this.power < 18000){
 			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 5){
 				this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).withProperty(BlockPowerStorage.mode, 5));
 				((TilePowerStorage)this.getWorld().getTileEntity(getPos())).addPower(power);
@@ -173,7 +173,7 @@ public class TilePowerStorage extends TileEntity implements IPowerTile, ITickabl
 			}
 		}
 		
-		if(this.power > 15000 && this.power <= 18000){
+		if(this.power >= 18000){
 			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 6){
 				this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).withProperty(BlockPowerStorage.mode, 6));
 				((TilePowerStorage)this.getWorld().getTileEntity(getPos())).addPower(power);
