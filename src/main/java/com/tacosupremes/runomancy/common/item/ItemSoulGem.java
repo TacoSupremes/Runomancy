@@ -171,7 +171,7 @@ public class ItemSoulGem extends ItemMod implements IPageGiver {
 	        }
 	        else
 	        {
-	            RayTraceResult movingobjectposition = this.getMovingObjectPositionFromPlayer(w, player, true);
+	            RayTraceResult movingobjectposition = this.rayTrace(w, player, true);
 
 	            if (movingobjectposition == null)
 	            {
@@ -220,7 +220,7 @@ public class ItemSoulGem extends ItemMod implements IPageGiver {
 
 	    public static Entity spawnCreature(World w, ItemStack is, double x, double y, double z)
 	    {
-	        if (!EntityList.stringToClassMapping.containsKey(is.getTagCompound().getString("NAME")))
+	        if (!EntityList.NAME_TO_CLASS.containsKey(is.getTagCompound().getString("NAME")))
 	        {
 	            return null;
 	        }
@@ -238,7 +238,7 @@ public class ItemSoulGem extends ItemMod implements IPageGiver {
 	                if (entity instanceof EntityLivingBase)
 	                {
 	                    EntityLiving entityliving = (EntityLiving)entity;
-	                    entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(w.rand.nextFloat() * 360.0F), 0.0F);
+	                    entity.setLocationAndAngles(x, y, z, MathHelper.wrapDegrees(w.rand.nextFloat() * 360.0F), 0.0F);
 	                    entityliving.rotationYawHead = entityliving.rotationYaw;
 	                    entityliving.renderYawOffset = entityliving.rotationYaw;
 	                    w.spawnEntityInWorld(entity);
@@ -276,7 +276,7 @@ public class ItemSoulGem extends ItemMod implements IPageGiver {
 		
 		is.setTagCompound(new NBTTagCompound());
 		
-		is.getTagCompound().setString("NAME", EntityList.func_188430_a(c));
+		is.getTagCompound().setString("NAME", EntityList.getEntityStringFromClass(c));
 		
 		return is;
 		

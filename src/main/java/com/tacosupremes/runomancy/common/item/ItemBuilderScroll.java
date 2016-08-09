@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tacosupremes.runomancy.common.block.ModBlocks;
+import com.tacosupremes.runomancy.common.lib.LibMisc;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
@@ -14,6 +17,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
 
 public class ItemBuilderScroll extends ItemMod{
 
@@ -62,7 +68,7 @@ public void buildStructure2(World w, BlockPos pos, ItemStack is, EntityPlayer pl
 			
 			if(iD != -1){
 				
-				w.setBlockState(bp, Block.getBlockById(iD).getStateFromMeta(is.getTagCompound().getCompoundTag("META").getInteger("META"+i)));
+				w.setBlockState(bp, Block.getStateById(iD));
 				
 			}
 			
@@ -143,7 +149,7 @@ public void buildStructure2(World w, BlockPos pos, ItemStack is, EntityPlayer pl
 		
 		if(stack.getItemDamage() == 0){
 			
-			t.add(I18n.translateToLocal("runomancy.blank"));
+			t.add(I18n.translateToLocal(LibMisc.MODID+"." + "blank"));
 			
 		}else{
 			
@@ -156,10 +162,19 @@ public void buildStructure2(World w, BlockPos pos, ItemStack is, EntityPlayer pl
 				if(iD <= 0)
 					continue;
 				
-				int meta = stack.getTagCompound().getCompoundTag("META").getInteger("META"+i);
-				ItemStack bo = new ItemStack(Block.getBlockById(iD).getStateFromMeta(meta).getBlock(), 1, meta);
 				
-				if(bo.getItem() == null)
+				IBlockState state = Block.getStateById(iD);
+				ItemStack bo = new ItemStack(state.getBlock(),1,state.getBlock().getMetaFromState(state));
+				
+				if(FluidRegistry.lookupFluidForBlock(Block.getBlockById(iD)) != null){
+					bo = new ItemStack(Items.BUCKET);
+				
+					FluidBucketWrapper f = new FluidBucketWrapper(bo);
+					f.fill(new FluidStack(FluidRegistry.lookupFluidForBlock(Block.getBlockById(iD)), 1000), true);
+			
+				}
+				
+				if(bo == null || bo.getItem() == null)
 					continue;
 				
 				bl.add(bo);

@@ -25,7 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockEndRune extends BlockContainerRune implements IPageGiver{
 
 	public BlockEndRune() {
-		super(Material.circuits, "endRune");
+		super(Material.CIRCUITS, "endRune");
 		
 		
 	}

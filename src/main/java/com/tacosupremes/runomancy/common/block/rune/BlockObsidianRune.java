@@ -22,7 +22,7 @@ public class BlockObsidianRune extends BlockRune implements IPageGiver{
 	
 	
 	public BlockObsidianRune() {
-		super(Material.circuits, "obsidianRune");
+		super(Material.CIRCUITS, "obsidianRune");
 		this.setDefaultState(this.getDefaultState().withProperty(mode, 0));
 		
 		

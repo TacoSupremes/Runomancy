@@ -21,7 +21,7 @@ public class BlockSoulRune extends BlockRune {
 	
 
 	public BlockSoulRune() {
-		super(Material.circuits, "soulRune");
+		super(Material.CIRCUITS, "soulRune");
 		this.setDefaultState(this.getDefaultState().withProperty(mode, 0));
 		
 		

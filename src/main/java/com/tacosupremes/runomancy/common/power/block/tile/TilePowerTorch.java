@@ -60,10 +60,11 @@ public class TilePowerTorch extends TileEntity implements IPowerNode{
 	}
 	
 	@Override
-    public void writeToNBT(NBTTagCompound nbt)
+    public NBTTagCompound writeToNBT(NBTTagCompound nbt)
     {
-        super.writeToNBT(nbt);
+       
         writeCustomNBT(nbt);
+        return  super.writeToNBT(nbt);
     }
 	
 	@Override
@@ -74,10 +75,12 @@ public class TilePowerTorch extends TileEntity implements IPowerNode{
     }
 	
 	@Override
-	public Packet getDescriptionPacket() {
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		
 		NBTTagCompound nbt = new NBTTagCompound();
         this.writeCustomNBT(nbt);
         return new SPacketUpdateTileEntity(this.getPos(), -999, nbt);
+		
 	}
 
 	@Override

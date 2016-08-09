@@ -3,6 +3,8 @@ package com.tacosupremes.runomancy.common.power.block;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import com.google.common.base.Predicate;
 import com.tacosupremes.runomancy.common.block.BlockModContainer;
 import com.tacosupremes.runomancy.common.power.block.tile.IPowerNode;
@@ -32,7 +34,7 @@ public class BlockPowerTorch extends BlockModContainer{
 
 	
 	public BlockPowerTorch() {
-		super(Material.circuits,"powerTorch");
+		super(Material.CIRCUITS,"powerTorch");
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.UP));
         this.setTickRandomly(true);
 		
@@ -64,7 +66,7 @@ public class BlockPowerTorch extends BlockModContainer{
     protected static final AxisAlignedBB TORCH_EAST_AABB = new AxisAlignedBB(0.0D, 0.20000000298023224D, 0.3499999940395355D, 0.30000001192092896D, 0.800000011920929D, 0.6499999761581421D);
 
   
-
+    @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {
         switch ((EnumFacing)state.getValue(FACING))
@@ -81,8 +83,14 @@ public class BlockPowerTorch extends BlockModContainer{
                 return field_185738_b;
         }
     }
-
+    @Override
     public AxisAlignedBB getSelectedBoundingBox(IBlockState blockState, World worldIn, BlockPos pos)
+    {
+        return getBoundingBox(blockState, worldIn, pos);
+    }
+    
+    @Nullable
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos)
     {
         return NULL_AABB;
     }

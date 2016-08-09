@@ -25,7 +25,7 @@ public static final PropertyInteger mode = PropertyInteger.create("mode",0, ModB
 	
 	
 	public BlockEarthRune() {
-		super(Material.circuits, "earthRune");
+		super(Material.CIRCUITS, "earthRune");
 		
 		this.setDefaultState(this.getDefaultState().withProperty(mode, 0));
 		

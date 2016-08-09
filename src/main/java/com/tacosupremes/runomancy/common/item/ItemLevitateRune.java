@@ -32,8 +32,7 @@ public class ItemLevitateRune extends ItemMod {
 			if(player.isSneaking() && player.isAirBorne && Math.abs(player.motionY) > 0 && !player.isCollided){
 				
 				player.motionY /= 1.25D;
-				if(player.moveForward > 0)
-					 player.moveFlying(0.0F, 1.0F,  0.085F);
+			
 				for(int i = 0; i< 4; i++){
 					
 				w.spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, player.posX+rand.nextDouble()/2-rand.nextDouble()/2, player.posY-0.2D, player.posZ+rand.nextDouble()/2-rand.nextDouble()/2, -player.motionX, -player.motionY, -player.motionZ);

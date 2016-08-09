@@ -46,7 +46,7 @@ public class ItemRunicPickaxe extends ItemPickaxe implements IPageGiver {
 	@Override
 	public float getStrVsBlock(ItemStack stack, IBlockState block) {
 	
-		return stack.getItemDamage() == stack.getMaxDamage()-1 ? super.getStrVsBlock(stack, block) / 12F : block == Blocks.obsidian ? 4*super.getStrVsBlock(stack, block) : super.getStrVsBlock(stack, block);
+		return stack.getItemDamage() == stack.getMaxDamage()-1 ? super.getStrVsBlock(stack, block) / 12F : block == Blocks.OBSIDIAN ? 4*super.getStrVsBlock(stack, block) : super.getStrVsBlock(stack, block);
 	}
 
 	@Override
@@ -138,7 +138,7 @@ public class ItemRunicPickaxe extends ItemPickaxe implements IPageGiver {
 				 is.getTagCompound().setBoolean("ACTIVE", true);
 				 if(is.isItemEnchanted()){
 					 
-					 if(EnchantmentHelper.getEnchantmentLevel(Enchantments.silkTouch, player.getHeldItem(EnumHand.MAIN_HAND)) > 0){
+					 if(EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItem(EnumHand.MAIN_HAND)) > 0){
 					 is.getTagCompound().setBoolean("SILK", true);
 					 
 					 NBTTagList nl = is.getEnchantmentTagList();
@@ -147,7 +147,7 @@ public class ItemRunicPickaxe extends ItemPickaxe implements IPageGiver {
 			            {
 			                int j = nl.getCompoundTagAt(i).getShort("id");
 			                
-			                if(j == Enchantment.getEnchantmentID(Enchantments.silkTouch)){
+			                if(j == Enchantment.getEnchantmentID(Enchantments.SILK_TOUCH)){
 			                	nl.removeTag(i);
 			                	break;
 			                }
@@ -159,20 +159,20 @@ public class ItemRunicPickaxe extends ItemPickaxe implements IPageGiver {
 					 
 					 }
 					 
-					 if(EnchantmentHelper.getEnchantmentLevel(Enchantments.fortune, player.getHeldItem(hand)) > 0){
+					 if(EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItem(hand)) > 0){
 						 
 						 NBTTagList nl = is.getEnchantmentTagList();
 							
 							NBTTagCompound nbt = new NBTTagCompound();
 							
-							nbt.setShort("id", (short)Enchantment.getEnchantmentID(Enchantments.fortune));
-							nbt.setShort("lvl", (short)(3 + EnchantmentHelper.getEnchantmentLevel(Enchantments.fortune, player.getHeldItem(EnumHand.MAIN_HAND))));
+							nbt.setShort("id", (short)Enchantment.getEnchantmentID(Enchantments.FORTUNE));
+							nbt.setShort("lvl", (short)(3 + EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItem(EnumHand.MAIN_HAND))));
 							
 							for (int i = 0; i < nl.tagCount(); ++i)
 				            {
 				                int j = nl.getCompoundTagAt(i).getShort("id");
 				                
-				                if(j == Enchantment.getEnchantmentID(Enchantments.fortune)){
+				                if(j == Enchantment.getEnchantmentID(Enchantments.FORTUNE)){
 				                	nl.removeTag(i);
 				                	break;
 				                }
@@ -189,7 +189,7 @@ public class ItemRunicPickaxe extends ItemPickaxe implements IPageGiver {
 						
 						NBTTagCompound nbt = new NBTTagCompound();
 						
-						nbt.setShort("id", (short)Enchantment.getEnchantmentID(Enchantments.fortune));
+						nbt.setShort("id", (short)Enchantment.getEnchantmentID(Enchantments.FORTUNE));
 						nbt.setShort("lvl", (short)3);
 						nl.appendTag(nbt);
 						is.setTagInfo("ench", nl);
@@ -202,7 +202,7 @@ public class ItemRunicPickaxe extends ItemPickaxe implements IPageGiver {
 						
 						NBTTagCompound nbt = new NBTTagCompound();
 						
-						nbt.setShort("id", (short)Enchantment.getEnchantmentID(Enchantments.fortune));
+						nbt.setShort("id", (short)Enchantment.getEnchantmentID(Enchantments.FORTUNE));
 						nbt.setShort("lvl", (short)3);
 						nl.appendTag(nbt);
 						is.setTagInfo("ench", nl);
@@ -211,7 +211,7 @@ public class ItemRunicPickaxe extends ItemPickaxe implements IPageGiver {
 				 is.getTagCompound().setBoolean("ACTIVE", false);
 				 
 				 
-				 if(EnchantmentHelper.getEnchantmentLevel(Enchantments.fortune, player.getHeldItem(EnumHand.MAIN_HAND)) > 3){
+				 if(EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItem(EnumHand.MAIN_HAND)) > 3){
 					 
 					 NBTTagList nl = is.getEnchantmentTagList();
 					 
@@ -219,8 +219,8 @@ public class ItemRunicPickaxe extends ItemPickaxe implements IPageGiver {
 			            {
 			                int j = nl.getCompoundTagAt(i).getShort("id");
 			                
-			                if(j == Enchantment.getEnchantmentID(Enchantments.fortune)){
-			                	nl.getCompoundTagAt(i).setShort("lvl", (short)(EnchantmentHelper.getEnchantmentLevel(Enchantments.fortune, (player).getHeldItem(EnumHand.MAIN_HAND)) - 3));
+			                if(j == Enchantment.getEnchantmentID(Enchantments.FORTUNE)){
+			                	nl.getCompoundTagAt(i).setShort("lvl", (short)(EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, (player).getHeldItem(EnumHand.MAIN_HAND)) - 3));
 			                	break;
 			                }
 			                
@@ -239,7 +239,7 @@ public class ItemRunicPickaxe extends ItemPickaxe implements IPageGiver {
 			            {
 			                int j = nl.getCompoundTagAt(i).getShort("id");
 			                
-			                if(j == Enchantment.getEnchantmentID(Enchantments.fortune)){
+			                if(j == Enchantment.getEnchantmentID(Enchantments.FORTUNE)){
 			                	nl.removeTag(i);
 			                	break;
 			                }
@@ -258,7 +258,7 @@ public class ItemRunicPickaxe extends ItemPickaxe implements IPageGiver {
 						
 						NBTTagCompound nbt = new NBTTagCompound();
 						
-						nbt.setShort("id", (short)Enchantment.getEnchantmentID(Enchantments.silkTouch));
+						nbt.setShort("id", (short)Enchantment.getEnchantmentID(Enchantments.SILK_TOUCH));
 						nbt.setShort("lvl", (short)1);
 						nl.appendTag(nbt);
 						is.setTagInfo("ench", nl);
@@ -337,7 +337,7 @@ public class ItemRunicPickaxe extends ItemPickaxe implements IPageGiver {
  is.getTagCompound().setBoolean("ACTIVE", false);
 				 
 				 
-				 if(EnchantmentHelper.getEnchantmentLevel(Enchantments.fortune, ((EntityPlayer) entity).getHeldItem(EnumHand.MAIN_HAND)) > 3){
+				 if(EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, ((EntityPlayer) entity).getHeldItem(EnumHand.MAIN_HAND)) > 3){
 					 
 					 NBTTagList nl = is.getEnchantmentTagList();
 					 
@@ -345,8 +345,8 @@ public class ItemRunicPickaxe extends ItemPickaxe implements IPageGiver {
 			            {
 			                int j = nl.getCompoundTagAt(i).getShort("id");
 			                
-			                if(j == Enchantment.getEnchantmentID(Enchantments.fortune)){
-			                	nl.getCompoundTagAt(i).setShort("lvl", (short)(EnchantmentHelper.getEnchantmentLevel(Enchantments.fortune, ((EntityPlayer) entity).getHeldItem(EnumHand.MAIN_HAND)) - 3));
+			                if(j == Enchantment.getEnchantmentID(Enchantments.FORTUNE)){
+			                	nl.getCompoundTagAt(i).setShort("lvl", (short)(EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, ((EntityPlayer) entity).getHeldItem(EnumHand.MAIN_HAND)) - 3));
 			                	break;
 			                }
 			                
@@ -365,7 +365,7 @@ public class ItemRunicPickaxe extends ItemPickaxe implements IPageGiver {
 			            {
 			                int j = nl.getCompoundTagAt(i).getShort("id");
 			                
-			                if(j == Enchantment.getEnchantmentID(Enchantments.fortune)){
+			                if(j == Enchantment.getEnchantmentID(Enchantments.FORTUNE)){
 			                	nl.removeTag(i);
 			                	break;
 			                }
@@ -384,7 +384,7 @@ public class ItemRunicPickaxe extends ItemPickaxe implements IPageGiver {
 						
 						NBTTagCompound nbt = new NBTTagCompound();
 						
-						nbt.setShort("id", (short)Enchantment.getEnchantmentID(Enchantments.silkTouch));
+						nbt.setShort("id", (short)Enchantment.getEnchantmentID(Enchantments.SILK_TOUCH));
 						nbt.setShort("lvl", (short)1);
 						nl.appendTag(nbt);
 						is.setTagInfo("ench", nl);

@@ -42,7 +42,7 @@ public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 			
 			
 			
-			if(b.isAir(w.getBlockState(bp), w, bp) || b == null || b == Blocks.grass || b == Blocks.tallgrass || b == Blocks.red_flower || b == Blocks.yellow_flower || b instanceof BlockStem)
+			if(b.isAir(w.getBlockState(bp), w, bp) || b == null || b == Blocks.GRASS || b == Blocks.TALLGRASS || b == Blocks.RED_FLOWER || b == Blocks.YELLOW_FLOWER || b instanceof BlockStem)
 				continue;
 			
 			if(b instanceof IGrowable){
@@ -85,7 +85,7 @@ public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 			
 			if(b instanceof IPlantable){
 				
-				if(b == Blocks.nether_wart && ((BlockNetherWart)b).getMetaFromState(w.getBlockState(bp)) == 3)
+				if(b == Blocks.NETHER_WART && ((BlockNetherWart)b).getMetaFromState(w.getBlockState(bp)) == 3)
 					continue;
 				
 				if(te.power >= this.getCost()*2){

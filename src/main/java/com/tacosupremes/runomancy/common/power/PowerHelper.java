@@ -1,7 +1,9 @@
 package com.tacosupremes.runomancy.common.power;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
 import com.tacosupremes.runomancy.common.power.block.tile.IPowerNode;
@@ -635,20 +637,22 @@ public static boolean isBlockPowered(World w, BlockPos pos){
 					continue;
 				
 				
-				System.out.println("FUCKYEAH");
+		//		System.out.println("FUCKYEAH");
 				
 				
 				if(bl.isEmpty())
 					continue;
 			
-				
 				while(bl.size() != altI.get(0)+1){
 					if(bl.isEmpty())
 						break;
 					
 					bl.remove(bl.size()-1);
 					
+					
 				}
+				
+				
 				
 				i = altI.get(0);
 				
@@ -669,5 +673,6 @@ public static boolean isBlockPowered(World w, BlockPos pos){
 		return null;
 	}
 	
+
 
 }

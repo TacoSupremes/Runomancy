@@ -22,7 +22,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockPowerStorage extends BlockModContainer{
 
 	public BlockPowerStorage() {
-		super(Material.glass, "battery");
+		super(Material.GLASS, "battery");
 		this.setDefaultState(this.getDefaultState().withProperty(mode, 0));
 		
 	}

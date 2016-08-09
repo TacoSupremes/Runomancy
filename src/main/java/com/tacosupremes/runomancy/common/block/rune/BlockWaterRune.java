@@ -21,7 +21,7 @@ public static final PropertyInteger mode = PropertyInteger.create("mode",0, ModB
 	
 	
 	public BlockWaterRune() {
-		super(Material.circuits, "waterRune");
+		super(Material.CIRCUITS, "waterRune");
 		this.setDefaultState(this.getDefaultState().withProperty(mode, 0));
 		
 		

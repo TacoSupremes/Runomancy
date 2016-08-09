@@ -139,7 +139,7 @@ public class ItemRunicWand extends ItemMod implements IPageGiver {
 			
 			BlockPos bp = BlockPos.fromLong(is.getTagCompound().getLong("LINK"));
 			
-			 RayTraceResult rr = this.getMovingObjectPositionFromPlayer(w, (EntityPlayer) e, true);
+			 RayTraceResult rr = this.rayTrace(w, (EntityPlayer) e, true);
 			    
 			if(rr == null)
 				return;

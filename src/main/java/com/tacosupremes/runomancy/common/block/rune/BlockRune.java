@@ -33,7 +33,7 @@ public abstract class BlockRune extends BlockMod implements IRune, IPageGiver {
 	}
 	
 	public BlockRune(String s) {
-		this(Material.circuits, s);
+		this(Material.CIRCUITS, s);
 		
 	
 	}
@@ -82,12 +82,12 @@ public abstract class BlockRune extends BlockMod implements IRune, IPageGiver {
 	    /**
 	     * Called when a neighboring block changes.
 	     */
-	    public void onNeighborBlockChange(World worldIn, BlockPos pos, IBlockState state, Block neighborBlock)
-	    {
-	        super.onNeighborBlockChange(worldIn, pos, state, neighborBlock);
-	        this.checkAndDropBlock(worldIn, pos, state);
-	    }
-
+	 @Override
+		public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor) {
+			
+			super.onNeighborChange(world, pos, neighbor);
+			 this.checkAndDropBlock((World) world, pos, world.getBlockState(pos));
+		}
 	   
 
 	    protected void checkAndDropBlock(World worldIn, BlockPos pos, IBlockState state)
@@ -95,7 +95,7 @@ public abstract class BlockRune extends BlockMod implements IRune, IPageGiver {
 	        if (!this.canBlockStay(worldIn, pos, state))
 	        {
 	            this.dropBlockAsItem(worldIn, pos, state, 0);
-	            worldIn.setBlockState(pos, Blocks.air.getDefaultState(), 3);
+	            worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
 	        }
 	    }
 

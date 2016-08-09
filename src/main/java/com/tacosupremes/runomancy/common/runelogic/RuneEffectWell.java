@@ -39,9 +39,9 @@ public class RuneEffectWell implements IFunctionalRuneEffect {
 					if(te.power < this.getCost())
 						return;
 					
-		if(w.getBlockState(pos.add(x, 0, z)).getBlock().isAir(w.getBlockState(pos.add(x, 0, z)),w, pos.add(x, 0, z)) && w.getBlockState(pos.add(x, 0, z)).getBlock() != Blocks.snow_layer){
+		if(w.getBlockState(pos.add(x, 0, z)).getBlock().isAir(w.getBlockState(pos.add(x, 0, z)),w, pos.add(x, 0, z)) && w.getBlockState(pos.add(x, 0, z)).getBlock() != Blocks.SNOW_LAYER){
 				if(!w.isRemote)
-			w.setBlockState(pos.add(x,0,z), Blocks.snow_layer.getDefaultState());
+			w.setBlockState(pos.add(x,0,z), Blocks.SNOW_LAYER.getDefaultState());
 			
 			te.power -= this.getCost();
 			
@@ -64,7 +64,7 @@ public class RuneEffectWell implements IFunctionalRuneEffect {
 					if(te.power < this.getCost())
 						return;
 					
-					if(w.getBlockState(pos.add(x,0,z)).getBlock() != Blocks.snow_layer)
+					if(w.getBlockState(pos.add(x,0,z)).getBlock() != Blocks.SNOW_LAYER)
 						continue;
 				
 			
@@ -94,7 +94,7 @@ public class RuneEffectWell implements IFunctionalRuneEffect {
 		
 	if(w.getBlockState(pos.add(x, -1, z)).getBlock().isAir(w.getBlockState(pos.add(x,-1,z)),w, pos.add(x, -1, z))){
 		if(!w.isRemote)
-		w.setBlockState(pos.add(x,-1,z), Blocks.water.getDefaultState());
+		w.setBlockState(pos.add(x,-1,z), Blocks.WATER.getDefaultState());
 	}
 			
 			}		
@@ -114,7 +114,7 @@ public class RuneEffectWell implements IFunctionalRuneEffect {
 				if(x == 0 || z == 0)
 					continue;
 		
-				if(w.getBlockState(pos.add(x, -1, z)).getBlock() != Blocks.snow)
+				if(w.getBlockState(pos.add(x, -1, z)).getBlock() != Blocks.SNOW)
 					return false;
 		
 			}

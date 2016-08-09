@@ -89,21 +89,21 @@ public class ItemRunicHoe extends ItemHoe implements IPageGiver {
 							return  super.onItemUse(stack, player, w, pos, hand, facing, hitX, hitY, hitZ);
 						
 						
-						if(w.getBlockState(pos.add(xD, 0, zD)).getBlock() != Blocks.dirt && w.getBlockState(pos.add(xD, 0, zD)).getBlock() != Blocks.grass && !w.getBlockState(pos.add(xD, 0, zD).up()).getBlock().isAir(w.getBlockState(pos.add(xD, 1, zD)), w, pos.add(xD, 0, zD).up()))
+						if(w.getBlockState(pos.add(xD, 0, zD)).getBlock() != Blocks.DIRT && w.getBlockState(pos.add(xD, 0, zD)).getBlock() != Blocks.GRASS && !w.getBlockState(pos.add(xD, 0, zD).up()).getBlock().isAir(w.getBlockState(pos.add(xD, 1, zD)), w, pos.add(xD, 0, zD).up()))
 							continue;
 						
-						if(w.getBlockState(pos.add(xD, 0, zD)).getBlock() == Blocks.grass)
-							w.setBlockState(pos.add(xD, 0, zD), Blocks.farmland.getDefaultState(), 3);
+						if(w.getBlockState(pos.add(xD, 0, zD)).getBlock() == Blocks.GRASS)
+							w.setBlockState(pos.add(xD, 0, zD), Blocks.FARMLAND.getDefaultState(), 3);
 						
-						if(w.getBlockState(pos.add(xD, 0, zD)).getBlock() == Blocks.dirt){
+						if(w.getBlockState(pos.add(xD, 0, zD)).getBlock() == Blocks.DIRT){
 							
 							int meta = w.getBlockState(pos.add(xD, 0, zD)).getBlock().getMetaFromState(w.getBlockState(pos.add(xD, 0, zD)));
 							
 							if(meta == 0)
-								w.setBlockState(pos.add(xD, 0, zD), Blocks.farmland.getDefaultState(), 3);
+								w.setBlockState(pos.add(xD, 0, zD), Blocks.FARMLAND.getDefaultState(), 3);
 							
 							if(meta == 1)
-								w.setBlockState(pos.add(xD, 0, zD), Blocks.dirt.getDefaultState(), 3);
+								w.setBlockState(pos.add(xD, 0, zD), Blocks.DIRT.getDefaultState(), 3);
 							
 						}
 						

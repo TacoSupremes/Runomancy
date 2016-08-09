@@ -1,7 +1,10 @@
 package com.tacosupremes.runomancy.common.item;
 
+import java.util.List;
+
 import com.tacosupremes.runomancy.common.Runomancy;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.translation.I18n;
@@ -17,6 +20,8 @@ public class ItemMod extends Item{
 		this.setUnlocalizedName(s);
 		this.setRegistryName(s);
 		this.setCreativeTab(Runomancy.tab);
+		if(meta > 0)
+			this.setHasSubtypes(true);
 		GameRegistry.register(this);
 		ModItems.items.add(this);
 		this.meta = meta;
@@ -53,7 +58,32 @@ public class ItemMod extends Item{
 	}
 	
 	
+	
+	
+	
+	@Override
+	public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> l) {
+		if(!needsDifferentNames())
+		super.getSubItems(itemIn, tab, l);
+		else{
+			
+			for(int i = 0; i<=meta; i++){
+				l.add(new ItemStack(this,1,i));
+			}
+			
+			
+		}
+			
+	}
+
+
 	public boolean needsDifferentNames(){
+		
+		return false;
+	}
+
+
+	public boolean skipVariants() {
 		
 		return false;
 	}

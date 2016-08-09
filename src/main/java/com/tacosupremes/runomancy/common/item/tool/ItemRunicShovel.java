@@ -155,7 +155,7 @@ public class ItemRunicShovel extends ItemSpade implements IPageGiver {
 				 
 				 if(is.isItemEnchanted()){
 					 
-					 if(EnchantmentHelper.getEnchantmentLevel(Enchantments.silkTouch, is) > 0){
+					 if(EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, is) > 0){
 					 is.getTagCompound().setBoolean("SILK", true);
 					 
 					 NBTTagList nl = is.getEnchantmentTagList();
@@ -164,7 +164,7 @@ public class ItemRunicShovel extends ItemSpade implements IPageGiver {
 			            {
 			                int j = nl.getCompoundTagAt(i).getShort("id");
 			                
-			                if(j == Enchantment.getEnchantmentID(Enchantments.silkTouch)){
+			                if(j == Enchantment.getEnchantmentID(Enchantments.SILK_TOUCH)){
 			                	nl.removeTag(i);
 			                	break;
 			                }
@@ -176,23 +176,23 @@ public class ItemRunicShovel extends ItemSpade implements IPageGiver {
 					 
 					 }
 					 
-					 if(EnchantmentHelper.getEnchantmentLevel(Enchantments.fortune,is) > 0){
+					 if(EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE,is) > 0){
 						 
 						 is.getTagCompound().setBoolean("FORTUNE", true);
-						 is.getTagCompound().setInteger("FORTUNELVL", EnchantmentHelper.getEnchantmentLevel(Enchantments.fortune, is));
+						 is.getTagCompound().setInteger("FORTUNELVL", EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, is));
 							
 						 NBTTagList nl = is.getEnchantmentTagList();
 							
 							NBTTagCompound nbt = new NBTTagCompound();
 							
-							nbt.setShort("id", (short)Enchantment.getEnchantmentID(Enchantments.silkTouch));
+							nbt.setShort("id", (short)Enchantment.getEnchantmentID(Enchantments.SILK_TOUCH));
 							nbt.setShort("lvl", (short)1);
 							
 							for (int i = 0; i < nl.tagCount(); ++i)
 				            {
 				                int j = nl.getCompoundTagAt(i).getShort("id");
 				                
-				                if(j == Enchantment.getEnchantmentID(Enchantments.fortune)){
+				                if(j == Enchantment.getEnchantmentID(Enchantments.FORTUNE)){
 				                	nl.removeTag(i);
 				                	break;
 				                }
@@ -209,7 +209,7 @@ public class ItemRunicShovel extends ItemSpade implements IPageGiver {
 						
 						NBTTagCompound nbt = new NBTTagCompound();
 						
-						nbt.setShort("id", (short)Enchantment.getEnchantmentID(Enchantments.fortune));
+						nbt.setShort("id", (short)Enchantment.getEnchantmentID(Enchantments.FORTUNE));
 						nbt.setShort("lvl", (short)3);
 						nl.appendTag(nbt);
 						is.setTagInfo("ench", nl);
@@ -222,7 +222,7 @@ public class ItemRunicShovel extends ItemSpade implements IPageGiver {
 						
 						NBTTagCompound nbt = new NBTTagCompound();
 						
-						nbt.setShort("id", (short)Enchantment.getEnchantmentID(Enchantments.silkTouch));
+						nbt.setShort("id", (short)Enchantment.getEnchantmentID(Enchantments.SILK_TOUCH));
 						nbt.setShort("lvl", (short)1);
 						nl.appendTag(nbt);
 						is.setTagInfo("ench", nl);
@@ -231,7 +231,7 @@ public class ItemRunicShovel extends ItemSpade implements IPageGiver {
 				 
 				 is.getTagCompound().setBoolean("ACTIVE", false);
 				 
-				 if(EnchantmentHelper.getEnchantmentLevel(Enchantments.fortune, player.getHeldItem(hand)) == 3){
+				 if(EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItem(hand)) == 3){
 					 
 					 NBTTagList nl = is.getEnchantmentTagList();
 					 
@@ -239,8 +239,8 @@ public class ItemRunicShovel extends ItemSpade implements IPageGiver {
 			            {
 			                int j = nl.getCompoundTagAt(i).getShort("id");
 			                
-			                if(j == Enchantment.getEnchantmentID(Enchantments.fortune)){
-			                	nl.getCompoundTagAt(i).setShort("id", (short)Enchantment.getEnchantmentID(Enchantments.silkTouch));
+			                if(j == Enchantment.getEnchantmentID(Enchantments.FORTUNE)){
+			                	nl.getCompoundTagAt(i).setShort("id", (short)Enchantment.getEnchantmentID(Enchantments.SILK_TOUCH));
 			                	nl.getCompoundTagAt(i).setShort("lvl", (short)1);
 			                	break;
 			                }
@@ -260,7 +260,7 @@ public class ItemRunicShovel extends ItemSpade implements IPageGiver {
 			            {
 			                int j = nl.getCompoundTagAt(i).getShort("id");
 			                
-			                if(j == Enchantment.getEnchantmentID(Enchantments.silkTouch)){
+			                if(j == Enchantment.getEnchantmentID(Enchantments.SILK_TOUCH)){
 			                	nl.removeTag(i);
 			                	break;
 			                }
@@ -279,7 +279,7 @@ public class ItemRunicShovel extends ItemSpade implements IPageGiver {
 						
 						NBTTagCompound nbt = new NBTTagCompound();
 						
-						nbt.setShort("id", (short)Enchantment.getEnchantmentID(Enchantments.fortune));
+						nbt.setShort("id", (short)Enchantment.getEnchantmentID(Enchantments.FORTUNE));
 						nbt.setShort("lvl", (short)is.getTagCompound().getInteger("FORTUNELVL"));
 						nl.appendTag(nbt);
 						is.setTagInfo("ench", nl);
@@ -352,7 +352,7 @@ public class ItemRunicShovel extends ItemSpade implements IPageGiver {
 					 
 					 is.getTagCompound().setBoolean("ACTIVE", false);
 					 
-					 if(EnchantmentHelper.getEnchantmentLevel(Enchantments.fortune, is) == 3){
+					 if(EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, is) == 3){
 						 
 						 NBTTagList nl = is.getEnchantmentTagList();
 						 
@@ -360,8 +360,8 @@ public class ItemRunicShovel extends ItemSpade implements IPageGiver {
 				            {
 				                int j = nl.getCompoundTagAt(i).getShort("id");
 				                
-				                if(j == Enchantment.getEnchantmentID(Enchantments.fortune)){
-				                	nl.getCompoundTagAt(i).setShort("id", (short)Enchantment.getEnchantmentID(Enchantments.fortune));
+				                if(j == Enchantment.getEnchantmentID(Enchantments.FORTUNE)){
+				                	nl.getCompoundTagAt(i).setShort("id", (short)Enchantment.getEnchantmentID(Enchantments.FORTUNE));
 				                	nl.getCompoundTagAt(i).setShort("lvl", (short)1);
 				                	break;
 				                }
@@ -381,7 +381,7 @@ public class ItemRunicShovel extends ItemSpade implements IPageGiver {
 				            {
 				                int j = nl.getCompoundTagAt(i).getShort("id");
 				                
-				                if(j == Enchantment.getEnchantmentID(Enchantments.silkTouch)){
+				                if(j == Enchantment.getEnchantmentID(Enchantments.SILK_TOUCH)){
 				                	nl.removeTag(i);
 				                	break;
 				                }
@@ -400,7 +400,7 @@ public class ItemRunicShovel extends ItemSpade implements IPageGiver {
 							
 							NBTTagCompound nbt = new NBTTagCompound();
 							
-							nbt.setShort("id", (short)Enchantment.getEnchantmentID(Enchantments.fortune));
+							nbt.setShort("id", (short)Enchantment.getEnchantmentID(Enchantments.FORTUNE));
 							nbt.setShort("lvl", (short)is.getTagCompound().getInteger("FORTUNELVL"));
 							nl.appendTag(nbt);
 							is.setTagInfo("ench", nl);

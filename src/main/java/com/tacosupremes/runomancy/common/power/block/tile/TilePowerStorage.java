@@ -58,10 +58,12 @@ public class TilePowerStorage extends TileEntity implements IPowerTile, ITickabl
 	}
 	
 	@Override
-    public void writeToNBT(NBTTagCompound nbt)
+    public NBTTagCompound writeToNBT(NBTTagCompound nbt)
     {
-        super.writeToNBT(nbt);
+       
         writeCustomNBT(nbt);
+        
+        return super.writeToNBT(nbt);
     }
 	
 	@Override
@@ -72,10 +74,12 @@ public class TilePowerStorage extends TileEntity implements IPowerTile, ITickabl
     }
 	
 	@Override
-	public Packet getDescriptionPacket() {
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		
 		NBTTagCompound nbt = new NBTTagCompound();
         this.writeCustomNBT(nbt);
         return new SPacketUpdateTileEntity(this.getPos(), -999, nbt);
+		
 	}
 
 	@Override

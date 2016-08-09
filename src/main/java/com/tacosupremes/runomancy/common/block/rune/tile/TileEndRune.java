@@ -274,19 +274,24 @@ public class TileEndRune extends TileEntity implements ITickable, IPowerNode {
         readCustomNBT(nbt);
     }
 	@Override
-    public void writeToNBT(NBTTagCompound nbt)
+    public NBTTagCompound writeToNBT(NBTTagCompound nbt)
     {
-        super.writeToNBT(nbt);
+       
         writeCustomNBT(nbt);
+        return super.writeToNBT(nbt);
     }
 	
 	//Client Packet stuff
 	@Override
-	public Packet getDescriptionPacket() {
+	public SPacketUpdateTileEntity getUpdatePacket() {
+		
 		NBTTagCompound nbt = new NBTTagCompound();
         this.writeCustomNBT(nbt);
         return new SPacketUpdateTileEntity(this.getPos(), -999, nbt);
+		
 	}
+
+
 
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {

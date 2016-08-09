@@ -7,7 +7,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,7 +26,7 @@ public class BlockMarker extends BlockModContainer {
 	
 
 	public BlockMarker() {
-		super(Material.circuits, "marker");
+		super(Material.CIRCUITS, "marker");
 		this.setDefaultState(this.getDefaultState().withProperty(active, false));
 		
 		
@@ -83,10 +82,7 @@ public class BlockMarker extends BlockModContainer {
 	@Override
 	public boolean onBlockActivated(World w, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 		
-		if(heldItem == null)
-			return false;
-		
-		if(heldItem.getItem() == ModItems.runicWand){
+		if(heldItem == null || heldItem.getItem() != ModItems.builderScroll){
 		w.setBlockState(pos, state.withProperty(active, true));
 		
 		TileMarker te = (TileMarker)w.getTileEntity(pos);
@@ -160,6 +156,8 @@ if(w.getBlockState(pos.add(0, 0, z)).getBlock() == ModBlocks.marker){
 			te.xF = xF;
 			te.yF = yF;
 			te.zF = zF;
+			
+			return true;
 		
 		}
 		
@@ -170,6 +168,7 @@ if(w.getBlockState(pos.add(0, 0, z)).getBlock() == ModBlocks.marker){
 			heldItem.setItemDamage(1);
 			heldItem.setTagCompound(new NBTTagCompound());
 			
+			
 			NBTTagCompound b = new NBTTagCompound();
 			
 			NBTTagCompound meta = new NBTTagCompound();
@@ -178,7 +177,6 @@ if(w.getBlockState(pos.add(0, 0, z)).getBlock() == ModBlocks.marker){
 			
 			if(!te.isArea())
 				return false;
-			
 			
 			int xO = te.xF == null ? 0 : te.xF.getX()-pos.getX();
 			int yO = te.yF == null ? 0 : te.yF.getY()-pos.getY();
@@ -199,13 +197,10 @@ if(w.getBlockState(pos.add(0, 0, z)).getBlock() == ModBlocks.marker){
 				while(x_ != xO){
 					while(z_ != zO){
 						System.out.println(w.getBlockState(pos.add(x_, y_, z_)).toString() + ":::" + x_ + ":" + y_ + ":" + z_);
-						if(!w.getBlockState(pos.add(x_, y_, z_)).getBlock().isAir(w.getBlockState(pos.add(x_, y_, z_)), w, pos.add(x_, y_, z_))){
-					b.setInteger("BLOCK"+index, Block.blockRegistry.getIDForObject(w.getBlockState(pos.add(x_, y_, z_)).getBlock()));
-					meta.setInteger("META"+index, w.getBlockState(pos.add(x_, y_, z_)).getBlock().getMetaFromState(w.getBlockState(pos.add(x_, y_, z_))));
-						}else{
-							b.setInteger("BLOCK"+index, -1);
-							meta.setInteger("META"+index, -1);
-							
+						if(!w.getBlockState(pos.add(x_, y_, z_)).getBlock().isAir(w.getBlockState(pos.add(x_, y_, z_)), w, pos.add(x_, y_, z_)))
+							b.setInteger("BLOCK"+index, Block.getStateId(w.getBlockState(pos.add(x_, y_, z_))));
+						else{
+							b.setInteger("BLOCK"+index, -1);			
 						}
 				if(zO > 0)	
 					z_++;
@@ -228,9 +223,7 @@ if(w.getBlockState(pos.add(0, 0, z)).getBlock() == ModBlocks.marker){
 					y_--;
 		}
 			
-			heldItem.getTagCompound().setTag("BLOCKS", b);
-			heldItem.getTagCompound().setTag("META", meta);
-			
+			heldItem.getTagCompound().setTag("BLOCKS", b);			
 	}
 		
 		return super.onBlockActivated(w, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
