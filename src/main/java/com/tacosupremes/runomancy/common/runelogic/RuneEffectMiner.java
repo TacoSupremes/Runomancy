@@ -89,7 +89,7 @@ public class RuneEffectMiner implements IFunctionalRuneEffect {
 				ent.motionZ = 0;
 				
 				if(!w.isRemote)
-					w.spawnEntityInWorld(ent);
+					w.spawnEntity(ent);
 				}
 				}
 				

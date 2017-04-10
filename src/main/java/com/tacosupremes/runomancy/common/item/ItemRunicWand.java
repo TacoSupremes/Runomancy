@@ -80,10 +80,10 @@ public class ItemRunicWand extends ItemMod implements IPageGiver {
 	}
 
 	@Override
-	public EnumActionResult onItemUse(ItemStack is, EntityPlayer player, World w, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public EnumActionResult onItemUse(EntityPlayer player, World w, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		
 		
-		
+		ItemStack is = player.getActiveItemStack();
 		
 		
 		
@@ -123,7 +123,7 @@ public class ItemRunicWand extends ItemMod implements IPageGiver {
 		}
 		
 		
-		return super.onItemUse(is, player, w, pos, hand, facing, hitX, hitY, hitZ);
+		return super.onItemUse(player, w, pos, hand, facing, hitX, hitY, hitZ);
 		
 	}
 

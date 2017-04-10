@@ -24,6 +24,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
@@ -34,9 +35,10 @@ public class ItemRunicHoe extends ItemHoe implements IPageGiver {
 	public ItemRunicHoe() {
 		super(ModItems.runic);
 		this.setUnlocalizedName("runicHoe");
+		this.setRegistryName("runicHoe");
 		this.setCreativeTab(Runomancy.tab);
 		this.setHasSubtypes(true);
-		GameRegistry.registerItem(this, this.getUnlocalizedName().substring(5));
+		GameRegistry.register(this);
 		ModItems.nitems.add(this);
 		this.setNoRepair();
 	}
@@ -52,20 +54,15 @@ public class ItemRunicHoe extends ItemHoe implements IPageGiver {
 	
 	
 
+	
 	@Override
-	public boolean isItemTool(ItemStack stack) {
-		
-		return true;
-	}
-
-	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World w, BlockPos pos,
+	public EnumActionResult onItemUse(EntityPlayer player, World w, BlockPos pos,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		
-		
+		ItemStack stack = player.getActiveItemStack();
 
 		if(stack.getItemDamage() == stack.getMaxDamage()-1)
-			return super.onItemUse(stack, player, w, pos, hand, facing, hitX, hitY, hitZ);
+			return super.onItemUse(player, w, pos, hand, facing, hitX, hitY, hitZ);
 		
 		if(stack.hasTagCompound()){
 			
@@ -74,7 +71,7 @@ public class ItemRunicHoe extends ItemHoe implements IPageGiver {
 				
 				
 				if(stack.getItemDamage() == stack.getMaxDamage()-1)
-					return super.onItemUse(stack, player, w, pos, hand, facing, hitX, hitY, hitZ);
+					return super.onItemUse(player, w, pos, hand, facing, hitX, hitY, hitZ);
 				
 			player.swingArm(EnumHand.MAIN_HAND);
 
@@ -86,7 +83,7 @@ public class ItemRunicHoe extends ItemHoe implements IPageGiver {
 					
 						
 						if(stack.getItemDamage() == stack.getMaxDamage()-1)
-							return  super.onItemUse(stack, player, w, pos, hand, facing, hitX, hitY, hitZ);
+							return  super.onItemUse(player, w, pos, hand, facing, hitX, hitY, hitZ);
 						
 						
 						if(w.getBlockState(pos.add(xD, 0, zD)).getBlock() != Blocks.DIRT && w.getBlockState(pos.add(xD, 0, zD)).getBlock() != Blocks.GRASS && !w.getBlockState(pos.add(xD, 0, zD).up()).getBlock().isAir(w.getBlockState(pos.add(xD, 1, zD)), w, pos.add(xD, 0, zD).up()))
@@ -119,14 +116,14 @@ public class ItemRunicHoe extends ItemHoe implements IPageGiver {
 		
 		
 		
-		return super.onItemUse(stack, player, w, pos, hand, facing, hitX, hitY, hitZ);
+		return super.onItemUse(player, w, pos, hand, facing, hitX, hitY, hitZ);
 		
 	}
 
 
 
 	@Override
-	public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> l) {
+	public void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> l) {
 		
 		
 		l.add(new ItemStack(item,1,0));
@@ -192,11 +189,11 @@ public class ItemRunicHoe extends ItemHoe implements IPageGiver {
 	    }
 	
 	 @Override
-		public ActionResult<ItemStack> onItemRightClick(ItemStack is, World worldIn, EntityPlayer player,
+		public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player,
 				EnumHand hand) {
 			
 			 
-			 
+			 ItemStack is = player.getActiveItemStack();
 			 
 			 if(!is.hasTagCompound()){
 				 is.setTagCompound(new NBTTagCompound());
@@ -215,7 +212,7 @@ public class ItemRunicHoe extends ItemHoe implements IPageGiver {
 				 
 			 }
 				 
-			return super.onItemRightClick(is, worldIn, player, hand);
+			return super.onItemRightClick(worldIn, player, hand);
 			
 		}
 

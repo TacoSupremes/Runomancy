@@ -118,12 +118,7 @@ public abstract class BlockContainerRune extends BlockModContainer implements IR
 			
 		}
 
-		@Override
-		public boolean isVisuallyOpaque() {
-			
-			return false;
-			
-		}
+	
 	    
 		
 		 public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)

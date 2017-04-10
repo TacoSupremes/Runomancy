@@ -46,12 +46,13 @@ public class ItemHungerTablet extends ItemMod implements IPageGiver{
 
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack is, World worldIn, EntityPlayer playerIn,
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn,
 			EnumHand hand) {
 		
+		ItemStack is = playerIn.getActiveItemStack();
 		
 		if(!playerIn.isSneaking())
-			return super.onItemRightClick(is, worldIn, playerIn, hand);
+			return super.onItemRightClick(worldIn, playerIn, hand);
 		
 		if(is.getItemDamage() < 1)
 			is.setItemDamage(1);
@@ -59,7 +60,7 @@ public class ItemHungerTablet extends ItemMod implements IPageGiver{
 			is.setItemDamage(0);
 		
 		
-		return super.onItemRightClick(is, worldIn, playerIn, hand);
+		return super.onItemRightClick(worldIn, playerIn, hand);
 		
 	}
 
@@ -97,7 +98,7 @@ public class ItemHungerTablet extends ItemMod implements IPageGiver{
 				is.getTagCompound().setFloat("SAT",Math.min(100, sat+is.getTagCompound().getFloat("SAT")));
 				is.getTagCompound().setInteger("H",Math.min(100, food+is.getTagCompound().getInteger("H")));
 				
-				player.inventory.getStackInSlot(i).stackSize --;
+				player.inventory.getStackInSlot(i).shrink(1);
 				break;
 				
 			}

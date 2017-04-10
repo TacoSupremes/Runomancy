@@ -64,7 +64,7 @@ public class RuneEffectRepair implements IFunctionalRuneEffect {
 	        		if(is.getItem()== r.getIn().getItem() && is.getItemDamage() == r.getIn().getItemDamage()){
 	        			if(te.power >= r.getCost()){
 	        				te.power-=r.getCost();
-	        				if(is.stackSize == 1)
+	        				if(is.getCount() == 1)
 	        				entity.setEntityItemStack(r.getOut().copy());
 	        				else{
 	        					
@@ -72,12 +72,12 @@ public class RuneEffectRepair implements IFunctionalRuneEffect {
 	        					ent.setEntityItemStack(r.getOut().copy());
 	        					RuneEffectFurnace.setVelocity(ent, 0, 0.1D, 0);
 	        					
-	        					entity.setEntityItemStack(is.copy().splitStack(is.stackSize-1));
+	        					entity.setEntityItemStack(is.copy().splitStack(is.getCount()-1));
 	        					
 	        					ent.setPosition(entity.posX, entity.posY+0.1, entity.posZ);
 	        					ent.motionY = 0.4D;
 	        					if(!w.isRemote)
-	        						w.spawnEntityInWorld(ent);
+	        						w.spawnEntity(ent);
 	        					
 	        					this.spawnParticleOnEntity(entity);
 	        					

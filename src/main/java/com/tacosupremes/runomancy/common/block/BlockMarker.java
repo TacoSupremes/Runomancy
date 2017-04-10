@@ -80,8 +80,10 @@ public class BlockMarker extends BlockModContainer {
 
 
 	@Override
-	public boolean onBlockActivated(World w, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+	 public boolean onBlockActivated(World w, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+    {
 		
+		ItemStack heldItem = playerIn.getHeldItem(hand);
 		if(heldItem == null || heldItem.getItem() != ModItems.builderScroll){
 		w.setBlockState(pos, state.withProperty(active, true));
 		
@@ -226,7 +228,7 @@ if(w.getBlockState(pos.add(0, 0, z)).getBlock() == ModBlocks.marker){
 			heldItem.getTagCompound().setTag("BLOCKS", b);			
 	}
 		
-		return super.onBlockActivated(w, pos, state, playerIn, hand, heldItem, side, hitX, hitY, hitZ);
+		return super.onBlockActivated(w, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 		
 	}
 

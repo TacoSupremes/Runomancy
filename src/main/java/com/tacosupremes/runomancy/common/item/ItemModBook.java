@@ -19,15 +19,14 @@ public class ItemModBook extends ItemMod{
 
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World w, EntityPlayer player,
-			EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World w, EntityPlayer player, EnumHand hand){
 		
 		if(w.isRemote){
 			player.openGui(Runomancy.instance, LibMisc.GuiIDs.MODBOOK, w, (int)player.posX, (int)player.posY, (int)player.posZ);
 		}
 		
 		
-		return super.onItemRightClick(itemStackIn, w, player, hand);
+		return super.onItemRightClick(w, player, hand);
 		
 	}
 	

@@ -22,6 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
@@ -32,9 +33,10 @@ public class ItemRunicAxe extends ItemAxe implements IPageGiver{
 	public ItemRunicAxe() {
 		super(ModItems.runic);
 		this.setUnlocalizedName("runicAxe");
+		this.setRegistryName("runicAxe");
 		this.setCreativeTab(Runomancy.tab);
 		this.setHasSubtypes(true);
-		GameRegistry.registerItem(this, this.getUnlocalizedName().substring(5));
+		GameRegistry.register(this);
 		ModItems.nitems.add(this);
 		
 	
@@ -63,16 +65,12 @@ public class ItemRunicAxe extends ItemAxe implements IPageGiver{
 
 
 
-	@Override
-	public boolean isItemTool(ItemStack stack) {
-		
-		return true;
-	}
+	
 
 
 
 	@Override
-	public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> l) {
+	public void getSubItems(Item item, CreativeTabs tab, NonNullList<ItemStack> l) {
 		
 		
 		l.add(new ItemStack(item,1,0));
@@ -175,10 +173,10 @@ public class ItemRunicAxe extends ItemAxe implements IPageGiver{
 	 
 	 
 	 @Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack is, World worldIn, EntityPlayer player,
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player,
 			EnumHand hand) {
 		
-		 
+		 ItemStack is = player.getActiveItemStack();
 		 
 		 
 		 if(!is.hasTagCompound()){
@@ -198,7 +196,7 @@ public class ItemRunicAxe extends ItemAxe implements IPageGiver{
 			 
 		 }
 			 
-		return super.onItemRightClick(is, worldIn, player, hand);
+		return super.onItemRightClick(worldIn, player, hand);
 		
 	}
 

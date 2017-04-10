@@ -7,14 +7,13 @@ import com.tacosupremes.runomancy.common.Runomancy;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemMod extends Item{
 	
 	public int meta;
-	
-	
 	
 	public ItemMod(String s, int meta){
 		this.setUnlocalizedName(s);
@@ -27,11 +26,9 @@ public class ItemMod extends Item{
 		this.meta = meta;
 	}
 
-	
 	public ItemMod(String s){
 		this(s,0);
 	}
-	
 	
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
@@ -42,8 +39,6 @@ public class ItemMod extends Item{
 		
 		return super.getUnlocalizedName(stack);
 	}
-
-
 
 	@Override
 	public String getItemStackDisplayName(ItemStack stack) {
@@ -62,7 +57,7 @@ public class ItemMod extends Item{
 	
 	
 	@Override
-	public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> l) {
+	public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> l) {
 		if(!needsDifferentNames())
 		super.getSubItems(itemIn, tab, l);
 		else{
@@ -75,6 +70,9 @@ public class ItemMod extends Item{
 		}
 			
 	}
+
+	
+
 
 
 	public boolean needsDifferentNames(){

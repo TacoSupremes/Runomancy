@@ -32,13 +32,13 @@ public class ItemBuilderScroll extends ItemMod{
 	
 	
 	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World w, BlockPos pos,
+	public EnumActionResult onItemUse(EntityPlayer player, World w, BlockPos pos,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		
 		if(w.getBlockState(pos).getBlock() != ModBlocks.marker)
-			buildStructure2(w,pos.up(), stack, player);
+			buildStructure2(w,pos.up(), player.getHeldItem(player.getActiveHand()), player);
 		
-		return super.onItemUse(stack, player, w, pos, hand, facing, hitX, hitY, hitZ);
+		return super.onItemUse(player, w, pos, hand, facing, hitX, hitY, hitZ);
 		
 	}
 
@@ -221,7 +221,7 @@ public void buildStructure2(World w, BlockPos pos, ItemStack is, EntityPlayer pl
 		outer:
 		for(ItemStack n : is){
 			
-			int s = n.stackSize;
+			int s = n.getCount();
 			int cn = 0;
 			
 			for(ItemStack isp : player.inventory.mainInventory){
@@ -229,10 +229,10 @@ public void buildStructure2(World w, BlockPos pos, ItemStack is, EntityPlayer pl
 				
 				if(isp.getItem() == n.getItem() && isp.getItemDamage() == n.getItemDamage()){
 					
-					if(isp.stackSize >= cn)
+					if(isp.getCount() >= cn)
 						continue outer;
 					else
-						cn += isp.stackSize;
+						cn += isp.getCount();
 				}
 				
 			}
@@ -250,7 +250,7 @@ public void buildStructure2(World w, BlockPos pos, ItemStack is, EntityPlayer pl
 	
 	public static boolean playerHasItemstack(ItemStack is, EntityPlayer player){
 		
-		int s = is.stackSize;
+		int s = is.getCount();
 		int cn = 0;
 		
 		for(ItemStack isp : player.inventory.mainInventory){
@@ -258,10 +258,10 @@ public void buildStructure2(World w, BlockPos pos, ItemStack is, EntityPlayer pl
 			
 			if(isp.getItem() == is.getItem() && isp.getItemDamage() == is.getItemDamage()){
 				
-				if(isp.stackSize >= cn)
+				if(isp.getCount() >= cn)
 					return true;
 				else
-					cn += isp.stackSize;
+					cn += isp.getCount();
 			}
 			
 		}
@@ -277,17 +277,17 @@ public void buildStructure2(World w, BlockPos pos, ItemStack is, EntityPlayer pl
 	public static void removeItems(ItemStack is, EntityPlayer player){
 		
 		
-		int i = is.stackSize;
+		int i = is.getCount();
 		
 		for(ItemStack is2 : player.inventory.mainInventory){
 			
 			if(is2.getItem() == is.getItem() && is2.getItemDamage() == is.getItemDamage()){
-				if(is2.stackSize >= i){
-					is2.stackSize -= i;
+				if(is2.getCount() >= i){
+					is2.shrink(i);
 					return;
 				}else{
 					
-					i -= is2.stackSize;
+					i -= is2.getCount();
 					
 					is2 = null;
 					

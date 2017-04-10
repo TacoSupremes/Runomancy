@@ -123,7 +123,7 @@ public class TilePowerStorage extends TileEntity implements IPowerTile, ITickabl
 	@Override
 	public void update() {
 		
-		if(this.worldObj.isRemote)
+		if(this.world.isRemote)
 			return;
 		
 		if(this.getPower() > this.getMaxPower())

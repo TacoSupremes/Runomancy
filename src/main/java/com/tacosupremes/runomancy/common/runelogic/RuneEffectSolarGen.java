@@ -21,7 +21,7 @@ public class RuneEffectSolarGen implements IRuneEffect {
 		
 		
 	boolean fsky= w.canBlockSeeSky(pos);
-	if(w.provider.getHasNoSky()||!fsky)
+	if(w.provider.hasNoSky()||!fsky)
 		return;
 			
 			
@@ -31,7 +31,7 @@ public class RuneEffectSolarGen implements IRuneEffect {
       float f1 = f < (float)Math.PI ? 0.0F : ((float)Math.PI * 2F);
       f = f + (f1 - f) * 0.2F;
       i = Math.round((float)i * MathHelper.cos(f));
-      i = MathHelper.clamp_int(i, 0, 5);
+      i = MathHelper.clamp(i, 0, 5);
       
       te.power += i;
 	

@@ -21,6 +21,7 @@ import com.tacosupremes.runomancy.proxy.CommonProxy;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -106,9 +107,9 @@ public class Runomancy {
 		}
 
 		@Override
-		public Item getTabIconItem() {
+		public ItemStack getTabIconItem() {
 		
-			return Item.getItemFromBlock(ModBlocks.endRune);
+			return new ItemStack(ModBlocks.endRune);
 		}
     	
     }
