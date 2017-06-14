@@ -3,15 +3,21 @@ package com.tacosupremes.runomancy.common.power.block.tile;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tacosupremes.runomancy.common.block.tile.TileMod;
+import com.tacosupremes.runomancy.common.utils.BlockUtils;
+import com.tacosupremes.runomancy.common.utils.Vector3;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 
-public class TilePowerTorch extends TileEntity implements IPowerNode{
+public class TilePowerTorch extends TileMod implements IPowerNode, ITickable{
 
 	@Override
 	public int getRange() {
@@ -20,9 +26,11 @@ public class TilePowerTorch extends TileEntity implements IPowerNode{
 	}
 
 	
+	
+	
 	private List<BlockPos> linkedTo = new ArrayList<BlockPos>();
 	
-	private void readCustomNBT(NBTTagCompound nbt) {
+	public void readCustomNBT(NBTTagCompound nbt) {
 		
 		
 		
@@ -39,7 +47,7 @@ public class TilePowerTorch extends TileEntity implements IPowerNode{
 		
 	}
 	
-	private void writeCustomNBT(NBTTagCompound nbt) {
+	public void writeCustomNBT(NBTTagCompound nbt) {
 		
 		
 		
@@ -59,35 +67,7 @@ public class TilePowerTorch extends TileEntity implements IPowerNode{
 		
 	}
 	
-	@Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt)
-    {
-       
-        writeCustomNBT(nbt);
-        return  super.writeToNBT(nbt);
-    }
-	
-	@Override
-	public void readFromNBT(NBTTagCompound nbt)
-    {
-        super.readFromNBT(nbt);
-        readCustomNBT(nbt);
-    }
-	
-	@Override
-	public SPacketUpdateTileEntity getUpdatePacket() {
-		
-		NBTTagCompound nbt = new NBTTagCompound();
-        this.writeCustomNBT(nbt);
-        return new SPacketUpdateTileEntity(this.getPos(), -999, nbt);
-		
-	}
 
-	@Override
-	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-		super.onDataPacket(net, pkt);		
-		this.readCustomNBT(pkt.getNbtCompound());
-	}
 
 	@Override
 	public List<BlockPos> getLinkedBlocks() {
@@ -98,12 +78,45 @@ public class TilePowerTorch extends TileEntity implements IPowerNode{
 	}
 
 	@Override
-	public void updateLinkedBlocks() {
+	public void updateLinkedBlocks(BlockPos bp) {
 		
 		for(int i =0; i< linkedTo.size(); i++){
 			
-			if(this.getWorld().getTileEntity(linkedTo.get(i)) == null)
+			if(linkedTo.get(i).toString().equals(bp.toString()))
 				this.linkedTo.remove(i);
+			
+		}
+		
+		
+	}
+
+	@Override
+	public void update() {
+		
+		for(BlockPos bp : linkedTo){			
+			
+			BlockUtils.drawLine(getWorld(), Vector3.fromBlockPos(getPos()).add(0.5), Vector3.fromBlockPos(bp).add(0.5), EnumParticleTypes.DRAGON_BREATH);
+		}
+		
+		for(int i =0; i< linkedTo.size(); i++){
+			
+			if(this.getWorld().getTileEntity(linkedTo.get(i)) == null || this.getWorld().getTileEntity(linkedTo.get(i)) == this)
+				linkedTo.remove(i);
+			
+		}
+		
+		List<String> s = new ArrayList<String>();
+		
+		for(int i =0; i< linkedTo.size(); i++){
+			
+			if(s.contains(linkedTo.get(i).toString())){
+				linkedTo.remove(i);
+				continue;
+			}
+			
+			s.add(linkedTo.get(i).toString());
+			
+			
 			
 		}
 		

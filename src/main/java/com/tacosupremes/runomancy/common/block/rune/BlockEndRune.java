@@ -66,7 +66,8 @@ public class BlockEndRune extends BlockContainerRune implements IPageGiver{
 			
 			IPowerNode k = (IPowerNode)w.getTileEntity(bp);
 			
-			k.updateLinkedBlocks();
+			k.updateLinkedBlocks(pos);
+			k.getLinkedBlocks().remove(pos);
 			
 		}
 		

@@ -151,6 +151,123 @@ public static List<IPowerTile> getBlocksInRange(World w, BlockPos pos, List<IPow
 
 	
 	
+
+
+public static List<BlockPos> getPathToBattery(World w, BlockPos posF, List<BlockPos> linked, boolean draining){
+	
+	List<BlockPos> toCheck = new ArrayList<BlockPos>();
+	
+	List<BlockPos> path = new ArrayList<BlockPos>();
+	
+	List<String> checked = new ArrayList<String>();
+	
+	List<Integer> choice = new ArrayList<Integer>();
+	
+	//int pig  = 4;
+	//EnumParticleTypes e = EnumParticleTypes.values()[pig];
+	
+	if(linked.isEmpty())
+		return toCheck;
+	
+	if(linked.size() > 1){
+		
+		choice.add(0);
+		
+		toCheck.add(linked.get(0));
+	
+	}else
+		toCheck.addAll(linked);
+	
+	
+	
+	while(!toCheck.isEmpty()){
+
+		BlockPos pos = toCheck.remove(0);
+		
+		path.add(pos);
+		
+	//	w.spawnParticle(e, pos.getX()+0.5D, pos.getY()+1.5D, pos.getZ()+0.5D, 0, 0, 0, null);
+		
+		checked.add(pos.toString());
+		
+		IPowerNode ip = (IPowerNode)w.getTileEntity(pos);
+		
+		if(w.getTileEntity(pos) instanceof IPowerTile){
+		
+			IPowerTile ipt = (IPowerTile)w.getTileEntity(pos);
+			
+			if(draining){
+				
+				if(ipt.getPower() > 0)
+					break;
+				
+				
+				
+			}else{
+				
+				if(ipt.getPower() < ipt.getMaxPower())
+					break;
+			
+			}
+			
+		}
+		
+		List<BlockPos> aba = new ArrayList<BlockPos>();
+		
+		if(ip == null)
+			continue;
+		
+		for(int i = 0; i< ip.getLinkedBlocks().size(); i++){
+			
+			if(ip.getLinkedBlocks().get(i) == null)
+				continue;
+			
+			if(!checked.contains(ip.getLinkedBlocks().get(i).toString()))	
+				aba.add(ip.getLinkedBlocks().get(i));
+		}
+		
+		
+		if(aba.size() > 1)
+			choice.add(path.size()-1);
+		
+		if(aba.size() > 0)
+			toCheck.add(aba.get(0));
+		else{
+		//	pig++;
+			
+			if(choice.isEmpty())
+				return new ArrayList<BlockPos>();
+			else{
+				
+				int i = choice.remove(choice.size()-1);
+				
+				toCheck.add(path.get(i));
+				
+				
+				
+				for(int j = i+1; j< path.size();j++)
+					path.remove(j);
+				
+				
+				
+			}
+			
+		}
+		
+		
+			
+			
+			
+	}
+	
+//	BlockPos pos2 = path.get(path.size()-1); 
+		
+//	w.spawnParticle(e.EXPLOSION_HUGE, pos2.getX(), pos2.getY()+2, pos2.getZ(), 0, 0, 0, null);
+	ArrayList<BlockPos> pf = new ArrayList<BlockPos>();
+	pf.add(posF);
+	pf.addAll(path);	
+	return pf;
+}
 	
 	/*
 	public static List<IPowerTile> sortBasedOnPower(List<IPowerTile> p, boolean high){
@@ -209,27 +326,40 @@ public static List<IPowerTile> getBlocksInRange(World w, BlockPos pos, List<IPow
 		
 	}
 	
-	public static int drainPower(World w, BlockPos pos, int amountDrain, int r, boolean doit){
+	public static int drainPower(World w, BlockPos pos, int amountDrain, List<BlockPos> linked, boolean doit){
 		
-		BlockPos bp = getBattery(w, pos, true);
+		List<BlockPos> l2 = getPathToBattery(w, pos, linked, true);
+		
+		if(l2.isEmpty())
+			return 0;
+		BlockPos bp = l2.get(l2.size()-1);
 		
 		if(bp == null)
-			return -1;
+			return 0;
 		
-		IPowerTile l = bp == null ? null : (IPowerTile)w.getTileEntity(bp);
-		
-		
-		
+		IPowerTile l = (IPowerTile)w.getTileEntity(bp);
 		
 		
 		
 		if(l == null)
-			return -1;
+			return 0;
 		
 	
 		
 		int total = l.getPower();
 		int amountDrained = 0;
+		
+		if(doit){
+			
+		
+			
+			for(int i = 0; i < l2.size()-1; i++){
+	
+				BlockUtils.drawLine(w, Vector3.fromBlockPos(l2.get(i)).add(0.5D), Vector3.fromBlockPos(l2.get(i+1)).add(0.5D), EnumParticleTypes.REDSTONE);
+				
+			}
+			
+		}
 		
 		
 			if(amountDrain > total){
@@ -247,38 +377,39 @@ public static List<IPowerTile> getBlocksInRange(World w, BlockPos pos, List<IPow
 				
 			}
 		
-		//	if(amountDrained > 0 && doit)
-		//		drawTorchLines(w, bl, pos, true);
 		
 		return amountDrained;
 	}
 	
-public static int addPower(World w, BlockPos pos, int amountFill, int r, boolean doit){
+public static int addPower(World w, BlockPos pos, int amountFill, List<BlockPos> linked, boolean doit){
 		
-	//List<BlockPos> bl = getTorches(w, pos, r, null, null);
+	List<BlockPos> l2 = getPathToBattery(w, pos, linked, false);
 	
-	BlockPos bp = getBattery(w, pos, false);
+	if(l2.isEmpty())
+		return 0;
+	
+	BlockPos bp = l2.get(l2.size()-1);
 	
 	if(bp == null)
-		return -1;
+		return 0;
 	
-	IPowerTile l = bp == null ? null : (IPowerTile)w.getTileEntity(bp);
+	IPowerTile l = (IPowerTile)w.getTileEntity(bp);
 	
 	if(l == null)
-		return -1;
-	
-	
-		
-	
-	
-			
+		return 0;
 			
 			int amountFilled= 0;
 			
-			
-			
-			
 				int available = l.getMaxPower()-l.getPower();
+				
+				if(doit){
+					
+					for(int i = 0; i< l2.size()-1; i++){
+						BlockUtils.drawLine(w, Vector3.fromBlockPos(l2.get(i)).add(0.5D), Vector3.fromBlockPos(l2.get(i+1)).add(0.5D), EnumParticleTypes.VILLAGER_HAPPY);
+					}
+					
+					
+				}
 				
 				
 				if(available + amountFilled <=amountFill){
@@ -472,29 +603,7 @@ public static int addPower(World w, BlockPos pos, int amountFill, int r, boolean
 	
 	}
 	
-public static void drawTorchLines(World w, List<BlockPos> bp2, BlockPos pos, boolean drain){
-		
-			
-		List<BlockPos> bp = new ArrayList<BlockPos>();
-		
-		bp.add(pos);
-		bp.addAll(bp2);
-		
-		if(bp.size() == 1)
-			return;
-		
-		
-		
-		for(int i = 0; i< bp.size()-1; i++){
-			
-			
-			BlockUtils.drawLine(w, Vector3.fromBlockPos(bp.get(i)).add(0.5D), Vector3.fromBlockPos(bp.get(i+1)).add(0.5D), drain ? EnumParticleTypes.REDSTONE : EnumParticleTypes.SPELL_WITCH);
-			
-			
-		}
-	
-	}
-	
+
 
 public static boolean isBlockPowered(World w, BlockPos pos){
 	

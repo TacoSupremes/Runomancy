@@ -83,44 +83,44 @@ public class ItemRunicWand extends ItemMod implements IPageGiver {
 	public EnumActionResult onItemUse(EntityPlayer player, World w, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		
 		
-		ItemStack is = player.getActiveItemStack();
-		
+	
+
 		
 		
 		if(w.getTileEntity(pos) instanceof IPowerNode){
 			
-			if(player.isSneaking()){
-				
-				
-				
-				if(PowerHelper.getBattery(w, pos, false) != null)
-					player.motionY += 2D;
-				
-				return EnumActionResult.SUCCESS;
+			
+		
+		
+			
+			if(!player.getHeldItem(hand).hasTagCompound()){
+				player.getHeldItem(hand).setTagCompound(new NBTTagCompound());
 			}
 			
-			if(!is.hasTagCompound()){
-				is.setTagCompound(new NBTTagCompound());
-			}
-			
-			if(is.getTagCompound().getBoolean("ACTIVE")){
+			if(player.getHeldItem(hand).getTagCompound().getBoolean("ACTIVE")){
 				
 				IPowerNode n = (IPowerNode)w.getTileEntity(pos);
 				
-				n.getLinkedBlocks().add(BlockPos.fromLong(is.getTagCompound().getLong("LINK")));
-				IPowerNode n2 = (IPowerNode)w.getTileEntity(BlockPos.fromLong(is.getTagCompound().getLong("LINK")));
+				n.getLinkedBlocks().add(BlockPos.fromLong(player.getHeldItem(hand).getTagCompound().getLong("LINK")));
+				IPowerNode n2 = (IPowerNode)w.getTileEntity(BlockPos.fromLong(player.getHeldItem(hand).getTagCompound().getLong("LINK")));
 				n2.getLinkedBlocks().add(pos);
 				
-				is.getTagCompound().removeTag("LINK");
-				is.getTagCompound().setBoolean("ACTIVE", false);
+				player.getHeldItem(hand).getTagCompound().removeTag("LINK");
+				player.getHeldItem(hand).getTagCompound().setBoolean("ACTIVE", false);
 			}else{
-				is.getTagCompound().setBoolean("ACTIVE", true);
-				is.getTagCompound().setLong("LINK", pos.toLong());
+				player.getHeldItem(hand).getTagCompound().setBoolean("ACTIVE", true);
+				player.getHeldItem(hand).getTagCompound().setLong("LINK", pos.toLong());
 			}
 			
 		//	PowerHelper.drawTorchLines(w, pos, 5, false);
+			IPowerNode n = (IPowerNode)w.getTileEntity(pos);
+			
+			System.out.println(n.getLinkedBlocks().toString());
+			
 			
 		}
+		
+		
 		
 		
 		return super.onItemUse(player, w, pos, hand, facing, hitX, hitY, hitZ);
@@ -142,8 +142,10 @@ public class ItemRunicWand extends ItemMod implements IPageGiver {
 			 RayTraceResult rr = this.rayTrace(w, (EntityPlayer) e, true);
 			    
 			if(rr == null)
+			{
+				System.out.print("WHY");
 				return;
-			
+			}
 			double distance = Math.sqrt(bp.distanceSq(rr.hitVec.xCoord, rr.hitVec.yCoord, rr.hitVec.zCoord));
 			
 			BlockUtils.drawLine(w, Vector3.fromBlockPos(bp).add(0.5D), new Vector3(rr.hitVec), distance > 7.65D ? EnumParticleTypes.REDSTONE : EnumParticleTypes.VILLAGER_HAPPY);

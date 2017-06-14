@@ -3,6 +3,7 @@ package com.tacosupremes.runomancy.common.power.block.tile;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tacosupremes.runomancy.common.block.tile.TileMod;
 import com.tacosupremes.runomancy.common.power.block.BlockPowerStorage;
 
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,14 +14,16 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 
-public class TilePowerStorage extends TileEntity implements IPowerTile, ITickable{
+public class TilePowerStorage extends TileMod implements IPowerTile, ITickable{
 	
 	
 	public int power = 0;
 	
+	
+	
 	private List<BlockPos> linkedTo = new ArrayList<BlockPos>();
 	
-	private void readCustomNBT(NBTTagCompound nbt) {
+	public void readCustomNBT(NBTTagCompound nbt) {
 		
 		this.power = nbt.getInteger("power");
 		
@@ -37,7 +40,7 @@ public class TilePowerStorage extends TileEntity implements IPowerTile, ITickabl
 		
 	}
 	
-	private void writeCustomNBT(NBTTagCompound nbt) {
+	public void writeCustomNBT(NBTTagCompound nbt) {
 		
 		nbt.setInteger("power", power);
 		
@@ -57,37 +60,7 @@ public class TilePowerStorage extends TileEntity implements IPowerTile, ITickabl
 		
 	}
 	
-	@Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt)
-    {
-       
-        writeCustomNBT(nbt);
-        
-        return super.writeToNBT(nbt);
-    }
 	
-	@Override
-	public void readFromNBT(NBTTagCompound nbt)
-    {
-        super.readFromNBT(nbt);
-        readCustomNBT(nbt);
-    }
-	
-	@Override
-	public SPacketUpdateTileEntity getUpdatePacket() {
-		
-		NBTTagCompound nbt = new NBTTagCompound();
-        this.writeCustomNBT(nbt);
-        return new SPacketUpdateTileEntity(this.getPos(), -999, nbt);
-		
-	}
-
-	@Override
-	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-		super.onDataPacket(net, pkt);		
-		this.readCustomNBT(pkt.getNbtCompound());
-	}
-
 	@Override
 	public int getPower() {
 		
@@ -130,7 +103,7 @@ public class TilePowerStorage extends TileEntity implements IPowerTile, ITickabl
 			this.power = this.getMaxPower();
 		
 		
-		System.out.println(this.getPower());
+		//System.out.println(this.getPower());
 		
 		if(this.power == 0){
 			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 0)
@@ -185,6 +158,28 @@ public class TilePowerStorage extends TileEntity implements IPowerTile, ITickabl
 			}
 		}
 		
+		for(int i =0; i< linkedTo.size(); i++){
+			
+			if(this.getWorld().getTileEntity(linkedTo.get(i)) == null || this.getWorld().getTileEntity(linkedTo.get(i)) == this)
+				linkedTo.remove(i);
+			
+		}
+		
+		List<String> s = new ArrayList<String>();
+		
+		for(int i =0; i< linkedTo.size(); i++){
+			
+			if(s.contains(linkedTo.get(i).toString())){
+				linkedTo.remove(i);
+				continue;
+			}
+			
+			s.add(linkedTo.get(i).toString());
+			
+			
+			
+		}
+		
 	}
 
 	@Override
@@ -196,11 +191,11 @@ public class TilePowerStorage extends TileEntity implements IPowerTile, ITickabl
 	}
 
 	@Override
-	public void updateLinkedBlocks() {
+	public void updateLinkedBlocks(BlockPos bp) {
 		
 		for(int i =0; i< linkedTo.size(); i++){
 			
-			if(this.getWorld().getTileEntity(linkedTo.get(i)) == null)
+			if(linkedTo.get(i).toString().equals(bp.toString()))
 				this.linkedTo.remove(i);
 			
 		}

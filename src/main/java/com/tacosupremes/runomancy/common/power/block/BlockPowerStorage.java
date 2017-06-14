@@ -110,8 +110,8 @@ List<BlockPos> bpl = ((IPowerNode)w.getTileEntity(pos)).getLinkedBlocks();
 			
 			IPowerNode k = (IPowerNode)w.getTileEntity(bp);
 			
-			k.updateLinkedBlocks();
-			
+			k.updateLinkedBlocks(pos);
+			k.getLinkedBlocks().remove(pos);
 		}
 	}
     

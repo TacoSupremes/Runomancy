@@ -138,6 +138,50 @@ public static int countofItemStack(IInventory ii, ItemStack is){
 	return amount;
 }
 
+public static ItemStack insertItemNew(ItemStack is3, IInventory ii, boolean doit){
+	
+	ItemStack is = is3.copy();
+	
+	
+	
+	for(int i = 0; i<ii.getSizeInventory(); i++){
+		
+		if(ii.getStackInSlot(i).isEmpty() || ii.getStackInSlot(i) == null){
+			if(doit)
+			ii.setInventorySlotContents(i, is);
+			ii.markDirty();
+			return null;
+		}
+		
+		if(ItemStack.areItemsEqual(is, ii.getStackInSlot(i))){
+			
+			if(ii.getStackInSlot(i).getCount() + is.getCount() <= is.getMaxStackSize()){
+				
+				ItemStack is2 = is.copy();
+				is2.setCount(is.getCount() + ii.getStackInSlot(i).getCount());
+				if(doit)
+				ii.setInventorySlotContents(i, is2);
+				return null;
+			}else{
+				ItemStack is2 = is.copy();
+				is.setCount((ii.getStackInSlot(i).getCount() + is.getCount() - is.getMaxStackSize()));
+				is2.setCount(is.getMaxStackSize());
+				if(doit)
+				ii.setInventorySlotContents(i, is2);
+				
+				continue;
+				
+			}
+			
+		}
+		
+		
+	}
+	
+	
+	return is;
+}
+
 }
 
 	

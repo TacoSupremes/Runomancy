@@ -73,11 +73,19 @@ public class RuneEffectMiner implements IFunctionalRuneEffect {
 				if(is == null)
 					continue;
 				
+				boolean	skip = true;
 				
-				if(getInventory(w, pos, is) != null){
-					InventoryHelper.insertItem(is, getInventory(w, pos, is));
+				
+				for(EnumFacing f : EnumFacing.HORIZONTALS){
 					
-				}else{
+					if(getInventory(w, pos.add(f.getDirectionVec()), is) != null && InventoryHelper.insertItemNew(is, getInventory(w, pos.add(f.getDirectionVec()), is), false) == null){
+						InventoryHelper.insertItemNew(is, getInventory(w, pos.add(f.getDirectionVec()), is), true);
+						skip = false;
+					}
+				
+				}
+				
+				if(skip){
 					
 				
 				
@@ -91,10 +99,12 @@ public class RuneEffectMiner implements IFunctionalRuneEffect {
 				if(!w.isRemote)
 					w.spawnEntity(ent);
 				}
+				
+				
 				}
 				
 				
-				w.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, temp.getX()+0.5D, temp.getY(), temp.getZ()+0.5D, 0, 0, 0, 0);
+				w.spawnParticle(EnumParticleTypes.EXPLOSION_LARGE, temp.getX()+0.5D, temp.getY()+0.75D, temp.getZ()+0.5D, 0, 0, 0, 0);
 				if(!w.isRemote)
 				w.setBlockToAir(temp);
 				te.power -= getCost();

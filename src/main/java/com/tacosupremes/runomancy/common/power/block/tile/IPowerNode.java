@@ -10,6 +10,11 @@ public interface IPowerNode {
 	
 	public List<BlockPos> getLinkedBlocks();
 	
-	public void updateLinkedBlocks();
+	public void updateLinkedBlocks(BlockPos pos);
+	
+	public BlockPos getPos();
+	
+	
+	
 	
 }

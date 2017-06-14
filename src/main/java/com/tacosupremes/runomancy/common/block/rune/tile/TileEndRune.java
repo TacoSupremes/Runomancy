@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.tacosupremes.runomancy.common.block.rune.IRune;
+import com.tacosupremes.runomancy.common.block.tile.TileMod;
 import com.tacosupremes.runomancy.common.power.PowerHelper;
 import com.tacosupremes.runomancy.common.power.block.tile.IPowerNode;
 import com.tacosupremes.runomancy.common.runelogic.IRuneEffect;
@@ -20,7 +21,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 
-public class TileEndRune extends TileEntity implements ITickable, IPowerNode {
+public class TileEndRune extends TileMod implements IPowerNode {
 
 	
 	int currentEffect = -1;
@@ -33,9 +34,6 @@ public class TileEndRune extends TileEntity implements ITickable, IPowerNode {
 	public int ticks = 0;
 	
 	private List<BlockPos> l = new ArrayList<BlockPos>();
-	
-	
-
 	
 	public void readCustomNBT(NBTTagCompound nbt)
     {
@@ -167,15 +165,15 @@ public class TileEndRune extends TileEntity implements ITickable, IPowerNode {
 				if(this.power < this.getEffect().getPowerCapacity()){
 				
 					
-						if(((double)(this.power)/((double)(this.getEffect().getPowerCapacity())) < 0.25D) && PowerHelper.drainPower(this.getWorld(), getPos(), this.getEffect().getTransferRate(), getRange(), false) > 0){
+						if(((double)(this.power)/((double)(this.getEffect().getPowerCapacity())) < 0.25D) && PowerHelper.drainPower(this.getWorld(), pos, this.getEffect().getTransferRate(), l, false) > 0){
 							
 							
-							this.power += PowerHelper.drainPower(this.getWorld(), pos, this.getEffect().getTransferRate(), getRange(), true);
+							this.power += PowerHelper.drainPower(this.getWorld(), pos, this.getEffect().getTransferRate(), l, true);
 		//					BlockUtils.drawLine(getWorld(), Vector3.fromBlockPos(PowerHelper.getTorch(getWorld(), this.getPos(), getRange())).add(0.5D, 1.1D, 0.5D), Vector3.fromBlockPos(pos).add(0.5D));
 		//					PowerHelper.drawTorchLines(getWorld(), getPos(), getRange(), true);
 						}else{
 						
-							this.power += PowerHelper.drainPower(this.getWorld(), pos, this.getEffect().getTransferRate()/2, getRange(), true);
+							this.power += PowerHelper.drainPower(this.getWorld(), pos, this.getEffect().getTransferRate()/2, l, true);
 		//					BlockUtils.drawLine(getWorld(), Vector3.fromBlockPos(PowerHelper.getTorch(getWorld(), this.getPos(), getRange())).add(0.5D, 1.1D, 0.5D), Vector3.fromBlockPos(pos).add(0.5D));
 		//					PowerHelper.drawTorchLines(getWorld(), getPos(), getRange(), true);
 							
@@ -189,9 +187,9 @@ public class TileEndRune extends TileEntity implements ITickable, IPowerNode {
 					
 				}else{
 					
-					if(this.power > 0 && PowerHelper.addPower(this.getWorld(), pos, this.getEffect().getTransferRate(), getRange(), false) > 0){
+					if(this.power > 0 && PowerHelper.addPower(this.getWorld(), pos, this.getEffect().getTransferRate(), l, false) > 0){
 						
-						this.power-=PowerHelper.addPower(this.getWorld(), pos, this.getEffect().getTransferRate(), getRange(), true);
+						this.power-=PowerHelper.addPower(this.getWorld(), pos, this.getEffect().getTransferRate(), l, true);
 				//		BlockUtils.drawLine(getWorld(), Vector3.fromBlockPos(pos).add(0.5D), Vector3.fromBlockPos(PowerHelper.getTorch(getWorld(), this.getPos(), getRange())).add(0.5D, 0.6D, 0.5D));
 				//		PowerHelper.drawTorchLines(getWorld(), getPos(), getRange(), false);
 						
@@ -205,6 +203,28 @@ public class TileEndRune extends TileEntity implements ITickable, IPowerNode {
 		RuneFormations.effects.get(currentEffect).doEffect(this.getWorld(), this.getPos(), this, this.rEffect);
 		
 		
+		}
+		
+		for(int i =0; i< l.size(); i++){
+			
+			if(this.getWorld().getTileEntity(l.get(i)) == null || this.getWorld().getTileEntity(l.get(i)) == this)
+				l.remove(i);
+			
+		}	
+		
+		List<String> s = new ArrayList<String>();
+		
+		for(int i =0; i< l.size(); i++){
+			
+			if(s.contains(l.get(i).toString())){
+				l.remove(i);
+				continue;
+			}
+			
+			s.add(l.get(i).toString());
+			
+			
+			
 		}
 		
 	}
@@ -267,37 +287,10 @@ public class TileEndRune extends TileEntity implements ITickable, IPowerNode {
 		return currentEffect != -1;
 	}
 	
-	@Override
-	public void readFromNBT(NBTTagCompound nbt)
-    {
-        super.readFromNBT(nbt);
-        readCustomNBT(nbt);
-    }
-	@Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt)
-    {
-       
-        writeCustomNBT(nbt);
-        return super.writeToNBT(nbt);
-    }
 	
-	//Client Packet stuff
-	@Override
-	public SPacketUpdateTileEntity getUpdatePacket() {
-		
-		NBTTagCompound nbt = new NBTTagCompound();
-        this.writeCustomNBT(nbt);
-        return new SPacketUpdateTileEntity(this.getPos(), -999, nbt);
-		
-	}
 
 
 
-	@Override
-	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-		super.onDataPacket(net, pkt);		
-		this.readCustomNBT(pkt.getNbtCompound());
-	}
 
 	
 	public IRuneEffect getEffect(){
@@ -331,12 +324,13 @@ public class TileEndRune extends TileEntity implements ITickable, IPowerNode {
 
 
 	@Override
-	public void updateLinkedBlocks() {
+	public void updateLinkedBlocks(BlockPos bp) {
 		
 		for(int i =0; i< l.size(); i++){
 			
-			if(this.getWorld().getTileEntity(l.get(i)) == null)
+			if(l.get(i).compareTo(bp) == 0)
 				this.l.remove(i);
+				
 			
 		}
 		

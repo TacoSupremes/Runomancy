@@ -135,15 +135,15 @@ public class ItemSoulGem extends ItemMod implements IPageGiver {
 
 	  public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
 	    {
-	        ItemStack itemstack = player.getHeldItem(hand);
+	      
 
-	        itemstack.getItem().updateItemStackNBT(itemstack.getTagCompound());
+	      player.getHeldItem(hand).getItem().updateItemStackNBT(player.getActiveItemStack().getTagCompound());
 	        if (worldIn.isRemote)
 	        {
 	        	
 	            return EnumActionResult.SUCCESS;
 	        }
-	        else if (!player.canPlayerEdit(pos.offset(facing), facing, itemstack))
+	        else if (!player.canPlayerEdit(pos.offset(facing), facing, player.getActiveItemStack()))
 	        {
 	            return EnumActionResult.FAIL;
 	        }
@@ -159,13 +159,13 @@ public class ItemSoulGem extends ItemMod implements IPageGiver {
 	                if (tileentity instanceof TileEntityMobSpawner)
 	                {
 	                    MobSpawnerBaseLogic mobspawnerbaselogic = ((TileEntityMobSpawner)tileentity).getSpawnerBaseLogic();
-	                    mobspawnerbaselogic.setEntityId(getNamedIdFrom(itemstack));
+	                    mobspawnerbaselogic.setEntityId(getNamedIdFrom(player.getActiveItemStack()));
 	                    tileentity.markDirty();
 	                    worldIn.notifyBlockUpdate(pos, iblockstate, iblockstate, 3);
 
 	                    if (!player.capabilities.isCreativeMode)
 	                    {
-	                        itemstack.shrink(1);
+	                      player.getHeldItem(hand).shrink(1);
 	                    }
 
 	                    return EnumActionResult.SUCCESS;
@@ -174,20 +174,20 @@ public class ItemSoulGem extends ItemMod implements IPageGiver {
 
 	            BlockPos blockpos = pos.offset(facing);
 	            double d0 = this.getYOffset(worldIn, blockpos);
-	            Entity entity = spawnCreature(worldIn, getNamedIdFrom(itemstack), (double)blockpos.getX() + 0.5D, (double)blockpos.getY() + d0, (double)blockpos.getZ() + 0.5D);
+	            Entity entity = spawnCreature(worldIn, getNamedIdFrom(player.getActiveItemStack()), (double)blockpos.getX() + 0.5D, (double)blockpos.getY() + d0, (double)blockpos.getZ() + 0.5D);
 
 	            if (entity != null)
 	            {
-	                if (entity instanceof EntityLivingBase && itemstack.hasDisplayName())
+	                if (entity instanceof EntityLivingBase && player.getActiveItemStack().hasDisplayName())
 	                {
-	                    entity.setCustomNameTag(itemstack.getDisplayName());
+	                    entity.setCustomNameTag(player.getActiveItemStack().getDisplayName());
 	                }
 
-	                applyItemEntityDataToEntity(worldIn, player, itemstack, entity);
+	                applyItemEntityDataToEntity(worldIn, player, player.getActiveItemStack(), entity);
 
 	                if (!player.capabilities.isCreativeMode)
 	                {
-	                    itemstack.getTagCompound().removeTag("EntityTag");
+	                  player.getActiveItemStack().getTagCompound().removeTag("EntityTag");
 	                }
 	            }
 
@@ -247,18 +247,17 @@ public class ItemSoulGem extends ItemMod implements IPageGiver {
 	    /**
 	     * Called when the equipped item is right clicked.
 	     */
-	    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn)
+	    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand handIn)
 	    {
-	        ItemStack itemstack = playerIn.getHeldItem(handIn);
-	        itemstack.getItem().updateItemStackNBT(itemstack.getTagCompound());
+	     
 
 	        if (worldIn.isRemote)
 	        {
-	            return new ActionResult(EnumActionResult.PASS, itemstack);
+	            return new ActionResult(EnumActionResult.PASS, player.getActiveItemStack());
 	        }
 	        else
 	        {
-	            RayTraceResult raytraceresult = this.rayTrace(worldIn, playerIn, true);
+	            RayTraceResult raytraceresult = this.rayTrace(worldIn, player, true);
 
 	            if (raytraceresult != null && raytraceresult.typeOfHit == RayTraceResult.Type.BLOCK)
 	            {
@@ -266,42 +265,42 @@ public class ItemSoulGem extends ItemMod implements IPageGiver {
 
 	                if (!(worldIn.getBlockState(blockpos).getBlock() instanceof BlockLiquid))
 	                {
-	                    return new ActionResult(EnumActionResult.PASS, itemstack);
+	                    return new ActionResult(EnumActionResult.PASS, player.getActiveItemStack());
 	                }
-	                else if (worldIn.isBlockModifiable(playerIn, blockpos) && playerIn.canPlayerEdit(blockpos, raytraceresult.sideHit, itemstack))
+	                else if (worldIn.isBlockModifiable(player, blockpos) && player.canPlayerEdit(blockpos, raytraceresult.sideHit, player.getActiveItemStack()))
 	                {
-	                    Entity entity = spawnCreature(worldIn, getNamedIdFrom(itemstack), (double)blockpos.getX() + 0.5D, (double)blockpos.getY() + 0.5D, (double)blockpos.getZ() + 0.5D);
+	                    Entity entity = spawnCreature(worldIn, getNamedIdFrom(player.getActiveItemStack()), (double)blockpos.getX() + 0.5D, (double)blockpos.getY() + 0.5D, (double)blockpos.getZ() + 0.5D);
 
 	                    if (entity == null)
 	                    {
-	                        return new ActionResult(EnumActionResult.PASS, itemstack);
+	                        return new ActionResult(EnumActionResult.PASS, player.getActiveItemStack());
 	                    }
 	                    else
 	                    {
-	                        if (entity instanceof EntityLivingBase && itemstack.hasDisplayName())
+	                        if (entity instanceof EntityLivingBase && player.getActiveItemStack().hasDisplayName())
 	                        {
-	                            entity.setCustomNameTag(itemstack.getDisplayName());
+	                            entity.setCustomNameTag(player.getActiveItemStack().getDisplayName());
 	                        }
 
-	                        applyItemEntityDataToEntity(worldIn, playerIn, itemstack, entity);
+	                        applyItemEntityDataToEntity(worldIn, player, player.getActiveItemStack(), entity);
 
-	                        if (!playerIn.capabilities.isCreativeMode)
+	                        if (!player.capabilities.isCreativeMode)
 	                        {
-	                            itemstack.getTagCompound().removeTag("EntityTag");
+	                            player.getActiveItemStack().getTagCompound().removeTag("EntityTag");
 	                        }
 
-	                        playerIn.addStat(StatList.getObjectUseStats(this));
-	                        return new ActionResult(EnumActionResult.SUCCESS, itemstack);
+	                        player.addStat(StatList.getObjectUseStats(this));
+	                        return new ActionResult(EnumActionResult.SUCCESS, player.getActiveItemStack());
 	                    }
 	                }
 	                else
 	                {
-	                    return new ActionResult(EnumActionResult.FAIL, itemstack);
+	                    return new ActionResult(EnumActionResult.FAIL, player.getActiveItemStack());
 	                }
 	            }
 	            else
 	            {
-	                return new ActionResult(EnumActionResult.PASS, itemstack);
+	                return new ActionResult(EnumActionResult.PASS, player.getActiveItemStack());
 	            }
 	        }
 	    }
@@ -417,16 +416,7 @@ public class ItemSoulGem extends ItemMod implements IPageGiver {
 	        }
 	    }
 	
-	public static ItemStack gemWithEntity(Entity e){
-		
-		ItemStack is = new ItemStack(ModItems.soulGem, 1,0);
-		
-		is.setTagCompound(new NBTTagCompound());
-		
-		is.getTagCompound().setString("NAME", EntityList.getEntityString(e));
-		
-		return is;
-	}
+	
 
 	
 	 

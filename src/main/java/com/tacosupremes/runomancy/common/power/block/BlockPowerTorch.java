@@ -45,7 +45,7 @@ public class BlockPowerTorch extends BlockModContainer{
 	        {
 	            return p_apply_1_ != EnumFacing.DOWN;
 	        }
-	    });	    
+	    });	   
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
@@ -349,7 +349,8 @@ public class BlockPowerTorch extends BlockModContainer{
 			
 			IPowerNode k = (IPowerNode)w.getTileEntity(bp);
 			
-			k.updateLinkedBlocks();
+			k.updateLinkedBlocks(pos);
+			k.getLinkedBlocks().remove(pos);
 			
 		}
 	}
