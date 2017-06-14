@@ -20,8 +20,8 @@ public class RuneEffectSolarGen implements IRuneEffect {
 	
 		
 		
-	boolean fsky= w.canBlockSeeSky(pos);
-	if(w.provider.hasNoSky()||!fsky)
+	boolean fsky = w.canBlockSeeSky(pos);
+	if(w.provider.hasNoSky() || !fsky)
 		return;
 			
 			

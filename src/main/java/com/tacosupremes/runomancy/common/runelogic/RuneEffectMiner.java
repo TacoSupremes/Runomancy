@@ -70,38 +70,32 @@ public class RuneEffectMiner implements IFunctionalRuneEffect {
 					
 				
 				
-				if(is == null)
-					continue;
+					if(is == null)
+						continue;
 				
-				boolean	skip = true;
+	
 				
-				
-				for(EnumFacing f : EnumFacing.HORIZONTALS){
+			
 					
-					if(getInventory(w, pos.add(f.getDirectionVec()), is) != null && InventoryHelper.insertItemNew(is, getInventory(w, pos.add(f.getDirectionVec()), is), false) == null){
-						InventoryHelper.insertItemNew(is, getInventory(w, pos.add(f.getDirectionVec()), is), true);
-						skip = false;
+					if(getInventory(w, pos, is) != null)
+						InventoryHelper.insertItem(is, getInventory(w, pos, is), true);
+					else
+					{
+					
+				
+				
+						EntityItem ent = new EntityItem(w);
+						ent.setPosition(te.getPos().getX()+0.5D, te.getPos().getY()+0.2D, te.getPos().getZ()+0.5D);
+						ent.setEntityItemStack(is);
+						ent.motionX = 0;
+						ent.motionY = 0.4D;
+						ent.motionZ = 0;
+				
+						if(!w.isRemote)
+							w.spawnEntity(ent);
+					}		
+				
 					}
-				
-				}
-				
-				if(skip){
-					
-				
-				
-				EntityItem ent = new EntityItem(w);
-				ent.setPosition(te.getPos().getX()+0.5D, te.getPos().getY()+0.2D, te.getPos().getZ()+0.5D);
-				ent.setEntityItemStack(is);
-				ent.motionX = 0;
-				ent.motionY = 0.4D;
-				ent.motionZ = 0;
-				
-				if(!w.isRemote)
-					w.spawnEntity(ent);
-				}
-				
-				
-				}
 				
 				
 				w.spawnParticle(EnumParticleTypes.EXPLOSION_LARGE, temp.getX()+0.5D, temp.getY()+0.75D, temp.getZ()+0.5D, 0, 0, 0, 0);
@@ -165,7 +159,7 @@ public class RuneEffectMiner implements IFunctionalRuneEffect {
 	@Override
 	public int getCost() {
 		
-		return 400;
+		return 600;
 	}
 
 
@@ -190,22 +184,13 @@ public class RuneEffectMiner implements IFunctionalRuneEffect {
 	
 	public IInventory getInventory(World w, BlockPos bp, ItemStack is){
 		
-		IInventory en = null;
-		int h = -1;
-		
 		for(EnumFacing e : EnumFacing.HORIZONTALS){
 			
-			if(InventoryHelper.getInventory(w, bp.add(e.getDirectionVec())) != null && InventoryHelper.itemsLeft(is, InventoryHelper.getInventory(w, bp.add(e.getDirectionVec()))) == 0){
-				if(InventoryHelper.countofItemStack(InventoryHelper.getInventory(w, bp.add(e.getDirectionVec())), is) > h || en == null){
-				
-					en = InventoryHelper.getInventory(w, bp.add(e.getDirectionVec()));
-				
-					h = InventoryHelper.countofItemStack(InventoryHelper.getInventory(w, bp.add(e.getDirectionVec())), is);
-				}
-			}
-		}
+			if(InventoryHelper.getInventory(w, bp.add(e.getDirectionVec())) != null && InventoryHelper.insertItem(is, InventoryHelper.getInventory(w, bp.add(e.getDirectionVec())), false) == null)
+				return InventoryHelper.getInventory(w, bp.add(e.getDirectionVec()));
 		
-		return en;
+		}
+		return null;
 		
 	}
 	

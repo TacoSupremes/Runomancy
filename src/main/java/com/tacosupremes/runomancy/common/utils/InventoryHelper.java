@@ -11,90 +11,7 @@ import net.minecraft.world.ILockableContainer;
 import net.minecraft.world.World;
 
 public class InventoryHelper {
-	
-	public static void insertItem(ItemStack ism, IInventory ii){
-		
-		
-		
-		if(itemsLeft(ism, ii) != 0)	
-			return;
-		
-		
-		ItemStack is = ism.copy();
-		
-	//	int mx = ii.getInventoryStackLimit();
-		
-		for(int i = 0; i< ii.getSizeInventory();i++){
-			
-			ItemStack slot = ii.getStackInSlot(i);
-			
-			if(is == null || is.getCount() == 0)
-				return;
-			
-			if(slot == null){
-				ii.setInventorySlotContents(i, is);
-				
-				return;
-			}
-			
-			if(slot.areItemsEqual(is, slot)){
-				
-				if(slot.getCount() +is.getCount() <= slot.getMaxStackSize()){
-					ii.setInventorySlotContents(i, new ItemStack(slot.getItem(),slot.getCount()+is.getCount(),slot.getItemDamage()));
-					break;
-				}else{
-					
-					is.splitStack(slot.getMaxStackSize()-slot.getCount());
-					ii.setInventorySlotContents(i, new ItemStack(slot.getItem(),slot.getMaxStackSize(),slot.getItemDamage()));
-					
-				}
-				
-				
-			}
-		}
-		
-	}
-	
-public static int itemsLeft(ItemStack ism, IInventory iio){
-		
-		ItemStack is = ism.copy();
-		
-		NewInventory ii = new NewInventory(iio);
-		
-		
-		for(int i = 0; i< ii.getSizeInventory();i++){
-			
-			ItemStack slot = ii.getStackInSlot(i);
-			
-			if(is == null || is.getCount() == 0)
-				return 0;
-			
-			if(slot == null){
-				ii.setInventorySlotContents(i, is);
-				return 0;
-			}
-			
-			if(slot.areItemsEqual(is, slot)){
-				
-				if(slot.getCount() +is.getCount() <= slot.getMaxStackSize()){
-					ii.setInventorySlotContents(i, new ItemStack(slot.getItem(),slot.getCount() + is.getCount(),slot.getItemDamage()));
-					return 0;
-				}else{
-					
-					is.splitStack(slot.getMaxStackSize()-slot.getCount());
-					ii.setInventorySlotContents(i, new ItemStack(slot.getItem(),slot.getMaxStackSize(),slot.getItemDamage()));
-					
-				}
-				
-				
-			}
-		}
-		
-		if(is == null || is.getCount() == 0)
-			return 0;
-		
-		return is.getCount();
-	}
+
 
 public static IInventory getInventory(World w, BlockPos bp){
 	
@@ -138,7 +55,7 @@ public static int countofItemStack(IInventory ii, ItemStack is){
 	return amount;
 }
 
-public static ItemStack insertItemNew(ItemStack is3, IInventory ii, boolean doit){
+public static ItemStack insertItem(ItemStack is3, IInventory ii, boolean doit){
 	
 	ItemStack is = is3.copy();
 	
@@ -147,9 +64,10 @@ public static ItemStack insertItemNew(ItemStack is3, IInventory ii, boolean doit
 	for(int i = 0; i<ii.getSizeInventory(); i++){
 		
 		if(ii.getStackInSlot(i).isEmpty() || ii.getStackInSlot(i) == null){
-			if(doit)
+			if(doit){
 			ii.setInventorySlotContents(i, is);
 			ii.markDirty();
+			}
 			return null;
 		}
 		
@@ -159,16 +77,19 @@ public static ItemStack insertItemNew(ItemStack is3, IInventory ii, boolean doit
 				
 				ItemStack is2 = is.copy();
 				is2.setCount(is.getCount() + ii.getStackInSlot(i).getCount());
-				if(doit)
+				if(doit){
 				ii.setInventorySlotContents(i, is2);
+				ii.markDirty();
+				}
 				return null;
 			}else{
 				ItemStack is2 = is.copy();
 				is.setCount((ii.getStackInSlot(i).getCount() + is.getCount() - is.getMaxStackSize()));
 				is2.setCount(is.getMaxStackSize());
-				if(doit)
+				if(doit){
 				ii.setInventorySlotContents(i, is2);
-				
+				ii.markDirty();
+				}
 				continue;
 				
 			}
