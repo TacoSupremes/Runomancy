@@ -32,7 +32,7 @@ public class RuneEffectFurnace implements IFunctionalRuneEffect {
 		  List<EntityItem> entities = (List<EntityItem>) w.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(x - 1, y - 1, z - 1, x + 2, y + 0.3F, z + 2));
 	        for (EntityItem entity : entities) {
 	        	
-	        	ItemStack is = entity.getEntityItem().copy();
+	        	ItemStack is = entity.getEntityItem();
 	        	
 	        	
 	        	
@@ -59,7 +59,7 @@ public class RuneEffectFurnace implements IFunctionalRuneEffect {
 							ent.setPosition(entity.posX, entity.posY+0.1D, entity.posZ);
 							ent.setEntityItemStack(result);
 							ent.motionX = 0;
-							ent.motionY = 0.1D;
+							ent.motionY = 0.2D;
 							ent.motionZ = 0;
 							
 	        				if(!w.isRemote){

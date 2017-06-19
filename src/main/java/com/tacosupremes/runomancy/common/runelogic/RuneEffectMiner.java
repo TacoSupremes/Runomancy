@@ -35,7 +35,7 @@ public class RuneEffectMiner implements IFunctionalRuneEffect {
 		if(te.power < getCost())
 			return;
 		
-		if(te.ticks %4 != 0)
+		if(te.ticks %10 != 0)
 			return;
 	//	w.spawnParticle(particleType, xCoord, yCoord, zCoord, xOffset, yOffset, zOffset, p_175688_14_);
 		int r = 6;
@@ -98,9 +98,11 @@ public class RuneEffectMiner implements IFunctionalRuneEffect {
 					}
 				
 				
-				w.spawnParticle(EnumParticleTypes.EXPLOSION_LARGE, temp.getX()+0.5D, temp.getY()+0.75D, temp.getZ()+0.5D, 0, 0, 0, 0);
 				if(!w.isRemote)
 				w.setBlockToAir(temp);
+				
+				w.spawnParticle(EnumParticleTypes.EXPLOSION_LARGE, temp.getX()+0.5D, temp.getY()+0.75D, temp.getZ()+0.5D, 0, 0, 0, 0);
+				
 				te.power -= getCost();
 				
 						break outerloop;

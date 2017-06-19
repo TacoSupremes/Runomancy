@@ -62,6 +62,7 @@ public class Runomancy {
     	RuneFormations.addEffect(new RuneEffectFurnaceGen());
     	RuneFormations.addEffect(new RuneEffectMiner());
     	RuneFormations.addEffect(new RuneEffectWell());
+    //	RuneFormations.addEffect(new RuneEffectNetherGen());
     	ModBlocks.preInit();
 		
     }

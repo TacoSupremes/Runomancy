@@ -1,12 +1,5 @@
 {
     "variants": {
-    "normal": { "model": "runomancy:battery" },
-    "mode=0": { "model": "runomancy:battery" },
-    "mode=1": { "model": "runomancy:battery1" },
-    "mode=2": { "model": "runomancy:battery2" },
-    "mode=3": { "model": "runomancy:battery3"},
-    "mode=4": { "model": "runomancy:battery4" },
-    "mode=5": { "model": "runomancy:battery5" },
-    "mode=6": { "model": "runomancy:battery6" }
+    "normal": { "model": "runomancy:battery" }
     }
 }

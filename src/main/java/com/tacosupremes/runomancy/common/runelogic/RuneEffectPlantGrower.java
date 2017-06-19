@@ -6,11 +6,14 @@ import com.tacosupremes.runomancy.common.lib.LibMisc;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCactus;
+import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockNetherWart;
 import net.minecraft.block.BlockReed;
 import net.minecraft.block.BlockStem;
 import net.minecraft.block.IGrowable;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
@@ -42,7 +45,7 @@ public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 			
 			
 			
-			if(b.isAir(w.getBlockState(bp), w, bp) || b == null || b == Blocks.GRASS || b == Blocks.TALLGRASS || b == Blocks.RED_FLOWER || b == Blocks.YELLOW_FLOWER || b instanceof BlockStem)
+			if(b.isAir(w.getBlockState(bp), w, bp) || b == null || b == Blocks.GRASS || b == Blocks.TALLGRASS || b == Blocks.RED_FLOWER || b == Blocks.YELLOW_FLOWER || b instanceof BlockDoublePlant)
 				continue;
 			
 			if(b instanceof IGrowable){
@@ -68,11 +71,33 @@ public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 				continue;
 			}
 			
+			
+			if(b instanceof BlockStem){
+				
+				Block crop = getCropFromSeed(((BlockStem)b).getItem(w, bp, w.getBlockState(bp)));
+				
+				if(crop != null){
+					
+					if(!blockNear(w, bp, crop)){
+						
+						te.power -= this.getCost();
+						for(int i=0;i<=3;i++){
+							if(!w.isRemote)
+						b.updateTick(w, bp, w.getBlockState(bp), w.rand);
+						
+						w.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, bp.getX()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, bp.getY()+0.3D, bp.getZ()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, 0, 0, 0, 0);
+							
+							}
+						continue;
+					}
+					
+				}
+				
+			}
+			
 			if(b instanceof BlockCactus || b instanceof BlockReed){
 				
-				boolean canGrow = false;
-				
-				canGrow = w.getBlockState(bp.up()).getBlock().isAir(w.getBlockState(bp.up()), w, bp.up()); 
+				boolean canGrow  = w.getBlockState(bp.up()).getBlock().isAir(w.getBlockState(bp.up()), w, bp.up()); 
 				
 				if(canGrow)
 					canGrow = w.getBlockState(bp.down(2)).getBlock() != b;
@@ -124,6 +149,20 @@ public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 		
 		return false;
 	}
+	
+public Block getCropFromSeed(ItemStack is){
+	
+	if(is.isEmpty())
+		return null;
+	
+	if(is.getItem() == Items.MELON_SEEDS)
+		return Blocks.MELON_BLOCK;
+	
+	if(is.getItem() == Items.PUMPKIN_SEEDS)
+		return Blocks.PUMPKIN;
+	
+	return null;
+	}
 
 	@Override
 	public Block[] getNeededBlocks() {
@@ -173,5 +212,7 @@ public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 		
 		return LibMisc.MODID + ".plant.effect";
 	}
+	
+	
 
 }

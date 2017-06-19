@@ -14,7 +14,9 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -22,12 +24,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class BlockPowerStorage extends BlockModContainer{
 
 	public BlockPowerStorage() {
-		super(Material.GLASS, "battery");
-		this.setDefaultState(this.getDefaultState().withProperty(mode, 0));
+		super(Material.ROCK, "battery");
+	
 		
 	}
 	
-	public static final PropertyInteger mode = PropertyInteger.create("mode",0, 7);
+
 	
 
 	@Override
@@ -42,43 +44,39 @@ public class BlockPowerStorage extends BlockModContainer{
 		return TilePowerStorage.class;
 	}
 
+
+	
+	@SideOnly(Side.CLIENT)
+    public BlockRenderLayer getBlockLayer()
+    {
+        return BlockRenderLayer.CUTOUT_MIPPED;
+    }
+
 	@Override
-	public BlockRenderLayer getBlockLayer() {
+	public boolean isNormalCube(IBlockState state) {
 		
-		return BlockRenderLayer.CUTOUT;
-		
+		return false;
 	}
 
-	@SideOnly(Side.CLIENT)
-    public IBlockState getStateForEntityRender(IBlockState state)
-    {
-        return this.getDefaultState().withProperty(mode, 6);
-    }
+	@Override
+	public boolean isOpaqueCube(IBlockState state) {
+		
+		return false;
+	}
 
-    /**
-     * Convert the given metadata into a BlockState for this Block
-     */
-    public IBlockState getStateFromMeta(int meta)
-    {
-        return this.getDefaultState().withProperty(mode, meta);
-    }
+	@Override
+	public boolean isFullBlock(IBlockState state) {
+		
+		return false;
+	}
 
-    /**
-     * Convert the BlockState into the correct metadata value
-     */
-    public int getMetaFromState(IBlockState state)
-    {
-       
+	@Override
+	public boolean isFullCube(IBlockState state) {
+		
+		return false;
+	}
 
-        return state.getValue(mode);
-    }
-
-    protected BlockStateContainer createBlockState()
-    {
-        return new BlockStateContainer(this, new IProperty[] {mode});
-    }
-    
-    
+  
     
 
 	@Override
@@ -90,8 +88,8 @@ public class BlockPowerStorage extends BlockModContainer{
 
 	@Override
 	public int getComparatorInputOverride(IBlockState blockState, World worldIn, BlockPos pos) {
-		
-		return this.getMetaFromState(blockState);
+		//TODO
+		return 0;
 		
 	}
 
@@ -114,7 +112,11 @@ List<BlockPos> bpl = ((IPowerNode)w.getTileEntity(pos)).getLinkedBlocks();
 			k.getLinkedBlocks().remove(pos);
 		}
 	}
-    
-    
+	
+    @Override
+	 public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
+	    {
+	      return new AxisAlignedBB(0D, 0D, 0D, 1D, 0.3D, 1D);
+	    }
 	
 }

@@ -11,6 +11,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 
@@ -96,8 +97,7 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickable{
 	@Override
 	public void update() {
 		
-		if(this.world.isRemote)
-			return;
+	
 		
 		if(this.getPower() > this.getMaxPower())
 			this.power = this.getMaxPower();
@@ -105,57 +105,29 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickable{
 		
 		//System.out.println(this.getPower());
 		
-		if(this.power == 0){
-			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 0)
-				this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).withProperty(BlockPowerStorage.mode, 0));
+		
+			
+		
+		if(this.power > 0 && this.power <= 6000){
+			
+			this.getWorld().spawnParticle(EnumParticleTypes.REDSTONE, this.getPos().getX()+0.5D, this.getPos().getY()+0.2D, this.getPos().getZ()+0.5D, 0, 0, 0);
+			
+		
+		}
+		
+		
+		if(this.power > 6000 && this.power < 12000){
+			
+			this.getWorld().spawnParticle(EnumParticleTypes.SPELL_WITCH, this.getPos().getX()+0.5D, this.getPos().getY()+0.2D, this.getPos().getZ()+0.5D, 0, 0, 0);
 			
 		}
 		
-		if(this.power > 0 && this.power <= 3000){
-			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 1){
-				this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).withProperty(BlockPowerStorage.mode, 1));
-				((TilePowerStorage)this.getWorld().getTileEntity(getPos())).addPower(power);
-		}
-		}
 		
-		if(this.power > 3000 && this.power <= 6000){
-			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 2){
-				
-				
-				this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).withProperty(BlockPowerStorage.mode, 2));
-				((TilePowerStorage)this.getWorld().getTileEntity(getPos())).addPower(power);
-			}
-		}
-		
-		if(this.power > 6000 && this.power <= 9000){
-			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 3){
-				this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).withProperty(BlockPowerStorage.mode, 3));
-				((TilePowerStorage)this.getWorld().getTileEntity(getPos())).addPower(power);
-			}
-		}
-		
-		if(this.power > 9000 && this.power <= 12000){
-			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 4){
-				this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).withProperty(BlockPowerStorage.mode, 4));
-				((TilePowerStorage)this.getWorld().getTileEntity(getPos())).addPower(power);
-				
-			}
-		}
-		
-		if(this.power > 12000 && this.power < 18000){
-			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 5){
-				this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).withProperty(BlockPowerStorage.mode, 5));
-				((TilePowerStorage)this.getWorld().getTileEntity(getPos())).addPower(power);
-				
-			}
-		}
-		
-		if(this.power >= 18000){
-			if(this.getWorld().getBlockState(getPos()).getValue(BlockPowerStorage.mode) != 6){
-				this.getWorld().setBlockState(getPos(), this.getWorld().getBlockState(getPos()).withProperty(BlockPowerStorage.mode, 6));
-				((TilePowerStorage)this.getWorld().getTileEntity(getPos())).addPower(power);
-				
-			}
+		if(this.power >= 12000){
+			
+			this.getWorld().spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, this.getPos().getX()+0.5D, this.getPos().getY()+0.2D, this.getPos().getZ()+0.5D, 0, 0, 0);
+			
+			
 		}
 		
 		for(int i =0; i< linkedTo.size(); i++){
