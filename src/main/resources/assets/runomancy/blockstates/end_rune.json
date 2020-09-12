@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "mode=0": { "model": "runomancy:block/end_rune" },
+    "mode=1": { "model": "runomancy:block/end_rune_portal" },
+    "mode=2": { "model": "runomancy:block/end_rune_solar" },
+    "mode=3": { "model": "runomancy:block/end_rune_lava" },
+    "mode=4": { "model": "runomancy:block/end_rune_plant" },
+    "mode=5": { "model": "runomancy:block/end_rune_furnace_gen" },
+    "mode=6": { "model": "runomancy:block/end_rune_plant" },
+    "mode=7": { "model": "runomancy:block/end_rune_well" }
+  }
+}

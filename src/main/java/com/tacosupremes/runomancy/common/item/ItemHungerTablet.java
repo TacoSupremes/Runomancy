@@ -3,75 +3,51 @@ package com.tacosupremes.runomancy.common.item;
 import java.util.List;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
-import com.tacosupremes.runomancy.gui.Categories;
-import com.tacosupremes.runomancy.gui.IPageGiver;
-import com.tacosupremes.runomancy.gui.ItemPage;
-import com.tacosupremes.runomancy.gui.Page;
-
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemFood;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.text.translation.I18n;
+import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
-public class ItemHungerTablet extends ItemMod implements IPageGiver{
 
-	public ItemHungerTablet() {
-		super("hungerRune", 1);
-		this.setMaxDamage(0);
-		this.setMaxStackSize(1);
-		
-		
-	}
-
-	
-	 @Override
-	  public int getMetadata(int damage) {
-	    return damage;
-	  }
-	 
-	 
-	 
-	
-
-
-
-
-	
-	
+public class ItemHungerTablet extends ItemMod
+{
 
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn,
-			EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand hand) {
 		
 		ItemStack is = playerIn.getActiveItemStack();
 		
 		if(!playerIn.isSneaking())
 			return super.onItemRightClick(worldIn, playerIn, hand);
-		
+
+		/*
 		if(is.getItemDamage() < 1)
 			is.setItemDamage(1);
 		else
 			is.setItemDamage(0);
 		
-		
+		*/
+
 		return super.onItemRightClick(worldIn, playerIn, hand);
 		
 	}
 
+	@Override
+	public String getItemRegistryName()
+	{
+		return "hunger_tablet";
+	}
 
+/*
 	@Override
 	public void onUpdate(ItemStack is, World w, Entity e, int itemSlot, boolean isSelected) {
 		
 		if(e.ticksExisted %40 != 0)
 			return;
 		
-		if(!is.hasTagCompound()){
+		if(!is.hasTag()){
 			is.setTagCompound(new NBTTagCompound());
 			is.getTagCompound().setFloat("SAT",0);
 			is.getTagCompound().setInteger("H",0);
@@ -150,6 +126,9 @@ public class ItemHungerTablet extends ItemMod implements IPageGiver{
 		
 	}
 
+
+
+
 	@Override
 	public void addInformation(ItemStack is, EntityPlayer playerIn, List<String> l, boolean advanced) {
 		
@@ -199,6 +178,6 @@ public class ItemHungerTablet extends ItemMod implements IPageGiver{
 		
 	}
 	
-	
+	*/
 
 }

@@ -3,12 +3,6 @@ package com.tacosupremes.runomancy.common.lib;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tacosupremes.runomancy.common.utils.BlockUtils;
-
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
-
 public class LibMisc {
 	
 	public static final String MODID = "runomancy";
@@ -71,11 +65,16 @@ public class LibMisc {
 		addOre("oreAdamantium"); // Simple Ores2
 		addOre("oreTungsten"); // Simple Tungsten
 		
-		cleanOres();
-		makeDusts();
+		//cleanOres();
+		//makeDusts();
 	}
-	
 
+		public static void addOre(String s){
+			ores.add(s);
+		}
+
+
+		/*
 
 	private static void cleanOres() {
 		
@@ -98,14 +97,11 @@ public class LibMisc {
 		
 	}
 
-	public static void addOre(String s){
-		ores.add(s);
-	}
+
 	
-	public static boolean isOre(IBlockState b){
-		
-		
-		ItemStack is = new ItemStack(b.getBlock(), 1, b.getBlock().getMetaFromState(b));
+	public static boolean isOre(BlockState b)
+	{
+		ItemStack is = new ItemStack(b.getBlock());
 		
 		for(String s : ores){
 			
@@ -204,11 +200,11 @@ public ItemStack getOtherForms(ItemStack i){
 	
 	
 	return null;
-	
+
 }
 
 
-	/**From Ore to Dust **/
+	/**From Ore to Dust
 	public static String toDust(String s){
 	
 		if(!s.contains("ore"))
@@ -223,7 +219,7 @@ public ItemStack getOtherForms(ItemStack i){
 		
 	}
 	
-	/**From Ore to Dust **/
+	/**From Ore to Dust **
 	public static ItemStack toDust(ItemStack is){
 	
 	
@@ -231,13 +227,13 @@ public ItemStack getOtherForms(ItemStack i){
 
 	}
 	
-	/**From Ore to Dust **/
+	/**From Ore to Dust *
 	public static ItemStack toDust(IBlockState state){
 		
 		return toDust(BlockUtils.toItemStack(state));
 	}
 	
-	/**From Dust to Ore **/
+	/**From Dust to Ore *
 	public static String toOre(String s){
 
 		return s.replace("dust", "ore");
@@ -248,7 +244,7 @@ public ItemStack getOtherForms(ItemStack i){
 	
 	
 	
-	/**From Dust to Ingot **/
+	*From Dust to Ingot *
 	public static String toIngot(String s){
 		
 		return s.replace("dust", "ingot");
@@ -257,7 +253,7 @@ public ItemStack getOtherForms(ItemStack i){
 	
 	public static String getDustName(ItemStack is3){
 		
-		ItemStack is = is3.copy().splitStack(1);
+		//ItemStack is = is3.copy().splitStack(1);
 		
 		
 		for(String s : dusts){
@@ -275,8 +271,8 @@ public ItemStack getOtherForms(ItemStack i){
 		return null;
 	}
 	
-	
-	
+
+	*/
 	
 	
 	}

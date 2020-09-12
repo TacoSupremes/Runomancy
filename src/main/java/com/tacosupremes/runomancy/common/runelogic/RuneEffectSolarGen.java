@@ -3,30 +3,26 @@ package com.tacosupremes.runomancy.common.runelogic;
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
-
 import net.minecraft.block.Block;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.EnumSkyBlock;
+import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 
 public class RuneEffectSolarGen implements IRuneEffect {
 
 	@Override
-	public void doEffect(World w, BlockPos pos, TileEndRune te, NBTTagCompound n) {
+	public void doEffect(World w, BlockPos pos, TileEndRune te, CompoundNBT n)
+	{
 	
-		
-	
-		
-		
-	boolean fsky = w.canBlockSeeSky(pos);
-	if(w.provider.hasNoSky() || !fsky)
+
+	if(!w.canBlockSeeSky(pos))
 		return;
 			
 			
 			
-	  int i = w.getLightFor(EnumSkyBlock.SKY, pos) - w.getSkylightSubtracted();
+	  int i = w.getLightFor(LightType.SKY, pos) - w.getSkylightSubtracted();
       float f = w.getCelestialAngleRadians(1.0F);
       float f1 = f < (float)Math.PI ? 0.0F : ((float)Math.PI * 2F);
       f = f + (f1 - f) * 0.2F;

@@ -2,8 +2,8 @@ package com.tacosupremes.runomancy.common.recipes;
 
 import net.minecraft.item.ItemStack;
 
-public class RuneChargerRecipe {
-	
+public class RuneChargerRecipe
+{
 	private ItemStack in;
 	private ItemStack out;
 	private int cost;

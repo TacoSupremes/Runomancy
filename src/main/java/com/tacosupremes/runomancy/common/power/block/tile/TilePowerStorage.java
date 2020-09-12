@@ -1,21 +1,18 @@
 package com.tacosupremes.runomancy.common.power.block.tile;
 
+import com.tacosupremes.runomancy.common.block.tile.TileMod;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.particles.IParticleData;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.math.BlockPos;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tacosupremes.runomancy.common.block.tile.TileMod;
-import com.tacosupremes.runomancy.common.power.block.BlockPowerStorage;
-
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
-
-public class TilePowerStorage extends TileMod implements IPowerTile, ITickable{
+public class TilePowerStorage extends TileMod implements IPowerTile, ITickableTileEntity
+{
 	
 	
 	public int power = 0;
@@ -23,40 +20,45 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickable{
 	
 	
 	private List<BlockPos> linkedTo = new ArrayList<BlockPos>();
-	
-	public void readCustomNBT(NBTTagCompound nbt) {
+
+	public TilePowerStorage(TileEntityType<?> tileEntityTypeIn)
+	{
+		super(tileEntityTypeIn);
+	}
+
+	public void readCustomNBT(CompoundNBT nbt) {
 		
-		this.power = nbt.getInteger("power");
+		this.power = nbt.getInt("power");
 		
-		if(nbt.hasKey("BPS")){
+		if(nbt.contains("BPS")){
 			
-			for(int i = 0; i< nbt.getCompoundTag("BPS").getSize(); i++){
+			for(int i = 0; i< nbt.getCompound("BPS").size(); i++){
 				
 				
-				linkedTo.add(BlockPos.fromLong(nbt.getCompoundTag("BPS").getLong("B"+i)));
+				linkedTo.add(BlockPos.fromLong(nbt.getCompound("BPS").getLong("B"+i)));
 			}
 			
-			nbt.removeTag("BPS");
+			nbt.remove("BPS");
 		}
 		
 	}
 	
-	public void writeCustomNBT(NBTTagCompound nbt) {
+	public void writeCustomNBT(CompoundNBT nbt) {
 		
-		nbt.setInteger("power", power);
+		nbt.putInt("power", power);
 		
 		if(!linkedTo.isEmpty()){
 			
-		NBTTagCompound bt = new NBTTagCompound();
+		CompoundNBT bt = new CompoundNBT();
 		
 		for(int i = 0; i<linkedTo.size(); i++){
 			
-			bt.setLong("B"+i, linkedTo.get(i).toLong());
+			bt.putLong("B"+i, linkedTo.get(i).toLong());
 			
 		}
 			
-		nbt.setTag("BPS", bt);
-			
+		nbt.put("BPS", bt);
+
 		}
 		
 	}
@@ -95,10 +97,9 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickable{
 	
 
 	@Override
-	public void update() {
-		
-	
-		
+	public void tick()
+	{
+
 		if(this.getPower() > this.getMaxPower())
 			this.power = this.getMaxPower();
 		
@@ -110,7 +111,7 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickable{
 		
 		if(this.power > 0 && this.power <= 6000){
 			
-			this.getWorld().spawnParticle(EnumParticleTypes.REDSTONE, this.getPos().getX()+0.5D, this.getPos().getY()+0.2D, this.getPos().getZ()+0.5D, 0, 0, 0);
+			this.getWorld().addParticle((IParticleData) ParticleTypes.DUST, this.getPos().getX()+0.5D, this.getPos().getY()+0.2D, this.getPos().getZ()+0.5D, 0, 0, 0);
 			
 		
 		}
@@ -118,14 +119,14 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickable{
 		
 		if(this.power > 6000 && this.power < 12000){
 			
-			this.getWorld().spawnParticle(EnumParticleTypes.SPELL_WITCH, this.getPos().getX()+0.5D, this.getPos().getY()+0.2D, this.getPos().getZ()+0.5D, 0, 0, 0);
+			this.getWorld().addParticle(ParticleTypes.WITCH, this.getPos().getX()+0.5D, this.getPos().getY()+0.2D, this.getPos().getZ()+0.5D, 0, 0, 0);
 			
 		}
 		
 		
 		if(this.power >= 12000){
 			
-			this.getWorld().spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, this.getPos().getX()+0.5D, this.getPos().getY()+0.2D, this.getPos().getZ()+0.5D, 0, 0, 0);
+			this.getWorld().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getPos().getX()+0.5D, this.getPos().getY()+0.2D, this.getPos().getZ()+0.5D, 0, 0, 0);
 			
 			
 		}

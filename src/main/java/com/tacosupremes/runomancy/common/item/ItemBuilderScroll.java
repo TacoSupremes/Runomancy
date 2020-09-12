@@ -6,30 +6,11 @@ import java.util.List;
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.translation.I18n;
-import net.minecraft.world.World;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.wrappers.FluidBucketWrapper;
 
-public class ItemBuilderScroll extends ItemMod{
+public class ItemBuilderScroll extends ItemMod {
 
-	public ItemBuilderScroll() {
-		super("builderScroll", 1);
-		this.setMaxStackSize(1);
-	}
 	
-	
-	
+	/*
 	
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World w, BlockPos pos,
@@ -298,9 +279,13 @@ public void buildStructure2(World w, BlockPos pos, ItemStack is, EntityPlayer pl
 		
 		
 	}
+*/
 
-	
-
+	@Override
+	public String getItemRegistryName()
+	{
+		return "builder_scroll";
+	}
 }
 
 

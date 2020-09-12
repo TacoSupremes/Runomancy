@@ -3,91 +3,94 @@ package com.tacosupremes.runomancy.common.block.rune.tile;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.block.rune.IRune;
 import com.tacosupremes.runomancy.common.block.tile.TileMod;
 import com.tacosupremes.runomancy.common.power.PowerHelper;
 import com.tacosupremes.runomancy.common.power.block.tile.IPowerNode;
 import com.tacosupremes.runomancy.common.runelogic.IRuneEffect;
 import com.tacosupremes.runomancy.common.runelogic.RuneFormations;
-import com.tacosupremes.runomancy.common.utils.BlockUtils;
-import com.tacosupremes.runomancy.common.utils.Vector3;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ITickable;
+import net.minecraft.block.BlockState;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
 
-public class TileEndRune extends TileMod implements IPowerNode {
-
-	
+public class TileEndRune extends TileMod implements IPowerNode, ITickableTileEntity
+{
 	int currentEffect = -1;
 	public int power = 0;
 	
-	public NBTTagCompound rEffect = null;
+	public CompoundNBT rEffect = null;
 	
 	public List<BlockPos> children = new ArrayList<BlockPos>();
 	
 	public int ticks = 0;
 	
 	private List<BlockPos> l = new ArrayList<BlockPos>();
-	
-	public void readCustomNBT(NBTTagCompound nbt)
+
+    public TileEndRune()
     {
-		for(int i =0; i<nbt.getInteger("LENGTH");i++){
-		children.add(BlockPos.fromLong(nbt.getCompoundTag("children").getLong("L"+i)));
+        super(ModBlocks.TILE_END_RUNE.get());
+    }
+
+    public void readCustomNBT(CompoundNBT nbt)
+    {
+		for(int i =0; i<nbt.getInt("LENGTH");i++){
+		children.add(BlockPos.fromLong(nbt.getCompound("children").getLong("L"+i)));
 			
 		}
+
+
+
+		nbt.remove("children");
+		this.currentEffect = nbt.getInt("effect");
+		this.power = nbt.getInt("power");
 		
-		nbt.removeTag("children");
-		this.currentEffect = nbt.getInteger("effect");
-		this.power = nbt.getInteger("power");
+		this.rEffect = nbt.getCompound("NBTE");
 		
-		this.rEffect = nbt.getCompoundTag("NBTE");
-		
-		for(int i =0; i<nbt.getCompoundTag("CC").getSize();i++){
-			l.add(BlockPos.fromLong(nbt.getCompoundTag("CC").getLong("L"+i)));
-				
-			}
-		nbt.removeTag("CC");
+		for(int i =0; i<nbt.getCompound("CC").size(); i++)
+			l.add(BlockPos.fromLong(nbt.getCompound("CC").getLong("L"+i)));
+
+		nbt.remove("CC");
 		
     }
 
 	
 	
-	public void writeCustomNBT(NBTTagCompound nbt)
+	public void writeCustomNBT(CompoundNBT nbt)
     {
-		NBTTagCompound n = new NBTTagCompound();
-		nbt.setInteger("LENGTH", children.size());
+		CompoundNBT n = new CompoundNBT();
+		nbt.putInt("LENGTH", children.size());
 		for(int i =0; i<children.size();i++){
-			n.setLong("L"+i, children.get(i).toLong());
+			n.putLong("L"+i, children.get(i).toLong());
 		}
-		nbt.setTag("children", n);
-		nbt.setInteger("effect", currentEffect);
-		nbt.setInteger("power", power);
-		nbt.setTag("NBTE", this.rEffect);
-		NBTTagCompound nn = new NBTTagCompound();
+		nbt.put("children", n);
+		nbt.putInt("effect", currentEffect);
+		nbt.putInt("power", power);
+		if(rEffect != null)
+			nbt.put("NBTE", this.rEffect);
+		CompoundNBT nn = new CompoundNBT();
 		for(int i = 0; i< l.size(); i++){
-			nn.setLong("L" + i, l.get(i).toLong());
+			nn.putLong("L" + i, l.get(i).toLong());
 			}
 		
-		nbt.setTag("CC", nn);
+		nbt.put("CC", nn);
 		
     }
 	
 	
 	@Override
-	public void update() {
+	public void tick()
+	{
 		
 		ticks++;
 		
 		
 		
 		if(rEffect == null)
-			rEffect = new NBTTagCompound();
+			rEffect = new CompoundNBT();
 		
 		
 		
@@ -129,7 +132,7 @@ public class TileEndRune extends TileMod implements IPowerNode {
 										i2++;
 										continue;
 									}
-									IBlockState state = ((IRune)this.getWorld().getBlockState(bp2).getBlock()).getStateWithMode(this.getWorld().getBlockState(bp2), re.getFinalBlockStates()[i2]);
+									BlockState state = ((IRune)this.getWorld().getBlockState(bp2).getBlock()).getStateWithMode(this.getWorld().getBlockState(bp2), re.getFinalBlockStates()[i2]);
 									this.getWorld().setBlockState(bp2, state);
 									children.add(bp2);
 									i2++;
@@ -246,7 +249,7 @@ public class TileEndRune extends TileMod implements IPowerNode {
 					BlockPos bp = new BlockPos(this.getPos().add(new BlockPos(xD, 0, zD)));
 				
 					
-					if(this.getWorld().getBlockState(bp).getBlock() == re.getNeededBlocks()[index] &&((IRune)this.getWorld().getBlockState(bp).getBlock()).getMetaFromState(this.getWorld().getBlockState(bp)) == re.getFinalBlockStates()[index]){
+					if(this.getWorld().getBlockState(bp).getBlock() == re.getNeededBlocks()[index] &&((IRune)this.getWorld().getBlockState(bp).getBlock()).getModeFromState(this.getWorld().getBlockState(bp)) == re.getFinalBlockStates()[index]){
 						index++;
 					}else if(re.getNeededBlocks()[index] == null)
 					index++;
@@ -267,15 +270,12 @@ public class TileEndRune extends TileMod implements IPowerNode {
 		
 	}
 	
-	public void destroy(){
-		
-		
-		
-		for(BlockPos b : children){
-			
+	public void destroy()
+	{
+
+		for(BlockPos b : children)
+		{
 			this.getWorld().setBlockState(b, this.getWorld().getBlockState(b).getBlock().getDefaultState());
-			
-			
 		}
 		
 		children.removeAll(children);

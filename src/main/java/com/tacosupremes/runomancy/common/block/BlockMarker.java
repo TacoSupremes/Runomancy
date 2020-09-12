@@ -1,27 +1,8 @@
 package com.tacosupremes.runomancy.common.block;
 
-import com.tacosupremes.runomancy.common.block.tile.TileMarker;
-import com.tacosupremes.runomancy.common.item.ModItems;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-public class BlockMarker extends BlockModContainer {
-	
+public class BlockMarker
+{
+	/*
 	public static final PropertyBool active = PropertyBool.create("active");
 	
 
@@ -41,7 +22,7 @@ public class BlockMarker extends BlockModContainer {
 
     /**
      * Convert the given metadata into a BlockState for this Block
-     */
+
     public IBlockState getStateFromMeta(int meta)
     {
         return this.getDefaultState().withProperty(active, meta == 1);
@@ -49,7 +30,7 @@ public class BlockMarker extends BlockModContainer {
 
     /**
      * Convert the BlockState into the correct metadata value
-     */
+
     public int getMetaFromState(IBlockState state)
     {
        
@@ -233,7 +214,7 @@ if(w.getBlockState(pos.add(0, 0, z)).getBlock() == ModBlocks.marker){
 	}
 
 	
-	
+	*/
 	
 
 }

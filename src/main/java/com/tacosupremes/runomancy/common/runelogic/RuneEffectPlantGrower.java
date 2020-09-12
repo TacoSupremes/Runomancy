@@ -1,30 +1,26 @@
 package com.tacosupremes.runomancy.common.runelogic;
 
+import com.tacosupremes.runomancy.common.Runomancy;
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockCactus;
-import net.minecraft.block.BlockDoublePlant;
-import net.minecraft.block.BlockNetherWart;
-import net.minecraft.block.BlockReed;
-import net.minecraft.block.BlockStem;
-import net.minecraft.block.IGrowable;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+import net.minecraft.block.*;
+
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
 
 public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 
 	@Override
-	public void doEffect(World w, BlockPos pos, TileEndRune te, NBTTagCompound n) {
+	public void doEffect(World w, BlockPos pos, TileEndRune te, CompoundNBT n) {
 		
 		int r = RuneFormations.getRange(this)+4;
 		
@@ -45,7 +41,7 @@ public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 			
 			
 			
-			if(b.isAir(w.getBlockState(bp), w, bp) || b == null || b == Blocks.GRASS || b == Blocks.TALLGRASS || b == Blocks.RED_FLOWER || b == Blocks.YELLOW_FLOWER || b instanceof BlockDoublePlant)
+			if(b.isAir(w.getBlockState(bp), w, bp) || b == null || b == Blocks.GRASS || b == Blocks.TALL_GRASS || b == Blocks.POPPY || b == Blocks.DANDELION || b instanceof DoublePlantBlock || b instanceof FlowerBlock)
 				continue;
 			
 			if(b instanceof IGrowable){
@@ -58,11 +54,13 @@ public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 				if(grow.canGrow(w, bp, w.getBlockState(bp), w.isRemote)){
 					te.power -= this.getCost();
 					for(int i=0;i<=3;i++){
-						if(!w.isRemote)
-					b.updateTick(w, bp, w.getBlockState(bp), w.rand);
-					
-					w.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, bp.getX()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, bp.getY()+0.3D, bp.getZ()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, 0, 0, 0, 0);
-						
+						if(!w.isRemote) {
+							//	b.randomTick(w.getBlockState(bp), (ServerWorld) w, bp, Runomancy.rand);
+
+							((IGrowable) b).grow((ServerWorld) w, Runomancy.rand, bp, w.getBlockState(bp));
+
+							w.addParticle(ParticleTypes.HAPPY_VILLAGER, bp.getX() + 0.5D + w.rand.nextGaussian() / 5 - w.rand.nextGaussian() / 5, bp.getY() + 0.3D, bp.getZ() + 0.5D + w.rand.nextGaussian() / 5 - w.rand.nextGaussian() / 5, 0, 0, 0);
+						}
 						}
 					}
 				
@@ -72,9 +70,9 @@ public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 			}
 			
 			
-			if(b instanceof BlockStem){
+			if(b instanceof StemBlock){
 				
-				Block crop = getCropFromSeed(((BlockStem)b).getItem(w, bp, w.getBlockState(bp)));
+				Block crop = getCropFromSeed(((StemBlock)b).getItem(w, bp, w.getBlockState(bp)));
 				
 				if(crop != null){
 					
@@ -82,10 +80,15 @@ public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 						
 						te.power -= this.getCost();
 						for(int i=0;i<=3;i++){
-							if(!w.isRemote)
-						b.updateTick(w, bp, w.getBlockState(bp), w.rand);
+							if(!w.isRemote) {
+								((IGrowable)b).grow((ServerWorld) w, Runomancy.rand,bp, w.getBlockState(bp));
+
+								w.addParticle(ParticleTypes.HAPPY_VILLAGER, bp.getX()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, bp.getY()+0.3D, bp.getZ()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, 0,  0, 0);
+
+							}
+						//b.updateTick(w, bp, w.getBlockState(bp), w.rand);
 						
-						w.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, bp.getX()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, bp.getY()+0.3D, bp.getZ()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, 0, 0, 0, 0);
+						//w.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, bp.getX()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, bp.getY()+0.3D, bp.getZ()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, 0, 0, 0, 0);
 							
 							}
 						continue;
@@ -95,7 +98,7 @@ public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 				
 			}
 			
-			if(b instanceof BlockCactus || b instanceof BlockReed){
+			if(b instanceof CactusBlock || b instanceof SugarCaneBlock){
 				
 				boolean canGrow  = w.getBlockState(bp.up()).getBlock().isAir(w.getBlockState(bp.up()), w, bp.up()); 
 				
@@ -110,16 +113,19 @@ public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 			
 			if(b instanceof IPlantable){
 				
-				if(b == Blocks.NETHER_WART && ((BlockNetherWart)b).getMetaFromState(w.getBlockState(bp)) == 3)
+				if(b == Blocks.NETHER_WART && w.getBlockState(bp).get(NetherWartBlock.AGE) == 3)
 					continue;
 				
 				if(te.power >= this.getCost()*2){
 					te.power -= this.getCost()*2;
-				
-				b.updateTick(w, bp, w.getBlockState(bp), w.rand);
-				w.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, bp.getX()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, bp.getY()+0.3D, bp.getZ()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, 0, 0, 0, 0);
-				
-				
+
+					if(!w.isRemote) {
+						((IGrowable)b).grow((ServerWorld) w, Runomancy.rand,bp, w.getBlockState(bp));
+
+						w.addParticle(ParticleTypes.HAPPY_VILLAGER, bp.getX()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, bp.getY()+0.3D, bp.getZ()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, 0,  0, 0);
+
+					}
+
 				}
 				
 				continue;
@@ -138,8 +144,11 @@ public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 	
 	public boolean blockNear(World w, BlockPos bp, Block b){
 		
-		for(EnumFacing e : EnumFacing.HORIZONTALS){
-			
+		for(Direction e : Direction.values()){
+
+			if(e == Direction.DOWN || e == Direction.UP)
+				continue;
+
 			BlockPos bpo = bp.add(e.getDirectionVec());
 			
 			if(w.getBlockState(bpo).getBlock() == b)
@@ -156,7 +165,7 @@ public Block getCropFromSeed(ItemStack is){
 		return null;
 	
 	if(is.getItem() == Items.MELON_SEEDS)
-		return Blocks.MELON_BLOCK;
+		return Blocks.MELON;
 	
 	if(is.getItem() == Items.PUMPKIN_SEEDS)
 		return Blocks.PUMPKIN;

@@ -1,41 +1,50 @@
 package com.tacosupremes.runomancy.common.item;
 
-import java.util.Random;
-
+import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class ItemLevitateRune extends ItemMod {
 
 	private Random rand;
 
-	public ItemLevitateRune() {
-		super("levitateRune");
-		this.setMaxStackSize(1);
+
+	public ItemLevitateRune()
+	{
+		super();
 		this.rand = new Random();
-		
 	}
 
-	
-
 	@Override
-	public void onUpdate(ItemStack is, World w, Entity e, int itemSlot, boolean isSelected) {
+	public void inventoryTick(ItemStack stack, World w, Entity e, int itemSlot, boolean isSelected) {
 		
 		
-		if(e instanceof EntityPlayer){
+		if(e instanceof PlayerEntity){
 			
-			EntityPlayer player = (EntityPlayer)e;
+			PlayerEntity player = (PlayerEntity)e;
 			
-			if(player.isSneaking() && player.isAirBorne && Math.abs(player.motionY) > 0 && !player.isCollided){
+			if(player.isSneaking() && player.isAirBorne && Math.abs(player.getMotion().y) > 0 && !player.collided){
 				
-				player.motionY /= 1.25D;
-			
+				//player.motionY /= 1.25D;
+
+				player.setMotion(player.getMotion().mul(1,1D / 1.25D,1));
+
+
+				double mX = player.getMotion().x;
+				double mY = player.getMotion().y;
+				double mZ = player.getMotion().z;
+
+
 				for(int i = 0; i< 4; i++){
-					
-				w.spawnParticle(EnumParticleTypes.FIREWORKS_SPARK, player.posX+rand.nextDouble()/2-rand.nextDouble()/2, player.posY-0.2D, player.posZ+rand.nextDouble()/2-rand.nextDouble()/2, -player.motionX, -player.motionY, -player.motionZ);
+
+
+
+				w.addParticle(ParticleTypes.FIREWORK, player.getPosX() + rand.nextDouble()/2-rand.nextDouble()/2, player.getPosY()-0.2D, player.getPosZ()+rand.nextDouble()/2-rand.nextDouble()/2, -mX, -mY, -mZ);
 				}
 				
 			}
@@ -43,7 +52,7 @@ public class ItemLevitateRune extends ItemMod {
 			if(isSelected && player.fallDistance > 0)
 				player.fallDistance = 0;
 					
-			if(player.fallDistance > 0 && player.fallDistance < 5 && player.motionY < 0)
+			if(player.fallDistance > 0 && player.fallDistance < 5 && player.getMotion().y < 0)
 				player.fallDistance = 0;
 
 						
@@ -64,10 +73,11 @@ public class ItemLevitateRune extends ItemMod {
 		
 		
 	}
-	
-	
-	
-	
-	
 
+
+	@Override
+	public String getItemRegistryName()
+	{
+		return "levitate_rune";
+	}
 }

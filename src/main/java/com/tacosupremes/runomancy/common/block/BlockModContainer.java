@@ -1,37 +1,24 @@
 package com.tacosupremes.runomancy.common.block;
 
-import com.tacosupremes.runomancy.common.Runomancy;
 
-import net.minecraft.block.BlockContainer;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraft.world.IBlockReader;
 
-public abstract class BlockModContainer extends BlockContainer {
+public abstract class BlockModContainer extends BlockMod
+{
 
-	public BlockModContainer(Material materialIn, String s) {
-		super(materialIn);
-		this.setUnlocalizedName(s);
-		this.setCreativeTab(Runomancy.tab);
-		ModBlocks.blocks.add(this);
-		this.setRegistryName(s);
-		GameRegistry.register(this);
-		GameRegistry.register(new ItemBlock(this).setRegistryName(s));
-		GameRegistry.registerTileEntity(tile(), s);
+	public BlockModContainer(Properties properties)
+	{
+		super(properties);
 	}
-	
-	protected abstract Class<? extends TileEntity> tile();
 
-	
+	@Override
+	public abstract TileEntity createTileEntity(BlockState state, IBlockReader world);
 
-	 public EnumBlockRenderType getRenderType(IBlockState state)
-	    {
-	        return EnumBlockRenderType.MODEL;
-	    }
-	
-	
-
+	@Override
+	public boolean hasTileEntity(BlockState state)
+	{
+		return true;
+	}
 }

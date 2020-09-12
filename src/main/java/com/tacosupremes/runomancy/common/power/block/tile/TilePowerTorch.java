@@ -1,23 +1,24 @@
 package com.tacosupremes.runomancy.common.power.block.tile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.tacosupremes.runomancy.common.block.tile.TileMod;
 import com.tacosupremes.runomancy.common.utils.BlockUtils;
 import com.tacosupremes.runomancy.common.utils.Vector3;
-
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.ITickable;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.tileentity.ITickableTileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
 
-public class TilePowerTorch extends TileMod implements IPowerNode, ITickable{
+import java.util.ArrayList;
+import java.util.List;
+
+public class TilePowerTorch extends TileMod implements IPowerNode, ITickableTileEntity
+{
+
+	public TilePowerTorch(TileEntityType<?> tileEntityTypeIn)
+	{
+		super(tileEntityTypeIn);
+	}
 
 	@Override
 	public int getRange() {
@@ -30,38 +31,38 @@ public class TilePowerTorch extends TileMod implements IPowerNode, ITickable{
 	
 	private List<BlockPos> linkedTo = new ArrayList<BlockPos>();
 	
-	public void readCustomNBT(NBTTagCompound nbt) {
+	public void readCustomNBT(CompoundNBT nbt) {
 		
 		
 		
-		if(nbt.hasKey("BPS")){
+		if(nbt.contains("BPS")){
 			
-			for(int i = 0; i< nbt.getCompoundTag("BPS").getSize(); i++){
+			for(int i = 0; i< nbt.getCompound("BPS").size(); i++){
 				
 				
-				linkedTo.add(BlockPos.fromLong(nbt.getCompoundTag("BPS").getLong("B"+i)));
+				linkedTo.add(BlockPos.fromLong(nbt.getCompound("BPS").getLong("B"+i)));
 			}
 			
-			nbt.removeTag("BPS");
+			nbt.remove("BPS");
 		}
 		
 	}
 	
-	public void writeCustomNBT(NBTTagCompound nbt) {
+	public void writeCustomNBT(CompoundNBT nbt) {
 		
 		
 		
 		if(!linkedTo.isEmpty()){
 			
-		NBTTagCompound bt = new NBTTagCompound();
+		CompoundNBT bt = new CompoundNBT();
 		
 		for(int i = 0; i<linkedTo.size(); i++){
 			
-			bt.setLong("B"+i, linkedTo.get(i).toLong());
+			bt.putLong("B"+i, linkedTo.get(i).toLong());
 			
 		}
 			
-		nbt.setTag("BPS", bt);
+		nbt.put("BPS", bt);
 			
 		}
 		
@@ -91,11 +92,11 @@ public class TilePowerTorch extends TileMod implements IPowerNode, ITickable{
 	}
 
 	@Override
-	public void update() {
+	public void tick() {
 		
 		for(BlockPos bp : linkedTo){			
 			
-			BlockUtils.drawLine(getWorld(), Vector3.fromBlockPos(getPos()).add(0.5), Vector3.fromBlockPos(bp).add(0.5), EnumParticleTypes.DRAGON_BREATH);
+			BlockUtils.drawLine(getWorld(), Vector3.fromBlockPos(getPos()).add(0.5), Vector3.fromBlockPos(bp).add(0.5), ParticleTypes.DRAGON_BREATH);
 		}
 		
 		for(int i =0; i< linkedTo.size(); i++){

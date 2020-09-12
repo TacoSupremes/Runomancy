@@ -3,10 +3,6 @@ package com.tacosupremes.runomancy.common.runelogic;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.tacosupremes.runomancy.gui.EffectPage;
-import com.tacosupremes.runomancy.gui.FormationPage;
-import com.tacosupremes.runomancy.gui.Pages;
-
 public class RuneFormations {
 	
 	public static List<IRuneEffect> effects = new ArrayList<IRuneEffect>();
@@ -30,19 +26,7 @@ public class RuneFormations {
 		return Math.round((float)((float)Math.sqrt(re.getNeededBlocks().length) / 2F)) - 1;
 	}
 	
-	
-	public static void makePages(){
-		
-		for(IRuneEffect i : effects){
-			Pages.addPage(i.getName(), new EffectPage(i));	
-			Pages.addPage(i.getName()+".formation", new FormationPage(i));			
-		}
-		
-	
-		
-		
-		
-	}
+
 	
 	
 }

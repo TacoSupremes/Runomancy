@@ -1,24 +1,26 @@
 package com.tacosupremes.runomancy.common.block.tile;
 
-import com.tacosupremes.runomancy.common.utils.BlockUtils;
-import com.tacosupremes.runomancy.common.utils.Vector3;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.tileentity.TileEntityType;
 
-public class TileMarker extends TileEntity implements ITickable {
+public class TileMarker extends TileMod
+{
+	public TileMarker(TileEntityType<?> tileEntityTypeIn)
+	{
+		super(tileEntityTypeIn);
+	}
+	/*
+
+	public TileMarker(TileEntityType<?> tileEntityTypeIn)
+	{
+		super(tileEntityTypeIn);
+	}
 
 	@Override
-	public void update() {
+	public void tick() {
 		
-		if(this.getBlockMetadata() == 0)
-			return;
+		//if(this.getBlockMetadata() == 0)
+		//	return;
 		
 		World w = this.getWorld();
 		
@@ -159,38 +161,9 @@ if(yF != null && zF != null){
 			nbt.setLong("zD", zF.toLong());
 	
     }
-	
-	
-	@Override
-	public void readFromNBT(NBTTagCompound nbt)
-    {
-        super.readFromNBT(nbt);
-        readCustomNBT(nbt);
-    }
-	@Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt)
-    {
-        
-        writeCustomNBT(nbt);
-        
-        return super.writeToNBT(nbt);
-    }
-	
-	//Client Packet stuff
-	@Override
-	public SPacketUpdateTileEntity getUpdatePacket() {
-		NBTTagCompound nbt = new NBTTagCompound();
-        this.writeCustomNBT(nbt);
-        return new SPacketUpdateTileEntity(this.getPos(), -999, nbt);
-	}
-	
+
 	
 
-	@Override
-	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-		super.onDataPacket(net, pkt);		
-		this.readCustomNBT(pkt.getNbtCompound());
-	}
 
 	public boolean isArea3D(){
 		
@@ -204,5 +177,5 @@ if(yF != null && zF != null){
 		return xF != null && yF != null || xF != null && zF != null || yF != null && zF != null;
 	}
 	
-	
+	*/
 }

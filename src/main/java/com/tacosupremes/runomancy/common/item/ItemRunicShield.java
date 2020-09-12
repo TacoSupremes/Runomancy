@@ -1,77 +1,45 @@
 package com.tacosupremes.runomancy.common.item;
 
-import com.tacosupremes.runomancy.common.Runomancy;
-import com.tacosupremes.runomancy.gui.Categories;
-import com.tacosupremes.runomancy.gui.IPageGiver;
-import com.tacosupremes.runomancy.gui.ItemPage;
-import com.tacosupremes.runomancy.gui.Page;
 
+import com.tacosupremes.runomancy.common.Runomancy;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class ItemRunicShield extends ItemMod implements IPageGiver {
+import java.util.List;
 
-	public ItemRunicShield() {
-		super("runicShield");
-		this.setMaxDamage(1000);
-		
-	}
+public class ItemRunicShield extends ItemMod  {
 
 	@Override
-	public Page getPage() {
+	public void inventoryTick(ItemStack is, World w, Entity e, int itemSlot, boolean isSelected)
+	{
+		List<Entity> l = w.getEntitiesInAABBexcluding(e, new AxisAlignedBB(e.getPosition().add(-3, -2, -3), e.getPosition().add(3, 2, 3)), null);
 
-		return new ItemPage(new ItemStack(this));
+		for (Entity e2 : l)
+		{
+			if (e2 != null)
+			{
+				BlockPos bp = e2.getPosition().subtract(e.getPosition());
 
-	}
+				e2.setMotion(bp.getX() * 0.75D, e2.getMotion().y, bp.getZ() * 0.75D);
 
-	@Override
-	public Categories getCategories() {
-
-		return Categories.Item;
-
-	}
-
-	@Override
-	public boolean hasNormalRecipe() {
-
-		return true;
-
-	}
-
-	@Override
-	public Page getSubPages() {
-
-		return null;
-
-	}
-
-	@Override
-	public void onUpdate(ItemStack is, World w, Entity e, int itemSlot, boolean isSelected) {
-	
-		Entity e2 = w.findNearestEntityWithinAABB(EntityLivingBase.class, new AxisAlignedBB(e.getPosition().add(-3, -2, -3), e.getPosition().add(3, 2, 3)), e);
-		
-		if(e2 != null){
-			
-		BlockPos bp = e2.getPosition().subtract(e.getPosition());
-			
-			e2.motionX = bp.getX() * 0.75D;
-			//e2.motionY = -bp.getY();
-			e2.motionZ = bp.getZ() * 0.75D;
-			is.setItemDamage(is.getItemDamage() + 1);
-			
-			for(int i = 0; i<= 8; i++){
-				w.spawnParticle(EnumParticleTypes.CRIT_MAGIC, e2.posX+Runomancy.rand.nextGaussian()/4 - Runomancy.rand.nextGaussian()/4, e2.posY+1, e2.posZ+Runomancy.rand.nextGaussian()/4 - Runomancy.rand.nextGaussian()/4, 0, 0, 0, 0);
+				for (int i = 0; i <= 8; i++)
+				{
+					w.addParticle(ParticleTypes.CRIT, e2.getPosX() + Runomancy.rand.nextGaussian() / 4 - Runomancy.rand.nextGaussian() / 4, e2.getPosY() + 1, e2.getPosZ() + Runomancy.rand.nextGaussian() / 4 - Runomancy.rand.nextGaussian() / 4, 0, 0, 0);
+				}
+				return;
 			}
-			return;
-		}
-		
-	}
-	
-	
 
+		}
+	}
+
+
+	@Override
+	public String getItemRegistryName()
+	{
+		return null;
+	}
 }

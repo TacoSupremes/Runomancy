@@ -1,5 +1,6 @@
 package com.tacosupremes.runomancy.common.item;
 
+/*
 import java.util.List;
 import java.util.UUID;
 
@@ -219,7 +220,7 @@ public class ItemSoulGem extends ItemMod implements IPageGiver {
 
 	    /**
 	     * Applies the data in the EntityTag tag of the given ItemStack to the given Entity.
-	     */
+
 	    public static void applyItemEntityDataToEntity(World entityWorld, @Nullable EntityPlayer player, ItemStack stack, @Nullable Entity targetEntity)
 	    {
 	        MinecraftServer minecraftserver = entityWorld.getMinecraftServer();
@@ -246,7 +247,7 @@ public class ItemSoulGem extends ItemMod implements IPageGiver {
 
 	    /**
 	     * Called when the equipped item is right clicked.
-	     */
+
 	    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand handIn)
 	    {
 	     
@@ -305,10 +306,10 @@ public class ItemSoulGem extends ItemMod implements IPageGiver {
 	        }
 	    }
 
-	    /**
+
 	     * Spawns the creature specified by the egg's type in the location specified by the last three parameters.
 	     * Parameters: world, entityID, x, y, z.
-	     */
+
 	    @Nullable
 	    public static Entity spawnCreature(World worldIn, @Nullable ResourceLocation entityID, double x, double y, double z)
 	    {
@@ -343,7 +344,7 @@ public class ItemSoulGem extends ItemMod implements IPageGiver {
 
 	    /**
 	     * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
-	     */
+
 	    @SideOnly(Side.CLIENT)
 	    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
 	    {
@@ -359,7 +360,7 @@ public class ItemSoulGem extends ItemMod implements IPageGiver {
 
 	    /**
 	     * APplies the given entity ID to the given ItemStack's NBT data.
-	     */
+
 	    @SideOnly(Side.CLIENT)
 	    public static void applyEntityIdToItemStack(ItemStack stack, ResourceLocation entityId)
 	    {
@@ -422,3 +423,4 @@ public class ItemSoulGem extends ItemMod implements IPageGiver {
 	 
 
 }
+*/

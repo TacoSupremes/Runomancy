@@ -1,79 +1,52 @@
 package com.tacosupremes.runomancy.common.block.rune;
 
 import com.tacosupremes.runomancy.common.block.ModBlocks;
-import com.tacosupremes.runomancy.gui.Categories;
-import com.tacosupremes.runomancy.gui.IPageGiver;
-import com.tacosupremes.runomancy.gui.ItemPage;
-import com.tacosupremes.runomancy.gui.Page;
-
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.state.IntegerProperty;
+import net.minecraft.state.StateContainer;
+import net.minecraftforge.common.ToolType;
 
-public class BlockObsidianRune extends BlockRune implements IPageGiver{
-
-	public static final PropertyInteger mode = PropertyInteger.create("mode",0, ModBlocks.obsidianCount);
-	
-	
-	
-	public BlockObsidianRune() {
-		super(Material.CIRCUITS, "obsidianRune");
-		this.setDefaultState(this.getDefaultState().withProperty(mode, 0));
-		
-		
-	}
+public class BlockObsidianRune extends BlockRune
+{
+	public static final IntegerProperty mode = IntegerProperty.create("mode", 0, ModBlocks.obsidianCount);
 
 
-	@SideOnly(Side.CLIENT)
-    public IBlockState getStateForEntityRender(IBlockState state)
+    public BlockObsidianRune()
     {
-        return this.getDefaultState().withProperty(mode, 0);
+        super();
+        this.setDefaultState(this.stateContainer.getBaseState().with(mode, 0));
+    }
+    @Override
+    int getModeCount()
+    {
+        return ModBlocks.obsidianCount;
     }
 
-    /**
-     * Convert the given metadata into a BlockState for this Block
-     */
-    public IBlockState getStateFromMeta(int meta)
+    @Override
+    public String getName()
     {
-        return this.getDefaultState().withProperty(mode, meta);
+        return "obsidian_rune";
     }
 
-    /**
-     * Convert the BlockState into the correct metadata value
-     */
-    public int getMetaFromState(IBlockState state)
+    @Override
+    public BlockState getStateWithMode(BlockState state, int i)
     {
-       
-
-        return state.getValue(mode);
+        return this.getDefaultState().with(mode, i);
     }
 
-    protected BlockStateContainer createBlockState()
+    @Override
+    public int getModeFromState(BlockState state)
     {
-        return new BlockStateContainer(this, new IProperty[] {mode});
+        return state.get(mode);
     }
 
-	@Override
-	public IBlockState getStateWithMode(IBlockState state, int i) {
-		
-		return this.getDefaultState().withProperty(mode, i);
-	}
 
-	
-	@Override
-	public Page getPage() {
-		
-		return new ItemPage(new ItemStack(this));
-	}
-	
-	@Override
-	public Categories getCategories() {
-		
-		return Categories.Runes;
-	}
+    @Override
+    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
+    {
+        builder.add(mode);
+    }
 }

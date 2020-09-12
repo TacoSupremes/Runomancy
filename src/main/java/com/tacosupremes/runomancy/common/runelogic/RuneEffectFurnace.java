@@ -6,13 +6,14 @@ import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
 
+import com.tacosupremes.runomancy.common.recipes.ModRecipes;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.particles.BasicParticleType;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -20,7 +21,7 @@ import net.minecraft.world.World;
 public class RuneEffectFurnace implements IFunctionalRuneEffect {
 
 	@Override
-	public void doEffect(World w, BlockPos pos, TileEndRune te, NBTTagCompound n) {
+	public void doEffect(World w, BlockPos pos, TileEndRune te, CompoundNBT n) {
 		
 		int x = pos.getX();
 		int y = pos.getY();
@@ -29,42 +30,40 @@ public class RuneEffectFurnace implements IFunctionalRuneEffect {
 		if(te.power <this.getCost())
 			return;
 		
-		  List<EntityItem> entities = (List<EntityItem>) w.getEntitiesWithinAABB(EntityItem.class, new AxisAlignedBB(x - 1, y - 1, z - 1, x + 2, y + 0.3F, z + 2));
-	        for (EntityItem entity : entities) {
+		  List<ItemEntity> entities = w.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(x - 1, y - 1, z - 1, x + 2, y + 0.3F, z + 2));
+	        for (ItemEntity entity : entities) {
 	        	
-	        	ItemStack is = entity.getEntityItem();
+	        	ItemStack is = entity.getItem();
 	        	
 	        	
 	        	
-	        	ItemStack result = FurnaceRecipes.instance().getSmeltingResult(is); 
+	        	ItemStack result = ModRecipes.getSmeltingResult(w, is);
 	        	
-	        	if(result != null){
-	        		
-	        
-	        		
+	        	if(!result.isEmpty())
+	        	{
 	        		if(te.power >= this.getCost()){
 	        		
 	        			te.power-=this.getCost();
 	        			
-	        			spawnParticleOnEntity(EnumParticleTypes.SMOKE_NORMAL, entity);
-	        			spawnParticleOnEntity(EnumParticleTypes.FLAME, entity);
+	        			spawnParticleOnEntity(ParticleTypes.SMOKE, entity);
+	        			spawnParticleOnEntity(ParticleTypes.FLAME, entity);
 	        			
 	        			if(is.getCount() == 1){
-	        				entity.setEntityItemStack(result.copy());
-	        				entity.setPositionAndUpdate(entity.posX, entity.posY+0.1D, entity.posZ);
-	        			}else{
-	        				entity.getEntityItem().shrink(1);
-	        			//	entity.setEntityItemStack(is);
-	        				EntityItem ent = new EntityItem(w);
-							ent.setPosition(entity.posX, entity.posY+0.1D, entity.posZ);
-							ent.setEntityItemStack(result);
-							ent.motionX = 0;
-							ent.motionY = 0.2D;
-							ent.motionZ = 0;
-							
-	        				if(!w.isRemote){
-	        					w.spawnEntity(ent);
-	        				}
+	        				entity.setItem(result.copy());
+	        				entity.setPositionAndUpdate(entity.getPosX(), entity.getPosY()+0.1D, entity.getPosZ());
+	        			}
+	        			else
+						{
+							ItemEntity ent = new ItemEntity(w, entity.getPosX(), entity.getPosY(), entity.getPosZ());
+							ent.setItem(result.copy());
+							RuneEffectFurnace.setVelocity(ent, 0, 0.1D, 0);
+
+							entity.setItem(is.copy().split(is.getCount()-1));
+
+							//ent.setPosition(entity.posX, entity.posY+0.1, entity.posZ);
+							ent.setMotion(0,0.4D,0);
+							if(!w.isRemote)
+								w.addEntity(ent);
 	        			}
 	        		}
 	        		
@@ -72,20 +71,15 @@ public class RuneEffectFurnace implements IFunctionalRuneEffect {
 	        
 	        }
 	}
-	        public static void spawnParticleOnEntity(EnumParticleTypes en,EntityItem e){
-	    		
-	    		e.getEntityWorld().spawnParticle(en, e.posX, e.posY, e.posZ, 0, 0, 0, 1);
-	    		
+	        public static void spawnParticleOnEntity(BasicParticleType en, ItemEntity e)
+			{
+	    		e.getEntityWorld().addParticle(en, e.getPosX(), e.getPosY(), e.getPosZ(), 0, 0, 0);
 	    	}
 		
 	        
-	        public static void setVelocity(Entity e, double x, double y, double z){
-	        	
-	        	e.motionX = x;
-	        	e.motionY = y;
-	        	e.motionZ = z;
-	        	
-	        	
+	        public static void setVelocity(Entity e, double x, double y, double z)
+			{
+	        	e.setMotion(x,y,z);
 	        }
 
 	@Override
