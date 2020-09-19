@@ -46,7 +46,7 @@ public class BlockNode extends BlockModContainer
 		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.UP));
 	}
 
-
+	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)
 	{
 		switch (state.get(FACING))
@@ -68,30 +68,7 @@ public class BlockNode extends BlockModContainer
 		return null;
 	}
 
-
-/*
-	    protected boolean checkForDrop(World worldIn, BlockPos pos, BlockState state)
-	    {
-	        if (state.getBlock() == this && this.canPlaceAt(worldIn, pos, state.get(FACING)))
-	        {
-	            return true;
-	        }
-	        else
-	        {
-	            if (worldIn.getBlockState(pos).getBlock() == this)
-	            {
-	              //  this.dropBlockAsItem(worldIn, pos, state, 0);
-	                worldIn.destroyBlock(pos, true);
-	            }
-
-	            return false;
-	        }
-	    }
-
-
- */
-
-
+	@Override
 	public BlockState getStateForPlacement(BlockItemUseContext context)
 	{
 		BlockPos blockpos = context.getPos();
@@ -107,11 +84,13 @@ public class BlockNode extends BlockModContainer
 		return this.getDefaultState();
 	}
 
+	@Override
 	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos)
 	{
 		return !isValidPosition(stateIn, worldIn, currentPos) ? Blocks.AIR.getDefaultState() : stateIn;
 	}
 
+	@Override
 	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos)
 	{
 		Direction d = state.get(FACING).getOpposite();
@@ -154,8 +133,6 @@ public class BlockNode extends BlockModContainer
 	{
 		return state.rotate(mirrorIn.toRotation(state.get(FACING)));
 	}
-
-
 
 	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)

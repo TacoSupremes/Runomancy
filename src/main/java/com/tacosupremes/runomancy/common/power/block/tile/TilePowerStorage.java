@@ -1,9 +1,12 @@
 package com.tacosupremes.runomancy.common.power.block.tile;
 
+import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.block.tile.TileMod;
+import com.tacosupremes.runomancy.common.utils.Vector3;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
@@ -14,17 +17,21 @@ import java.util.List;
 public class TilePowerStorage extends TileMod implements IPowerTile, ITickableTileEntity
 {
 	
-	
 	public int power = 0;
-	
-	
-	
+
 	private List<BlockPos> linkedTo = new ArrayList<BlockPos>();
+
+	public TilePowerStorage()
+	{
+		super(ModBlocks.TILE_BATTERY.get());
+	}
 
 	public TilePowerStorage(TileEntityType<?> tileEntityTypeIn)
 	{
 		super(tileEntityTypeIn);
 	}
+
+	private static Vector3 offset = new Vector3(0.5,0.35D,0.5);
 
 	public void readCustomNBT(CompoundNBT nbt) {
 		
@@ -72,7 +79,7 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickableTi
 
 	@Override
 	public int addPower(int i) {
-		power+=i;
+		power += i;
 		return power;
 	}
 
@@ -82,11 +89,7 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickableTi
 		return addPower(-i);
 	}
 
-	@Override
-	public int getRange() {
-		
-		return 5;
-	}
+
 
 	@Override
 	public int getMaxPower() {
@@ -103,7 +106,8 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickableTi
 		if(this.getPower() > this.getMaxPower())
 			this.power = this.getMaxPower();
 		
-		
+
+		power++;
 		//System.out.println(this.getPower());
 		
 		
@@ -111,7 +115,7 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickableTi
 		
 		if(this.power > 0 && this.power <= 6000){
 			
-			this.getWorld().addParticle((IParticleData) ParticleTypes.DUST, this.getPos().getX()+0.5D, this.getPos().getY()+0.2D, this.getPos().getZ()+0.5D, 0, 0, 0);
+			this.getWorld().addParticle(RedstoneParticleData.REDSTONE_DUST, this.getPos().getX()+0.5D, this.getPos().getY()+0.45D, this.getPos().getZ()+0.5D, 0, 0, 0);
 			
 		
 		}
@@ -119,14 +123,14 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickableTi
 		
 		if(this.power > 6000 && this.power < 12000){
 			
-			this.getWorld().addParticle(ParticleTypes.WITCH, this.getPos().getX()+0.5D, this.getPos().getY()+0.2D, this.getPos().getZ()+0.5D, 0, 0, 0);
+			this.getWorld().addParticle(ParticleTypes.WITCH, this.getPos().getX()+0.5D, this.getPos().getY()+0.45D, this.getPos().getZ()+0.5D, 0, 0, 0);
 			
 		}
 		
 		
 		if(this.power >= 12000){
 			
-			this.getWorld().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getPos().getX()+0.5D, this.getPos().getY()+0.2D, this.getPos().getZ()+0.5D, 0, 0, 0);
+			this.getWorld().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getPos().getX()+0.5D, this.getPos().getY()+0.45D, this.getPos().getZ()+0.5D, 0, 0, 0);
 			
 			
 		}
@@ -155,12 +159,19 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickableTi
 		
 	}
 
+	/*
 	@Override
 	public List<BlockPos> getLinkedBlocks() {
 		
 		
 		return linkedTo;
 		
+	}
+
+	@Override
+	public int getRange() {
+
+		return 5;
 	}
 
 	@Override
@@ -175,8 +186,23 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickableTi
 		
 		
 	}
-	
-	
-	
+*/
 
+	@Override
+	public boolean isActiveNode()
+	{
+		return !getWorld().isBlockPowered(getPos());
+	}
+
+	@Override
+	public List<BlockPos> getNodeList()
+	{
+		return linkedTo;
+	}
+
+	@Override
+	public Vector3 getParticleOffset()
+	{
+		return Vector3.fromBlockPos(getPos()).add(offset);
+	}
 }

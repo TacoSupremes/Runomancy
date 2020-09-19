@@ -13,6 +13,8 @@ import com.tacosupremes.runomancy.common.block.rune.BlockWaterRune;
 import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
 import com.tacosupremes.runomancy.common.block.tile.TileNode;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
+import com.tacosupremes.runomancy.common.power.block.BlockPowerStorage;
+import com.tacosupremes.runomancy.common.power.block.tile.TilePowerStorage;
 import com.tacosupremes.runomancy.common.runelogic.RuneFormations;
 
 import net.minecraft.block.Block;
@@ -44,10 +46,13 @@ public class ModBlocks {
 
 	public static final RegistryObject<BlockMod> SOUL_RUNE = regBlock(BlockSoulRune::new);
 
-
 	public static final RegistryObject<BlockMod> NODE = regBlock(BlockNode::new);
 
 	public static final RegistryObject<TileEntityType<?>> TILE_NODE = regTile(TileNode::new, ModBlocks.NODE);
+
+	public static final RegistryObject<BlockMod> BATTERY = regBlock(BlockPowerStorage::new);
+
+	public static final RegistryObject<TileEntityType<?>> TILE_BATTERY = regTile(TilePowerStorage::new, ModBlocks.BATTERY);
 
 
 	//public static List<Block> blocks = new ArrayList<Block>();

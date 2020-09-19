@@ -82,6 +82,7 @@ public class Runomancy
 		WaterColorHandler.registerBlockColors();
 		GrassColorHandler.registerBlockColors();
 		RenderTypeLookup.setRenderLayer(ModBlocks.NODE.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.BATTERY.get(), RenderType.getCutout());
 
 
 	}

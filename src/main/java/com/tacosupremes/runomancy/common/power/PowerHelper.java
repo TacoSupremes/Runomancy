@@ -14,6 +14,7 @@ import com.tacosupremes.runomancy.common.utils.Vector3;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -354,7 +355,7 @@ public static List<BlockPos> getPathToBattery(World w, BlockPos posF, List<Block
 			
 			for(int i = 0; i < l2.size()-1; i++){
 	
-				BlockUtils.drawLine(w, Vector3.fromBlockPos(l2.get(i)).add(0.5D), Vector3.fromBlockPos(l2.get(i+1)).add(0.5D), ParticleTypes.DUST);
+				BlockUtils.drawLine(w, Vector3.fromBlockPos(l2.get(i)).add(0.5D), Vector3.fromBlockPos(l2.get(i+1)).add(0.5D), RedstoneParticleData.REDSTONE_DUST);
 				
 			}
 			
@@ -595,7 +596,7 @@ public static int addPower(World w, BlockPos pos, int amountFill, List<BlockPos>
 		for(int i = 0; i< bp.size()-1; i++){
 			
 			
-			BlockUtils.drawLine(w, Vector3.fromBlockPos(bp.get(i)).add(0.5D), Vector3.fromBlockPos(bp.get(i+1)).add(0.5D), drain ? ParticleTypes.DUST : ParticleTypes.WITCH);
+			BlockUtils.drawLine(w, Vector3.fromBlockPos(bp.get(i)).add(0.5D), Vector3.fromBlockPos(bp.get(i+1)).add(0.5D), drain ? RedstoneParticleData.REDSTONE_DUST : ParticleTypes.WITCH);
 			
 			
 		}
@@ -679,7 +680,7 @@ public static boolean isBlockPowered(World w, BlockPos pos){
 						for(BlockPos bpl : bl){
 							
 							if(last != null)
-							BlockUtils.drawLine(w, Vector3.fromBlockPos(last).add(0.5D), Vector3.fromBlockPos(bpl).add(0.5D), drain ? ParticleTypes.DUST : ParticleTypes.WITCH);
+							BlockUtils.drawLine(w, Vector3.fromBlockPos(last).add(0.5D), Vector3.fromBlockPos(bpl).add(0.5D), drain ? RedstoneParticleData.REDSTONE_DUST : ParticleTypes.WITCH);
 							last = bpl;
 						}
 						
@@ -695,7 +696,7 @@ public static boolean isBlockPowered(World w, BlockPos pos){
 						for(BlockPos bpl : bl){
 							
 							if(last != null)
-							BlockUtils.drawLine(w, Vector3.fromBlockPos(last).add(0.5D), Vector3.fromBlockPos(bpl).add(0.5D), drain ? ParticleTypes.DUST : ParticleTypes.WITCH);
+							BlockUtils.drawLine(w, Vector3.fromBlockPos(last).add(0.5D), Vector3.fromBlockPos(bpl).add(0.5D), drain ? RedstoneParticleData.REDSTONE_DUST : ParticleTypes.WITCH);
 							last = bpl;
 						}
 						

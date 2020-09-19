@@ -62,7 +62,7 @@ public static BlockPos[] createBlockRange(BlockPos center, int xR, int yR, int z
 
   
 
-  public static void drawLine(World w, Vector3 start, Vector3 end, ParticleType type)
+  public static void drawLine(World w, Vector3 start, Vector3 end, IParticleData type)
   {
 	  
   	double i = 0;
@@ -81,7 +81,7 @@ public static BlockPos[] createBlockRange(BlockPos center, int xR, int yR, int z
   		yD *= dL;
   		zD *= dL;
 
-  		w.addParticle((IParticleData) type, start.getX()+xD,start.getY()+yD,start.getZ()+zD, 0, 0, 0);
+  		w.addParticle(type, start.getX()+xD,start.getY()+yD,start.getZ()+zD, 0, 0, 0);
 
   		i++;
   	}

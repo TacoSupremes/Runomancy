@@ -1,8 +1,9 @@
 package com.tacosupremes.runomancy.common.power.block.tile;
 
-import net.minecraft.util.math.BlockPos;
+import com.tacosupremes.runomancy.common.block.tile.INode;
 
-public interface IPowerTile extends IPowerNode {
+public interface IPowerTile extends INode
+{
 	
 	public int getPower();
 

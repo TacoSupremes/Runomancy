@@ -1,5 +1,7 @@
 {
     "variants": {
-    "normal": { "model": "runomancy:battery" }
+      "": {
+        "model": "runomancy:block/battery"
+      }
     }
-}
+  }
