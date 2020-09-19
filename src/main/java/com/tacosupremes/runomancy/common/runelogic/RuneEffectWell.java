@@ -125,8 +125,8 @@ public class RuneEffectWell implements IFunctionalRuneEffect {
 	@Override
 	public Block[] getNeededBlocks() {
 
-		Block w = ModBlocks.waterRune;
-		Block e = ModBlocks.endRune;
+		Block w = ModBlocks.WATER_RUNE.get();
+		Block e = ModBlocks.END_RUNE.get();
 		Block n = null;
 		return new Block[]{n,w,n,
 						   w,e,w,

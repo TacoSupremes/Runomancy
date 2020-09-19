@@ -3,6 +3,7 @@ package com.tacosupremes.runomancy.common.runelogic;
 import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -16,6 +17,8 @@ public interface IRuneEffect {
 	public boolean isGenerating();
 	
 	public int[] getFinalBlockStates();
+
+
 	
 	public int getPowerCapacity();
 	

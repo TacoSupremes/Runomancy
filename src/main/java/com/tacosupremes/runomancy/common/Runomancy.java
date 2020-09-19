@@ -2,10 +2,14 @@ package com.tacosupremes.runomancy.common;
 
 
 import com.tacosupremes.runomancy.common.block.ModBlocks;
+import com.tacosupremes.runomancy.common.block.rune.GrassColorHandler;
+import com.tacosupremes.runomancy.common.block.rune.WaterColorHandler;
 import com.tacosupremes.runomancy.common.item.ModItems;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
 import com.tacosupremes.runomancy.common.runelogic.*;
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -75,6 +79,11 @@ public class Runomancy
 
 	//	ClientRegistry.bindTileEntityRenderer(ModBlocks.TILE_BOUND_ENDER_CHEST.get(), TileBoundEnderChestRenderer::new);
 		// LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
+		WaterColorHandler.registerBlockColors();
+		GrassColorHandler.registerBlockColors();
+		RenderTypeLookup.setRenderLayer(ModBlocks.NODE.get(), RenderType.getCutout());
+
+
 	}
 
 	private void enqueueIMC(final InterModEnqueueEvent event)

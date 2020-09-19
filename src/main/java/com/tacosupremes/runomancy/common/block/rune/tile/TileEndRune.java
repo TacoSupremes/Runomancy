@@ -9,6 +9,7 @@ import com.tacosupremes.runomancy.common.block.tile.TileMod;
 import com.tacosupremes.runomancy.common.power.PowerHelper;
 import com.tacosupremes.runomancy.common.power.block.tile.IPowerNode;
 import com.tacosupremes.runomancy.common.runelogic.IRuneEffect;
+import com.tacosupremes.runomancy.common.runelogic.RuneEffectRepair;
 import com.tacosupremes.runomancy.common.runelogic.RuneFormations;
 
 import net.minecraft.block.BlockState;
@@ -84,21 +85,18 @@ public class TileEndRune extends TileMod implements IPowerNode, ITickableTileEnt
 	@Override
 	public void tick()
 	{
-		
 		ticks++;
-		
-		
-		
+
 		if(rEffect == null)
 			rEffect = new CompoundNBT();
 		
-		
-		
-		
+
 		if(!isFormed()){
 			effect:
-			for(IRuneEffect re : RuneFormations.effects){
-				
+			for(IRuneEffect re : RuneFormations.effects)
+			{
+
+				//System.out.println(re.getName());
 				
 				int sr = Math.round((float)((float)Math.sqrt(re.getNeededBlocks().length)/2F))-1;
 				
@@ -109,9 +107,12 @@ public class TileEndRune extends TileMod implements IPowerNode, ITickableTileEnt
 						for(int xD = -sr;xD<=sr; xD++){
 						
 						BlockPos bp = new BlockPos(this.getPos().add(new BlockPos(xD, 0, zD)));
-				
-						
-						if(this.getWorld().getBlockState(bp).getBlock() == re.getNeededBlocks()[index]){
+
+						BlockState state2 = this.getWorld().getBlockState(bp);
+
+					//	System.out.println(this.getWorld().getBlockState(bp).getBlock().getRegistryName().toString());
+
+						if(this.getWorld().getBlockState(bp).getBlock() == re.getNeededBlocks()[index] && ((IRune)state2.getBlock()).getModeFromState(state2) == 0){
 							index++;
 						}else if(re.getNeededBlocks()[index] == null)
 							index++;
@@ -121,7 +122,8 @@ public class TileEndRune extends TileMod implements IPowerNode, ITickableTileEnt
 						}
 						
 						if(index == re.getNeededBlocks().length){
-							
+
+
 							this.currentEffect = RuneFormations.effects.indexOf(re);
 							int i2 = 0;
 							
@@ -133,7 +135,9 @@ public class TileEndRune extends TileMod implements IPowerNode, ITickableTileEnt
 										continue;
 									}
 									BlockState state = ((IRune)this.getWorld().getBlockState(bp2).getBlock()).getStateWithMode(this.getWorld().getBlockState(bp2), re.getFinalBlockStates()[i2]);
-									this.getWorld().setBlockState(bp2, state);
+
+									if(!getWorld().isRemote)
+										this.getWorld().setBlockState(bp2, state);
 									children.add(bp2);
 									i2++;
 									
@@ -153,8 +157,12 @@ public class TileEndRune extends TileMod implements IPowerNode, ITickableTileEnt
 			
 			
 		}else{
+
+			System.out.println("FORMED: " + this.getEffect().getName());
+
 			
 			if(shouldDestroy()){
+				System.out.println("BIGF");
 				destroy();
 				this.currentEffect = -1;
 				return;

@@ -1,20 +1,20 @@
 {
   "variants": {
-    "mode=0": { "model": "runomancy:fireRune" },
-    "mode=1": { "model": "runomancy:fireRuneLava" },
-    "mode=2": { "model": "runomancy:fireRuneSolar", "y": 180},
+    "mode=0": { "model": "runomancy:block/fire_rune" },
+    "mode=1": { "model": "runomancy:block/fire_rune_lava" },
+    "mode=2": { "model": "runomancy:block/fire_rune_solar", "y": 180},
     "mode=3": {
-      "model": "runomancy:fireRuneSolar",
+      "model": "runomancy:block/fire_rune_solar",
       "y": 270
     },
     "mode=4": {
-      "model": "runomancy:fireRuneSolar"
+      "model": "runomancy:block/fire_rune_solar"
     },
     "mode=5": {
-      "model": "runomancy:fireRuneSolar",
+      "model": "runomancy:block/fire_rune_solar",
       "y": 90
     },
-      "mode=6": { "model": "runomancy:fireRuneFurnaceGen" }
+      "mode=6": { "model": "runomancy:block/fire_rune_furnace_gen" }
 
   }
 }

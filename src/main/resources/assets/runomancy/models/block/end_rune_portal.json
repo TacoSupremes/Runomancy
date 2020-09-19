@@ -1,8 +1,8 @@
 {
     "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
     "textures": {
-        "0": "blocks/obsidian",
-        "1": "blocks/portal"
+        "0": "minecraft:block/obsidian",
+        "1": "minecraft:block/nether_portal"
     },
     "elements": [
         {

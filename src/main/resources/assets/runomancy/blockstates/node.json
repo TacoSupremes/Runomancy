@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=down":  { "model": "runomancy:block/node", "x": 180 },
+        "facing=up":    { "model": "runomancy:block/node" },
+        "facing=north": { "model": "runomancy:block/node", "x": 90},
+        "facing=south": { "model": "runomancy:block/node", "x": 90, "y": 180 },
+        "facing=west":  { "model": "runomancy:block/node", "x": 90, "y": 270 },
+        "facing=east":  { "model": "runomancy:block/node", "x": 90, "y": 90 }
+    }
+}

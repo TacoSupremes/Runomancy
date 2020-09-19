@@ -176,8 +176,8 @@ public Block getCropFromSeed(ItemStack is){
 	@Override
 	public Block[] getNeededBlocks() {
 	
-		Block e = ModBlocks.earthRune;
-		Block d = ModBlocks.endRune;
+		Block e = ModBlocks.EARTH_RUNE.get();
+		Block d = ModBlocks.END_RUNE.get();
 		Block n = null;
 		return new Block[]{n,e,n,
 						   e,d,e,

@@ -36,9 +36,9 @@ public class RuneEffectSolarGen implements IRuneEffect {
 	@Override
 	public Block[] getNeededBlocks() {
 		
-		Block o = ModBlocks.obsidianRune;
-		Block f = ModBlocks.fireRune;
-		Block e = ModBlocks.endRune;
+		Block o = ModBlocks.OBSIDIAN_RUNE.get();
+		Block f = ModBlocks.FIRE_RUNE.get();
+		Block e = ModBlocks.END_RUNE.get();
 		
 		return new Block[]{o,f,o,
 						   f,e,f,

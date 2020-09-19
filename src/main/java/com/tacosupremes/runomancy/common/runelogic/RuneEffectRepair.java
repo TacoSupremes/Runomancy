@@ -97,8 +97,8 @@ public class RuneEffectRepair implements IFunctionalRuneEffect {
 	@Override
 	public Block[] getNeededBlocks() {
 		
-		Block o = ModBlocks.obsidianRune;
-		Block e = ModBlocks.endRune;
+		Block o = ModBlocks.OBSIDIAN_RUNE.get();
+		Block e = ModBlocks.END_RUNE.get();
 		
 		return new Block[]{ o,o,o,
 							o,e,o,

@@ -11,14 +11,11 @@ import com.tacosupremes.runomancy.common.block.rune.BlockObsidianRune;
 import com.tacosupremes.runomancy.common.block.rune.BlockSoulRune;
 import com.tacosupremes.runomancy.common.block.rune.BlockWaterRune;
 import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
-import com.tacosupremes.runomancy.common.item.ModItems;
+import com.tacosupremes.runomancy.common.block.tile.TileNode;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
-import com.tacosupremes.runomancy.common.power.block.BlockPowerStorage;
-import com.tacosupremes.runomancy.common.power.block.BlockPowerTorch;
 import com.tacosupremes.runomancy.common.runelogic.RuneFormations;
 
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
@@ -31,14 +28,9 @@ public class ModBlocks {
 
 	public static final DeferredRegister<TileEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, LibMisc.MODID);
 
-	// double hopper splits stacks round robin between 2 inventories
-
 	// blocks
-	//public static final RegistryObject<BlockMod> RAIN_DETECTOR = regBlock(BlockRainDetector::new);
-
 
 	public static final RegistryObject<BlockMod> END_RUNE = regBlock(BlockEndRune::new);
-
 
 	public static final RegistryObject<TileEntityType<?>> TILE_END_RUNE = regTile(TileEndRune::new, ModBlocks.END_RUNE);
 
@@ -53,32 +45,23 @@ public class ModBlocks {
 	public static final RegistryObject<BlockMod> SOUL_RUNE = regBlock(BlockSoulRune::new);
 
 
-	public static List<Block> blocks = new ArrayList<Block>();
+	public static final RegistryObject<BlockMod> NODE = regBlock(BlockNode::new);
+
+	public static final RegistryObject<TileEntityType<?>> TILE_NODE = regTile(TileNode::new, ModBlocks.NODE);
+
+
+	//public static List<Block> blocks = new ArrayList<Block>();
 	
 	public static List<Block> runes = new ArrayList<Block>();
-	
-	public static Block endRune;
-	
-	public static Block obsidianRune;
-	
+
 	public static Block powerTorch;
 	
 	public static Block powerStorage;
 
-	public static Block fireRune;
-	
-	public static Block earthRune;
-	
-	public static Block waterRune;
-	
-	public static Block airRune;
-	
-	public static Block soulRune;
-	
 	public static Block marker;
 
-	
-	
+
+
 	public static final int obsidianCount = 12;
 	public static final int endRuneCount = RuneFormations.effects.size();
 	public static final int fireCount = 6;

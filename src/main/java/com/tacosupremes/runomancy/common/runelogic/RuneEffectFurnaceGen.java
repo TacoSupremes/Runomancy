@@ -70,9 +70,11 @@ public class RuneEffectFurnaceGen implements IRuneEffect {
 	@Override
 	public Block[] getNeededBlocks() {
 		
-		Block e = ModBlocks.earthRune;
-		Block f = ModBlocks.fireRune;
-		Block n = ModBlocks.endRune;
+		Block e = ModBlocks.EARTH_RUNE.get();
+		Block f = ModBlocks.FIRE_RUNE.get();
+		Block n = ModBlocks.END_RUNE.get();
+
+
 		
 		return new Block[]{e,f,e,
 						   f,n,f,

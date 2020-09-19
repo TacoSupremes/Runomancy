@@ -3,8 +3,16 @@ package com.tacosupremes.runomancy.common.block.rune;
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.ILightReader;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+
+import javax.annotation.Nullable;
 
 public class BlockEarthRune extends BlockRune
 {
@@ -22,8 +30,6 @@ public class BlockEarthRune extends BlockRune
     {
         return ModBlocks.earthCount;
     }
-
-
 
     @Override
     public String getName()
@@ -43,10 +49,11 @@ public class BlockEarthRune extends BlockRune
         return state.get(mode);
     }
 
-
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
     {
         builder.add(mode);
     }
+
+
 }

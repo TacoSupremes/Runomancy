@@ -112,10 +112,10 @@ public class RuneEffectMiner implements IFunctionalRuneEffect {
 	@Override
 	public Block[] getNeededBlocks() {
 		
-		Block o = ModBlocks.obsidianRune;
-		Block e = ModBlocks.earthRune;
+		Block o = ModBlocks.OBSIDIAN_RUNE.get();
+		Block e = ModBlocks.EARTH_RUNE.get();
 		Block n = null;
-		Block d = ModBlocks.endRune;
+		Block d = ModBlocks.END_RUNE.get();
 		
 		return new Block[]{o,o,o,o,o,
 						   o,e,n,e,o,

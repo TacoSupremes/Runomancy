@@ -1,19 +1,19 @@
 {
   "variants": {
-    "mode=0": { "model": "runomancy:earthRune" },
-    "mode=1": { "model": "runomancy:earthRunePlant", "y": 180},
+    "mode=0": { "model": "runomancy:block/earth_rune" },
+    "mode=1": { "model": "runomancy:block/earth_rune_plant", "y": 180},
     "mode=2": {
-      "model": "runomancy:earthRunePlant",
+      "model": "runomancy:block/earth_rune_plant",
       "y": 270
     },
     "mode=3": {
-      "model": "runomancy:earthRunePlant"
+      "model": "runomancy:block/earth_rune_plant"
     },
     "mode=4": {
-      "model": "runomancy:earthRunePlant",
+      "model": "runomancy:block/earth_rune_plant",
       "y": 90
     },
-    "mode=5": { "model": "runomancy:earthRuneMiner"}
+    "mode=5": { "model": "runomancy:block/earth_rune_miner"}
 
   }
 }

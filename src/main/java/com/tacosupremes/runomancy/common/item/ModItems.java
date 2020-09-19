@@ -6,6 +6,8 @@ import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
+import net.minecraft.item.WallOrFloorItem;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -38,6 +40,7 @@ public class ModItems {
 
 	public static final RegistryObject<Item> SOUL_RUNE_ITEM = makeBlockItem(ModBlocks.SOUL_RUNE);
 
+	public static final RegistryObject<Item> POWER_TORCH_ITEM = makeBlockItem(ModBlocks.NODE);
 
 	public static Item runicWand;
 
