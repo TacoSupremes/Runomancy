@@ -50,10 +50,11 @@ public class ModBlocks {
 
 	public static final RegistryObject<TileEntityType<?>> TILE_NODE = regTile(TileNode::new, ModBlocks.NODE);
 
+	public static final RegistryObject<BlockMod> BATTERY_INSIDE = regBlock(BlockBatteryPortal::new);
+
 	public static final RegistryObject<BlockMod> BATTERY = regBlock(BlockPowerStorage::new);
 
-	public static final RegistryObject<TileEntityType<?>> TILE_BATTERY = regTile(TilePowerStorage::new, ModBlocks.BATTERY);
-
+	public static final RegistryObject<TileEntityType<TilePowerStorage>> TILE_BATTERY = TILES.register(ModBlocks.BATTERY.getId().getPath(), () -> TileEntityType.Builder.create(TilePowerStorage::new, ModBlocks.BATTERY.get()).build(null));
 
 	//public static List<Block> blocks = new ArrayList<Block>();
 	

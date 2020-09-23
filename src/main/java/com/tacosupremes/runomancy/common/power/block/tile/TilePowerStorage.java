@@ -13,10 +13,10 @@ import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class TilePowerStorage extends TileMod implements IPowerTile, ITickableTileEntity
 {
-	
 	public int power = 0;
 
 	private List<BlockPos> linkedTo = new ArrayList<BlockPos>();
@@ -31,7 +31,7 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickableTi
 		super(tileEntityTypeIn);
 	}
 
-	private static Vector3 offset = new Vector3(0.5,0.35D,0.5);
+	private static Vector3 offset = new Vector3(0.5,0.95D,0.5);
 
 	public void readCustomNBT(CompoundNBT nbt) {
 		
@@ -78,70 +78,75 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickableTi
 	}
 
 	@Override
-	public int addPower(int i) {
-		power += i;
-		return power;
+	public int addPower(int i)
+	{
+		if(power + i > getMaxPower())
+		{
+			int res = getMaxPower() - power;
+
+			power = getMaxPower();
+
+			return res;
+		}
+		else
+			power += i;
+		return i;
 	}
 
 	@Override
-	public int removePower(int i) {
-		
-		return addPower(-i);
+	public int removePower(int i)
+	{
+		if(power <= 0 || power < i)
+			return 0;
+
+		power -= i;
+
+		return i;
 	}
 
 
 
 	@Override
-	public int getMaxPower() {
-	
-		return 18000;
+	public int getMaxPower()
+	{
+		return 16000;
 	}
 
-	
+
+	public void spawnEnergy()
+	{
+		Random rand = this.getWorld().getRandom();
+
+		int level = ((int)Math.floor((double)power / getMaxPower())) * 5 + 1;
+
+
+		for(int j = 0; j < level; j++)
+		for(int i = 0; i < 4; i++)
+			this.getWorld().addParticle(ParticleTypes.WITCH, this.getPos().getX()+0.5D+ rand.nextGaussian() / 8.5D, this.getPos().getY()+0.15D+j*0.1, this.getPos().getZ()+0.5D+ rand.nextGaussian() / 8.5D, 0, -1, 0);
+
+	}
+
 
 	@Override
 	public void tick()
 	{
-
 		if(this.getPower() > this.getMaxPower())
 			this.power = this.getMaxPower();
-		
 
-		power++;
+		//power += getMaxPower() / 15 / 20;
 		//System.out.println(this.getPower());
-		
-		
-			
-		
-		if(this.power > 0 && this.power <= 6000){
-			
-			this.getWorld().addParticle(RedstoneParticleData.REDSTONE_DUST, this.getPos().getX()+0.5D, this.getPos().getY()+0.45D, this.getPos().getZ()+0.5D, 0, 0, 0);
-			
-		
-		}
-		
-		
-		if(this.power > 6000 && this.power < 12000){
-			
-			this.getWorld().addParticle(ParticleTypes.WITCH, this.getPos().getX()+0.5D, this.getPos().getY()+0.45D, this.getPos().getZ()+0.5D, 0, 0, 0);
-			
-		}
-		
-		
-		if(this.power >= 12000){
-			
-			this.getWorld().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getPos().getX()+0.5D, this.getPos().getY()+0.45D, this.getPos().getZ()+0.5D, 0, 0, 0);
-			
-			
-		}
-		
-		for(int i =0; i< linkedTo.size(); i++){
-			
+
+		//spawnEnergy();
+
+
+
+		for(int i =0; i< linkedTo.size(); i++)
+		{
 			if(this.getWorld().getTileEntity(linkedTo.get(i)) == null || this.getWorld().getTileEntity(linkedTo.get(i)) == this)
 				linkedTo.remove(i);
-			
 		}
-		
+
+		/*
 		List<String> s = new ArrayList<String>();
 		
 		for(int i =0; i< linkedTo.size(); i++){
@@ -156,7 +161,7 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickableTi
 			
 			
 		}
-		
+		*/
 	}
 
 	/*
@@ -204,5 +209,11 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickableTi
 	public Vector3 getParticleOffset()
 	{
 		return Vector3.fromBlockPos(getPos()).add(offset);
+	}
+
+	@Override
+	public boolean canFill()
+	{
+		return power < getMaxPower();
 	}
 }

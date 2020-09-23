@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "color=purple": { "model": "runomancy:block/battery_portal_purple" }
+  }
+}

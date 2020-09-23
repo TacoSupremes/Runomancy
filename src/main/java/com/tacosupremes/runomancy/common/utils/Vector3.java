@@ -285,10 +285,20 @@ public class Vector3
 		GL11.glVertex3d(x, y, z);
 	}
 
-	public Vector3 negate() {
+	public Vector3 negate()
+	{
 		x = -x;
 		y = -y;
 		z = -z;
+		return this;
+	}
+
+
+	public Vector3 floor()
+	{
+		x = Math.floor(x);
+		y = Math.floor(y);
+		z = Math.floor(z);
 		return this;
 	}
 

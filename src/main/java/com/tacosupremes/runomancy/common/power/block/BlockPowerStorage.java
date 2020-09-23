@@ -33,7 +33,7 @@ public class BlockPowerStorage extends BlockModContainer
             Block.makeCuboidShape(2, 0, 13, 3, 12, 14),
             Block.makeCuboidShape(2, 12, 2, 14, 13, 14),
             Block.makeCuboidShape(6, 13, 6, 10, 15, 10)
-    ).reduce((v1, v2) -> {return VoxelShapes.combineAndSimplify(v1, v2, IBooleanFunction.OR);}).get();
+    ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, IBooleanFunction.OR)).get();
 
     @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context)

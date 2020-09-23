@@ -8,6 +8,7 @@ import java.util.Map;
 import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
 import com.tacosupremes.runomancy.common.power.block.tile.IPowerNode;
 import com.tacosupremes.runomancy.common.power.block.tile.IPowerTile;
+import com.tacosupremes.runomancy.common.runelogic.RuneFormations;
 import com.tacosupremes.runomancy.common.utils.BlockUtils;
 import com.tacosupremes.runomancy.common.utils.Vector3;
 
@@ -610,11 +611,11 @@ public static boolean isBlockPowered(World w, BlockPos pos){
 		  if(w.isBlockPowered(pos))
 			  return true;
 		  
-		  if(w.getTileEntity(pos) instanceof TileEndRune){
-			  
+		  if(w.getTileEntity(pos) instanceof TileEndRune)
+		  {
 			  TileEndRune te = (TileEndRune)w.getTileEntity(pos);
 			  
-			  int r = te.getRange()-3;
+			  int r = RuneFormations.getRange(te.getEffect());
 			  
 			  for(int xD = -r;xD<=r;xD++){
 					for(int yD = -r;yD<=r;yD++){

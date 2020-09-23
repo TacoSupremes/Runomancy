@@ -3,22 +3,30 @@ package com.tacosupremes.runomancy.common.block.rune.tile;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.collect.Lists;
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.block.rune.IRune;
+import com.tacosupremes.runomancy.common.block.tile.INode;
 import com.tacosupremes.runomancy.common.block.tile.TileMod;
 import com.tacosupremes.runomancy.common.power.PowerHelper;
 import com.tacosupremes.runomancy.common.power.block.tile.IPowerNode;
+import com.tacosupremes.runomancy.common.power.block.tile.IPowerTile;
+import com.tacosupremes.runomancy.common.power.block.tile.TilePowerStorage;
 import com.tacosupremes.runomancy.common.runelogic.IRuneEffect;
 import com.tacosupremes.runomancy.common.runelogic.RuneEffectRepair;
 import com.tacosupremes.runomancy.common.runelogic.RuneFormations;
 
+import com.tacosupremes.runomancy.common.utils.BlockUtils;
+import com.tacosupremes.runomancy.common.utils.Vector3;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
-public class TileEndRune extends TileMod implements IPowerNode, ITickableTileEntity
+public class TileEndRune extends TileMod implements IPowerTile, ITickableTileEntity
 {
 	int currentEffect = -1;
 	public int power = 0;
@@ -158,7 +166,7 @@ public class TileEndRune extends TileMod implements IPowerNode, ITickableTileEnt
 			
 		}else{
 
-			System.out.println("FORMED: " + this.getEffect().getName());
+
 
 			
 			if(shouldDestroy()){
@@ -168,8 +176,10 @@ public class TileEndRune extends TileMod implements IPowerNode, ITickableTileEnt
 				return;
 			}
 			
-			if(PowerHelper.isBlockPowered(this.getWorld(), getPos()))
+			if(!isActiveNode())
 				return;
+
+			System.out.println("FORMED: " + this.getEffect().getName());
 			
 			if(!this.getEffect().isGenerating()){
 				
@@ -196,11 +206,46 @@ public class TileEndRune extends TileMod implements IPowerNode, ITickableTileEnt
 						
 					}
 					
-				}else{
-					
-					if(this.power > 0 && PowerHelper.addPower(this.getWorld(), pos, this.getEffect().getTransferRate(), l, false) > 0){
-						
-						this.power-=PowerHelper.addPower(this.getWorld(), pos, this.getEffect().getTransferRate(), l, true);
+				}
+				else
+				{
+					if(this.power > 0)
+					{
+						List<BlockPos> bp = new ArrayList<>();
+
+						getPathToBattery(getWorld(),getPos(), getNodeList(), bp, new ArrayList<String>(), false);
+
+						if(!bp.isEmpty())
+						{
+
+
+							Vector3 last = getParticleOffset();
+
+							for(int i = 0; i< bp.size(); i++)
+							{
+								Vector3 current = ((INode) world.getTileEntity(bp.get(i))).getParticleOffset();
+
+								BlockUtils.drawLine(getWorld(), last, current, ParticleTypes.HAPPY_VILLAGER);
+
+								last = current;
+							}
+
+							BlockPos batterypos = bp.get(bp.size()-1);
+
+							TilePowerStorage tps = (TilePowerStorage)getWorld().getTileEntity(batterypos);
+
+							if(tps.getPower() < tps.getMaxPower())
+							{
+								tps.addPower(this.removePower(10));
+							}
+						}
+						else
+						{
+							System.out.println("TRAGIC");
+						}
+
+
+						//this.power-=PowerHelper.addPower(this.getWorld(), pos, this.getEffect().getTransferRate(), l, true);
 				//		BlockUtils.drawLine(getWorld(), Vector3.fromBlockPos(pos).add(0.5D), Vector3.fromBlockPos(PowerHelper.getTorch(getWorld(), this.getPos(), getRange())).add(0.5D, 0.6D, 0.5D));
 				//		PowerHelper.drawTorchLines(getWorld(), getPos(), getRange(), false);
 						
@@ -239,8 +284,44 @@ public class TileEndRune extends TileMod implements IPowerNode, ITickableTileEnt
 		}
 		
 	}
-	
-	
+
+	/*
+	private List<Vector3> getPathToBattery()
+	{
+		return getPathToBattery(getWorld(), getPos(), this, new ArrayList<Vector3>(),new ArrayList<Long>());
+	}
+*/
+/*
+	private List<Vector3> getPathToBattery(World w, BlockPos pos, INode node, List<Vector3> l, List<Long> visited)
+	{
+		visited.add(pos.toLong());
+
+		if(w.getTileEntity(pos) instanceof TilePowerStorage)
+		{
+			if(((TilePowerStorage)w.getTileEntity(pos)).getPower() < ((TilePowerStorage)w.getTileEntity(pos)).getPower())
+				return l;
+		}
+
+
+		for(BlockPos bp : node.getNodeList())
+		{
+			if(!visited.contains(bp.toLong()))
+			{
+				INode in = (INode)w.getTileEntity(bp);
+
+				l.add(in.getParticleOffset());
+
+				return getPathToBattery(w , bp, in, l, visited);
+			}
+
+			l.remove(l.size() - 1);
+
+		}
+
+		return new ArrayList<Vector3>();
+	}
+
+*/
 	public boolean shouldDestroy(){
 		
 		
@@ -298,9 +379,6 @@ public class TileEndRune extends TileMod implements IPowerNode, ITickableTileEnt
 	
 
 
-
-
-	
 	public IRuneEffect getEffect(){
 		
 		if(currentEffect < 0)
@@ -310,47 +388,117 @@ public class TileEndRune extends TileMod implements IPowerNode, ITickableTileEnt
 	}
 
 
-
 	@Override
-	public int getRange() {
-		
-		return RuneFormations.getRange(getEffect())+3;
-		
+	public int getPower()
+	{
+		return power;
 	}
 
-
-
 	@Override
-	public List<BlockPos> getLinkedBlocks() {
-		
+	public int addPower(int i)
+	{
+		if(power + i > getMaxPower())
+		{
+			int res = getMaxPower() - power;
 
-		
-		return l ;
-		
-	}
+			power = getMaxPower();
 
-
-
-	@Override
-	public void updateLinkedBlocks(BlockPos bp) {
-		
-		for(int i =0; i< l.size(); i++){
-			
-			if(l.get(i).compareTo(bp) == 0)
-				this.l.remove(i);
-				
-			
+			return res;
 		}
-		
-		
+		else
+			power += i;
+		return i;
 	}
 
+	@Override
+	public int removePower(int i)
+	{
+		if(power <= 0 || power < i)
+			return 0;
 
+		power -= i;
 
-	
+		return i;
+	}
 
+	@Override
+	public int getMaxPower()
+	{
+		return 0;
+	}
 
-	
+	@Override
+	public boolean canFill()
+	{
+		return power < getMaxPower();
+	}
 
+	@Override
+	public boolean isActiveNode()
+	{
+		return !PowerHelper.isBlockPowered(this.getWorld(), getPos());
+	}
 
+	@Override
+	public List<BlockPos> getNodeList()
+	{
+		return l;
+	}
+
+	@Override
+	public Vector3 getParticleOffset()
+	{
+		return Vector3.fromBlockPos(getPos()).add(0.5,0.2,0.5);
+	}
+
+	public static boolean getPathToBattery(World w, BlockPos posF, List<BlockPos> linked, List<BlockPos> path,
+										   List<String> used, boolean includeStart)
+	{
+
+		if(includeStart)
+		{
+			path.add(posF);
+		}
+
+		used.add(posF.toString());
+		//*G-N - N - N
+		// |		 |
+		// N -N		 N
+		//    |		 |
+		//	  N		 C
+
+		for(BlockPos bp : linked)
+		{
+			if(!used.contains(bp.toString()))
+			{
+				INode i = (INode)w.getTileEntity(bp);
+
+				used.add(bp.toString());
+
+				if(i == null || !i.isActiveNode())
+					continue;
+
+				path.add(bp);
+
+				if(w.getTileEntity(bp) instanceof TilePowerStorage && ((TilePowerStorage)w.getTileEntity(bp)).canFill())
+				{
+					return true;
+				}
+
+				List<BlockPos> l2 = new ArrayList<BlockPos>();
+
+				if(getPathToBattery(w, posF, i.getNodeList(), l2, used, false))
+				{
+					path.addAll(l2);
+					return true;
+				}
+
+				if(!path.isEmpty())
+					path.remove(path.size() - 1);
+			}
+
+		}
+		return false;
+
+	}
 }

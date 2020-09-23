@@ -14,6 +14,6 @@ public interface IPowerTile extends INode
 	public int getMaxPower();
 	
 
-	
+	public boolean canFill();
 
 }

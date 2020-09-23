@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -83,7 +84,8 @@ public class Runomancy
 		GrassColorHandler.registerBlockColors();
 		RenderTypeLookup.setRenderLayer(ModBlocks.NODE.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.BATTERY.get(), RenderType.getCutout());
-
+		RenderTypeLookup.setRenderLayer(ModBlocks.BATTERY_INSIDE.get(), RenderType.getCutout());
+		ClientRegistry.bindTileEntityRenderer(ModBlocks.TILE_BATTERY.get(), TileBatteryRenderer::new);
 
 	}
 
