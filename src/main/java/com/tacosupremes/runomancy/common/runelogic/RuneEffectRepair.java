@@ -26,7 +26,9 @@ public class RuneEffectRepair implements IFunctionalRuneEffect {
 		int y = pos.getY();
 		int z = pos.getZ();
 
-		  List<ItemEntity> entities = (List<ItemEntity>) w.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(x - 1, y - 1, z - 1, x + 2, y + 0.3F, z + 2));
+		System.out.println("DOING EFFECT");
+
+		  List<ItemEntity> entities = w.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(x - 1, y - 1, z - 1, x + 2, y + 0.3F, z + 2));
 		        for (ItemEntity entity : entities) {
 	        	
 	        	if(!entity.collided)

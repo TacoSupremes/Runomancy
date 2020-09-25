@@ -15,22 +15,17 @@ public class RuneEffectSolarGen implements IRuneEffect {
 	@Override
 	public void doEffect(World w, BlockPos pos, TileEndRune te, CompoundNBT n)
 	{
-	
+		if(!w.canBlockSeeSky(pos))
+			return;
 
-	if(!w.canBlockSeeSky(pos))
-		return;
-			
-			
-			
-	  int i = w.getLightFor(LightType.SKY, pos) - w.getSkylightSubtracted();
-      float f = w.getCelestialAngleRadians(1.0F);
-      float f1 = f < (float)Math.PI ? 0.0F : ((float)Math.PI * 2F);
-      f = f + (f1 - f) * 0.2F;
-      i = Math.round((float)i * MathHelper.cos(f));
-      i = MathHelper.clamp(i, 0, 5);
+		int i = w.getLightFor(LightType.SKY, pos) - w.getSkylightSubtracted();
+		float f = w.getCelestialAngleRadians(1.0F);
+		float f1 = f < (float)Math.PI ? 0.0F : ((float)Math.PI * 2F);
+		f = f + (f1 - f) * 0.2F;
+		i = Math.round((float)i * MathHelper.cos(f));
+		i = MathHelper.clamp(i, 0, 15);
       
-      te.power += i;
-	
+		te.power += i;
 	}
 
 	@Override

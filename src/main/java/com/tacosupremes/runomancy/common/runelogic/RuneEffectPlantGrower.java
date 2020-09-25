@@ -17,6 +17,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
 
+import java.util.Random;
+
 public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 
 	@Override
@@ -41,33 +43,10 @@ public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 			
 			
 			
-			if(b.isAir(w.getBlockState(bp), w, bp) || b == null || b == Blocks.GRASS || b == Blocks.TALL_GRASS || b == Blocks.POPPY || b == Blocks.DANDELION || b instanceof DoublePlantBlock || b instanceof FlowerBlock)
+			if(b.isAir(w.getBlockState(bp), w, bp) || b == null || b == Blocks.GRASS || b == Blocks.TALL_GRASS || b == Blocks.POPPY || b == Blocks.DANDELION || b instanceof DoublePlantBlock || b instanceof FlowerBlock || b instanceof GrassBlock)
 				continue;
 			
-			if(b instanceof IGrowable){
-				
-				if(te.power >= this.getCost()){
-					
-				
-				IGrowable grow = (IGrowable)b;
-				
-				if(grow.canGrow(w, bp, w.getBlockState(bp), w.isRemote)){
-					te.power -= this.getCost();
-					for(int i=0;i<=3;i++){
-						if(!w.isRemote) {
-							//	b.randomTick(w.getBlockState(bp), (ServerWorld) w, bp, Runomancy.rand);
 
-							((IGrowable) b).grow((ServerWorld) w, Runomancy.rand, bp, w.getBlockState(bp));
-
-							w.addParticle(ParticleTypes.HAPPY_VILLAGER, bp.getX() + 0.5D + w.rand.nextGaussian() / 5 - w.rand.nextGaussian() / 5, bp.getY() + 0.3D, bp.getZ() + 0.5D + w.rand.nextGaussian() / 5 - w.rand.nextGaussian() / 5, 0, 0, 0);
-						}
-						}
-					}
-				
-				}
-				
-				continue;
-			}
 			
 			
 			if(b instanceof StemBlock){
@@ -81,7 +60,7 @@ public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 						te.power -= this.getCost();
 						for(int i=0;i<=3;i++){
 							if(!w.isRemote) {
-								((IGrowable)b).grow((ServerWorld) w, Runomancy.rand,bp, w.getBlockState(bp));
+								((IGrowable)b).grow((ServerWorld) w, w.rand, bp, w.getBlockState(bp));
 
 								w.addParticle(ParticleTypes.HAPPY_VILLAGER, bp.getX()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, bp.getY()+0.3D, bp.getZ()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, 0,  0, 0);
 
@@ -97,8 +76,32 @@ public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 				}
 				
 			}
+
+						if(b instanceof IGrowable){
+
+							if(te.power >= this.getCost()){
+
+
+								IGrowable grow = (IGrowable)b;
+
+								if(grow.canGrow(w, bp, w.getBlockState(bp), w.isRemote)){
+									te.power -= this.getCost();
+
+									if(!w.isRemote) {
+										//	b.randomTick(w.getBlockState(bp), (ServerWorld) w, bp, Runomancy.rand);
+										grow.grow((ServerWorld) w, w.rand, bp, w.getBlockState(bp));
+
+										w.addParticle(ParticleTypes.HAPPY_VILLAGER, bp.getX() + 0.5D + w.rand.nextGaussian() / 5 - w.rand.nextGaussian() / 5, bp.getY() + 0.3D, bp.getZ() + 0.5D + w.rand.nextGaussian() / 5 - w.rand.nextGaussian() / 5, 0, 0, 0);
+									}
+
+								}
+
+							}
+
+							continue;
+						}
 			
-			if(b instanceof CactusBlock || b instanceof SugarCaneBlock){
+			if(b == Blocks.CACTUS || b == Blocks.SUGAR_CANE){
 				
 				boolean canGrow  = w.getBlockState(bp.up()).getBlock().isAir(w.getBlockState(bp.up()), w, bp.up()); 
 				
@@ -120,7 +123,8 @@ public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 					te.power -= this.getCost()*2;
 
 					if(!w.isRemote) {
-						((IGrowable)b).grow((ServerWorld) w, Runomancy.rand,bp, w.getBlockState(bp));
+						for(int i = 0; i< 2; i++)
+							b.tick(w.getBlockState(bp), (ServerWorld) w, bp, w.rand);
 
 						w.addParticle(ParticleTypes.HAPPY_VILLAGER, bp.getX()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, bp.getY()+0.3D, bp.getZ()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, 0,  0, 0);
 

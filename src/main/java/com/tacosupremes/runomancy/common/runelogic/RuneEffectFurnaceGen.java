@@ -5,6 +5,7 @@ import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
@@ -43,20 +44,42 @@ public class RuneEffectFurnaceGen implements IRuneEffect {
 			return;
 		}
 		
-		  List<ItemEntity> entities = (List<ItemEntity>) w.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(x - 1, y - 1, z - 1, x + 2, y + 0.3F, z + 2));
+		  List<ItemEntity> entities = w.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(x - 1, y - 1, z - 1, x + 2, y + 0.3F, z + 2));
 		       for (ItemEntity entity : entities)
 		       {
-	        	
-	        		ItemStack is = entity.getItem().copy();
 
 
-	        		int f = (int)((double)  ForgeHooks.getBurnTime(is) / 8D);
+				   ItemStack is = entity.getItem().copy();
+
+
+
+	        		int f = (int)((double)  ForgeHooks.getBurnTime(entity.getItem()) / 8D);
 	        		
 	        		if(f > 0)
 	        		{
 	        			nbt.putInt("FGTL", f);
-	        			entity.onKillCommand();
-	        			break;	
+
+	        			if(entity.getItem().getCount() == 1)
+	        				entity.onKillCommand();
+	        			else
+	        			{
+
+							entity.setItem(is.copy().split(is.getCount()-1));
+
+	        		//		ItemEntity e = new ItemEntity(w,entity.getPosX(),entity.getPosY() + 0.1D, entity.getPosZ(), new ItemStack(entity.getItem().getItem(), entity.getItem().getCount() - 1));
+						//	e.setMotion(entity.getMotion());
+	        			//	entity.remove();
+	        			//	e.setNoDespawn();
+						//	e.setDefaultPickupDelay();
+
+
+						//	w.addEntity(e);
+							//	entity.setItem();
+								//	entity.setItem(entity.getItem());
+
+
+						}
+	        				break;
 	        		}
 	        		else
 	        			continue;

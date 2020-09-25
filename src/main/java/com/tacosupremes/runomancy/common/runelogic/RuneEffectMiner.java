@@ -1,10 +1,11 @@
 package com.tacosupremes.runomancy.common.runelogic;
 
+import com.tacosupremes.runomancy.common.block.BlockNode;
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.block.rune.IRune;
 import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
+import com.tacosupremes.runomancy.common.block.tile.INode;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
-import com.tacosupremes.runomancy.common.power.block.tile.IPowerNode;
 import com.tacosupremes.runomancy.common.utils.InventoryUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.FlowingFluidBlock;
@@ -36,7 +37,10 @@ public class RuneEffectMiner implements IFunctionalRuneEffect {
 		
 		if(te.ticks %10 != 0)
 			return;
-	//	w.spawnParticle(particleType, xCoord, yCoord, zCoord, xOffset, yOffset, zOffset, p_175688_14_);
+
+		if(w.isRemote)
+			return;
+		//	w.spawnParticle(particleType, xCoord, yCoord, zCoord, xOffset, yOffset, zOffset, p_175688_14_);
 		int r = 6;
 		outerloop:
 		for(int yD = -1;yD>=-(te.getPos().getY()-1);yD--){
@@ -49,11 +53,8 @@ public class RuneEffectMiner implements IFunctionalRuneEffect {
 					
 				BlockPos temp = te.getPos().add(xD, yD, zD);
 				
-				if(w.getBlockState(temp.up()).getBlock() instanceof IRune || w.getTileEntity(temp.up()) instanceof IPowerNode)
-					continue;
-				
-				if(w.getBlockState(temp).getBlock() instanceof IRune || w.getTileEntity(temp) instanceof IPowerNode)
-					continue;
+
+
 				
 				if(yD == -(te.getPos().getY()-1) && xD == r && zD == r)
 					nbt.putBoolean("DONE", true);
@@ -63,7 +64,7 @@ public class RuneEffectMiner implements IFunctionalRuneEffect {
 				if(!isGoodBlock(w,temp))
 					continue;
 				
-				
+
 				//ItemStack is = null;// = new ItemStack(w.getBlockState(temp).getBlock(),1, w.getBlockState(temp).getBlock().getMetaFromState(w.getBlockState(temp)));
 				for(ItemStack is : Block.getDrops(w.getBlockState(temp), (ServerWorld) w, temp,  null)){
 					
@@ -84,15 +85,13 @@ public class RuneEffectMiner implements IFunctionalRuneEffect {
 						ent.setItem(is);
 
 						ent.setMotion(0,0.4D,0);
-				
-						if(!w.isRemote)
-							w.addEntity(ent);
+
+						w.addEntity(ent);
 					}		
 				
 					}
 				
-				
-				if(!w.isRemote)
+
 					w.destroyBlock(temp,false);
 				
 				w.addParticle(ParticleTypes.EXPLOSION, temp.getX()+0.5D, temp.getY()+0.75D, temp.getZ()+0.5D, 0, 0, 0);
@@ -170,6 +169,16 @@ public class RuneEffectMiner implements IFunctionalRuneEffect {
 		if(b.getBlockHardness(w.getBlockState(pos), w, pos) < 0)
 			return false;
 
+		if(w.getBlockState(pos).getBlock() instanceof IRune || w.getBlockState(pos.up()) instanceof IRune)
+			return false;
+
+		for(Direction d : Direction.values())
+		{
+			BlockPos bp = pos.add(d.getDirectionVec());
+			if(w.getBlockState(bp).getBlock().equals(ModBlocks.NODE.get()) && w.getBlockState(bp).get(BlockNode.FACING) == d)
+				return false;
+		}
+
 
 
 		if(w.getBlockState(pos).getBlock().isAir(w.getBlockState(pos), w, pos) || w.getBlockState(pos).getBlock() instanceof FlowingFluidBlock || w.getBlockState(pos).getBlock() instanceof IFluidBlock)
@@ -182,8 +191,11 @@ public class RuneEffectMiner implements IFunctionalRuneEffect {
 	
 	public IInventory getInventory(World w, BlockPos bp, ItemStack is){
 		
-		for(Direction e : Direction.values()){
+		for(Direction e : Direction.values())
+		{
 			if(e == Direction.DOWN || e == Direction.UP)
+				continue;
+
 			if(InventoryUtils.getInventory(w, bp.add(e.getDirectionVec())) != null && InventoryUtils.itemFits(is, InventoryUtils.getInventory(w, bp.add(e.getDirectionVec()))))
 				return InventoryUtils.getInventory(w, bp.add(e.getDirectionVec()));
 		

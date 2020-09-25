@@ -10,21 +10,24 @@ import net.minecraft.world.World;
 
 public interface IRuneEffect {
 	
-	public void doEffect(World w, BlockPos pos, TileEndRune te, CompoundNBT nbt);
+	void doEffect(World w, BlockPos pos, TileEndRune te, CompoundNBT nbt);
 
-	public Block[] getNeededBlocks();
+	Block[] getNeededBlocks();
 	
-	public boolean isGenerating();
-	
-	public int[] getFinalBlockStates();
+	boolean isGenerating();
 
+	default boolean isConsuming()
+	{
+		return !isGenerating();
+	}
+	
+	int[] getFinalBlockStates();
 
+	int getPowerCapacity();
 	
-	public int getPowerCapacity();
+	int getTransferRate();
 	
-	public int getTransferRate();
-	
-	public String getName();
+	String getName();
 
 	
 	

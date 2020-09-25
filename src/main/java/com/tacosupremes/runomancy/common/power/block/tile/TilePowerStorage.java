@@ -80,26 +80,55 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickableTi
 	@Override
 	public int addPower(int i)
 	{
+		if(!canFill())
+			return 0;
+
+		//System.out.print("\nadding power to battery" + getPower() + "--->");
+
 		if(power + i > getMaxPower())
 		{
 			int res = getMaxPower() - power;
 
 			power = getMaxPower();
 
+		//	System.out.print(power);
+
+			getWorld().addBlockEvent(getPos(), ModBlocks.BATTERY.get(), 0, power);
+
 			return res;
 		}
 		else
 			power += i;
+
+		//System.out.print(power);
+
+		getWorld().addBlockEvent(getPos(), ModBlocks.BATTERY.get(), 0, power);
 		return i;
 	}
+
+
 
 	@Override
 	public int removePower(int i)
 	{
-		if(power <= 0 || power < i)
+		if (power <= 0)
 			return 0;
 
+		//System.out.print("\nremoving power from bat" + getPower() + "--->");
+
+		if(power < i)
+		{
+			int t = power;
+			power = 0;
+		//	System.out.print(0);
+			getWorld().addBlockEvent(getPos(), ModBlocks.BATTERY.get(), 0, power);
+			return t;
+		}
+
 		power -= i;
+
+	//	System.out.print(power);
+		getWorld().addBlockEvent(getPos(), ModBlocks.BATTERY.get(), 0, power);
 
 		return i;
 	}
@@ -215,5 +244,15 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickableTi
 	public boolean canFill()
 	{
 		return power < getMaxPower();
+	}
+
+	@Override
+	public boolean receiveClientEvent(int id, int type)
+	{
+		if(!getWorld().isRemote())
+			return true;
+
+		this.power = type;
+		return false;
 	}
 }

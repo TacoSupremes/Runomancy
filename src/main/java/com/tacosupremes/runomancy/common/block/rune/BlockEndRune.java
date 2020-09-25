@@ -4,14 +4,13 @@ import java.util.List;
 
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
-import com.tacosupremes.runomancy.common.power.block.tile.IPowerNode;
+import com.tacosupremes.runomancy.common.block.tile.INode;
 
+import com.tacosupremes.runomancy.common.power.block.tile.IPowerTile;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
@@ -21,7 +20,6 @@ import net.minecraft.world.World;
 
 public class BlockEndRune extends BlockContainerRune
 {
-
 	public static final IntegerProperty mode = IntegerProperty.create("mode",0, 16);
 
 	public BlockEndRune()
@@ -29,8 +27,6 @@ public class BlockEndRune extends BlockContainerRune
 		super(Properties.create(Material.WOOD).notSolid().hardnessAndResistance(1.0F, 1.5F).sound(SoundType.WOOD));
 		this.setDefaultState(this.stateContainer.getBaseState().with(mode, 0));
 	}
-
-
 
 	@Override
 	public void onReplaced(BlockState state, World w, BlockPos pos, BlockState newState, boolean isMoving) {
@@ -40,16 +36,16 @@ public class BlockEndRune extends BlockContainerRune
 			te.destroy();
 
 
-			List<BlockPos> bpl = ((IPowerNode)w.getTileEntity(pos)).getLinkedBlocks();
+			List<BlockPos> bpl = ((IPowerTile)w.getTileEntity(pos)).getNodeList();
 
 			super.onReplaced(state, w, pos, newState, isMoving);
 
 			for(BlockPos bp : bpl)
 			{
-				IPowerNode k = (IPowerNode)w.getTileEntity(bp);
+				INode k = (INode)w.getTileEntity(bp);
 
-				k.updateLinkedBlocks(pos);
-				k.getLinkedBlocks().remove(pos);
+				//k.updateLinkedBlocks(pos);
+				k.getNodeList().remove(pos);
 			}
 
 		}
@@ -62,8 +58,6 @@ public class BlockEndRune extends BlockContainerRune
 	{
 		return ModBlocks.endRuneCount;
 	}
-
-
 
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world)
@@ -83,7 +77,6 @@ public class BlockEndRune extends BlockContainerRune
 		return state.get(mode);
 	}
 
-
 	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)
 	{
@@ -96,6 +89,5 @@ public class BlockEndRune extends BlockContainerRune
 	{
 		return "end_rune";
 	}
-
 
 }

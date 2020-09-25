@@ -38,14 +38,14 @@ public class ModRecipes {
 		return ItemStack.EMPTY;
 	}
 
-	public static void postInit()
+	public static void addChargerRecipes()
 	{
 
 		//	ItemStack w = new ItemStack(ModItems.runicWand,1, OreDictionary.WILDCARD_VALUE);
 
 
-		rcr.add(new RuneChargerRecipe(new ItemStack(ModItems.runicIngot), new ItemStack(Items.IRON_INGOT, 1), 300));
-		rcr.add(new RuneChargerRecipe(new ItemStack(ModBlocks.powerTorch), new ItemStack(Blocks.TORCH, 1), 0));
+		rcr.add(new RuneChargerRecipe(new ItemStack(ModItems.RUNIC_INGOT.get()), new ItemStack(Items.IRON_INGOT, 1), 300));
+		//rcr.add(new RuneChargerRecipe(new ItemStack(ModBlocks.powerTorch), new ItemStack(Blocks.TORCH, 1), 0));
 
 		/*
 		//addShapelessRecipe(new ItemStack(ModBlocks.endRune), w, new ItemStack(ModItems.enderShard));

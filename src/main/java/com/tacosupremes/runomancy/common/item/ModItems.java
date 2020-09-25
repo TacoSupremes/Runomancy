@@ -4,6 +4,7 @@ import com.tacosupremes.runomancy.common.Runomancy;
 import com.tacosupremes.runomancy.common.block.BlockMod;
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
+import com.tacosupremes.runomancy.common.recipes.ModRecipes;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;

@@ -24,7 +24,7 @@ public class InventoryUtils
 		for(int i = 0; i< ii.getSizeInventory(); i++)
 			inv.setInventorySlotContents(i, ii.getStackInSlot(i).copy());
 
-		return HopperTileEntity.putStackInInventoryAllSlots(null, inv, is, null).isEmpty();
+		return HopperTileEntity.putStackInInventoryAllSlots(null, inv, is2, null).isEmpty();
 	}
 
 /*

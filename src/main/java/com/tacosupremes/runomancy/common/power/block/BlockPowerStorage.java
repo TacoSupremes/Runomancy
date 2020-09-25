@@ -2,6 +2,7 @@ package com.tacosupremes.runomancy.common.power.block;
 
 import com.tacosupremes.runomancy.common.block.BlockModContainer;
 import com.tacosupremes.runomancy.common.block.ModBlocks;
+import com.tacosupremes.runomancy.common.power.block.tile.TilePowerStorage;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
@@ -12,6 +13,7 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
 
 import java.util.stream.Stream;
 
@@ -54,8 +56,16 @@ public class BlockPowerStorage extends BlockModContainer
     }
 
 
-	
 
+    public boolean eventReceived(BlockState state, World w, BlockPos pos, int id, int param)
+    {
+        if(!w.isRemote)
+            return true;
+
+        w.getTileEntity(pos).receiveClientEvent(id, param);
+
+        return false;
+    }
 	
 
 

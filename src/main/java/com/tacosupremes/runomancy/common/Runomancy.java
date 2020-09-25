@@ -6,6 +6,7 @@ import com.tacosupremes.runomancy.common.block.rune.GrassColorHandler;
 import com.tacosupremes.runomancy.common.block.rune.WaterColorHandler;
 import com.tacosupremes.runomancy.common.item.ModItems;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
+import com.tacosupremes.runomancy.common.recipes.ModRecipes;
 import com.tacosupremes.runomancy.common.runelogic.*;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderType;
@@ -69,6 +70,7 @@ public class Runomancy
 		RuneFormations.addEffect(new RuneEffectFurnaceGen());
 		RuneFormations.addEffect(new RuneEffectMiner());
 		RuneFormations.addEffect(new RuneEffectWell());
+		ModRecipes.addChargerRecipes();
 		//LOGGER.info("HELLO FROM PREINIT");
 		//LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
 	}

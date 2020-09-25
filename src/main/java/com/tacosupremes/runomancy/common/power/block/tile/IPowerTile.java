@@ -12,8 +12,14 @@ public interface IPowerTile extends INode
 	public int removePower(int i);
 	
 	public int getMaxPower();
-	
 
-	public boolean canFill();
+	public default boolean canFill()
+	{
+		return getPower() < getMaxPower();
+	}
 
+	public default boolean isEmpty()
+	{
+		return getPower() == 0;
+	};
 }
