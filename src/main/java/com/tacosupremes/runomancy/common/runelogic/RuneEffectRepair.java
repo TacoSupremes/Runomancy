@@ -26,8 +26,6 @@ public class RuneEffectRepair implements IFunctionalRuneEffect {
 		int y = pos.getY();
 		int z = pos.getZ();
 
-		System.out.println("DOING EFFECT");
-
 		  List<ItemEntity> entities = w.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(x - 1, y - 1, z - 1, x + 2, y + 0.3F, z + 2));
 		        for (ItemEntity entity : entities) {
 	        	
@@ -36,36 +34,33 @@ public class RuneEffectRepair implements IFunctionalRuneEffect {
 	        	
 	        	ItemStack is = entity.getItem().copy();
 	        	
-	        	if(is.isDamageable() && is.isDamaged()){
-	        		
-	        		
-	        		
-	        		if(te.power >= this.getCost()){
-	        		
-	        			te.power-=this.getCost();
-	        			is.damageItem(-1,null,null);
-	        			//is.setItemDamage(is.getItemDamage()-1);
-	        			this.spawnParticleOnEntity(entity);
-	        			entity.setItem(is);
-	        			
+	        	if(is.isDamageable() && is.isDamaged())
+	        	{
+	        		if(te.getPower() >= this.getCost())
+	        		{
+	        			if(!w.isRemote())
+	        			{
+							te.removePower(getCost());
+							is.setDamage(is.getDamage() - 1);
+							entity.setItem(is);
+						}
+						this.spawnParticleOnEntity(entity);
 	        		}
-	        		
+
+	        		return;
 	        	}
-	        	
-	        	
-	        	
+
 	        	for(RuneChargerRecipe r : ModRecipes.rcr)
 	        	{
 	        		if(is.isItemEqual(r.getIn()))
 	        		{
-	        			if(te.power >= r.getCost())
+	        			if(te.getPower() >= r.getCost())
 	        			{
-	        				te.power-=r.getCost();
+	        				te.removePower(r.getCost());
 	        				if(is.getCount() == 1)
 	        					entity.setItem(r.getOut().copy());
 	        				else
 	        					{
-	        					
 	        					ItemEntity ent = new ItemEntity(w, entity.getPosX(), entity.getPosY(), entity.getPosZ());
 	        					ent.setItem(r.getOut().copy());
 	        					RuneEffectFurnace.setVelocity(ent, 0, 0.1D, 0);
@@ -77,9 +72,10 @@ public class RuneEffectRepair implements IFunctionalRuneEffect {
 	        					if(!w.isRemote)
 	        						w.addEntity(ent);
 	        					
-	        					this.spawnParticleOnEntity(entity);
+
 	        					
-	        				}
+	        					}
+							this.spawnParticleOnEntity(entity);
 	        				break;
 	        			}else
 	        				break;

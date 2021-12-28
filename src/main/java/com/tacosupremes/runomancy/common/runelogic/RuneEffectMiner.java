@@ -32,7 +32,7 @@ public class RuneEffectMiner implements IFunctionalRuneEffect {
 		if(nbt.getBoolean("DONE"))
 			return;
 		
-		if(te.power < getCost())
+		if(te.getPower() < getCost())
 			return;
 		
 		if(te.ticks %10 != 0)
@@ -96,7 +96,7 @@ public class RuneEffectMiner implements IFunctionalRuneEffect {
 				
 				w.addParticle(ParticleTypes.EXPLOSION, temp.getX()+0.5D, temp.getY()+0.75D, temp.getZ()+0.5D, 0, 0, 0);
 				
-				te.power -= getCost();
+				te.removePower(getCost());
 				
 						break outerloop;
 						

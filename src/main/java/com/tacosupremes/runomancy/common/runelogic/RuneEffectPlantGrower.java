@@ -22,12 +22,12 @@ import java.util.Random;
 public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 
 	@Override
-	public void doEffect(World w, BlockPos pos, TileEndRune te, CompoundNBT n) {
+	public void doEffect(World w, BlockPos pos, TileEndRune te, CompoundNBT n)
+	{
 		
-		int r = RuneFormations.getRange(this)+4;
-		
-		
-		if(te.power < this.getCost())
+		int r = RuneFormations.getRange(this) + 4;
+
+		if(te.getPower() < this.getCost())
 			return;
 		
 			for(int xD = -r;xD<=r;xD++){
@@ -40,63 +40,70 @@ public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 			
 			
 			Block b = w.getBlockState(bp).getBlock();
-			
-			
-			
-			if(b.isAir(w.getBlockState(bp), w, bp) || b == null || b == Blocks.GRASS || b == Blocks.TALL_GRASS || b == Blocks.POPPY || b == Blocks.DANDELION || b instanceof DoublePlantBlock || b instanceof FlowerBlock || b instanceof GrassBlock)
+
+			if(b.isAir(w.getBlockState(bp), w, bp) || b == Blocks.GRASS || b == Blocks.TALL_GRASS || b == Blocks.POPPY || b == Blocks.DANDELION || b instanceof DoublePlantBlock || b instanceof FlowerBlock || b instanceof GrassBlock || b == Blocks.ATTACHED_MELON_STEM || b == Blocks.ATTACHED_PUMPKIN_STEM)
 				continue;
-			
 
 			
-			
-			if(b instanceof StemBlock){
+			if(b instanceof StemBlock)
+			{
 				
 				Block crop = getCropFromSeed(((StemBlock)b).getItem(w, bp, w.getBlockState(bp)));
-				
-				if(crop != null){
+
+				if(crop != null)
+				{
 					
-					if(!blockNear(w, bp, crop)){
-						
-						te.power -= this.getCost();
-						for(int i=0;i<=3;i++){
-							if(!w.isRemote) {
+					if(!blockNear(w, bp, crop))
+					{
+
+						Block bCheck = w.getBlockState(bp).getBlock();
+
+						if(bCheck == Blocks.ATTACHED_MELON_STEM || bCheck == Blocks.ATTACHED_PUMPKIN_STEM)
+							continue;
+
+
+							if(!w.isRemote)
+							{
+								bCheck = w.getBlockState(bp).getBlock();
+
+								if(bCheck == Blocks.ATTACHED_MELON_STEM || bCheck == Blocks.ATTACHED_PUMPKIN_STEM || !(bCheck instanceof IGrowable))
+									continue;
+
 								((IGrowable)b).grow((ServerWorld) w, w.rand, bp, w.getBlockState(bp));
+								te.removePower(this.getCost());
 
 								w.addParticle(ParticleTypes.HAPPY_VILLAGER, bp.getX()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, bp.getY()+0.3D, bp.getZ()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, 0,  0, 0);
 
 							}
-						//b.updateTick(w, bp, w.getBlockState(bp), w.rand);
-						
-						//w.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, bp.getX()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, bp.getY()+0.3D, bp.getZ()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, 0, 0, 0, 0);
-							
-							}
 						continue;
+
+
 					}
 					
 				}
 				
 			}
 
-						if(b instanceof IGrowable){
+						if(b instanceof IGrowable)
+						{
 
-							if(te.power >= this.getCost()){
+							IGrowable grow = (IGrowable)b;
 
+							if(grow.canGrow(w, bp, w.getBlockState(bp), w.isRemote))
+							{
+								te.removePower(this.getCost());
 
-								IGrowable grow = (IGrowable)b;
+								if(!w.isRemote)
+								{
+									//	b.randomTick(w.getBlockState(bp), (ServerWorld) w, bp, Runomancy.rand);
+									grow.grow((ServerWorld) w, w.rand, bp, w.getBlockState(bp));
 
-								if(grow.canGrow(w, bp, w.getBlockState(bp), w.isRemote)){
-									te.power -= this.getCost();
-
-									if(!w.isRemote) {
-										//	b.randomTick(w.getBlockState(bp), (ServerWorld) w, bp, Runomancy.rand);
-										grow.grow((ServerWorld) w, w.rand, bp, w.getBlockState(bp));
-
-										w.addParticle(ParticleTypes.HAPPY_VILLAGER, bp.getX() + 0.5D + w.rand.nextGaussian() / 5 - w.rand.nextGaussian() / 5, bp.getY() + 0.3D, bp.getZ() + 0.5D + w.rand.nextGaussian() / 5 - w.rand.nextGaussian() / 5, 0, 0, 0);
-									}
-
+									w.addParticle(ParticleTypes.HAPPY_VILLAGER, bp.getX() + 0.5D + w.rand.nextGaussian() / 5 - w.rand.nextGaussian() / 5, bp.getY() + 0.3D, bp.getZ() + 0.5D + w.rand.nextGaussian() / 5 - w.rand.nextGaussian() / 5, 0, 0, 0);
 								}
 
+								return;
 							}
+
 
 							continue;
 						}
@@ -114,36 +121,29 @@ public class RuneEffectPlantGrower implements IFunctionalRuneEffect {
 					continue;
 			}
 			
-			if(b instanceof IPlantable){
+			if(b instanceof IPlantable)
+			{
 				
 				if(b == Blocks.NETHER_WART && w.getBlockState(bp).get(NetherWartBlock.AGE) == 3)
 					continue;
 				
-				if(te.power >= this.getCost()*2){
-					te.power -= this.getCost()*2;
+				if(te.getPower() >= this.getCost()*2)
+				{
+					te.removePower(this.getCost() * 2);
 
-					if(!w.isRemote) {
+					if(!w.isRemote)
+					{
 						for(int i = 0; i< 2; i++)
-							b.tick(w.getBlockState(bp), (ServerWorld) w, bp, w.rand);
+							w.getBlockState(bp).tick((ServerWorld) w, bp, w.rand);
 
 						w.addParticle(ParticleTypes.HAPPY_VILLAGER, bp.getX()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, bp.getY()+0.3D, bp.getZ()+0.5D+w.rand.nextGaussian()/5-w.rand.nextGaussian()/5, 0,  0, 0);
 
 					}
 
-				}
-				
-				continue;
-			}
-			
-		}
-					
+					return;
 				}
 			}
-			
-			
-		
-		
-		
+		}}}
 	}
 	
 	public boolean blockNear(World w, BlockPos bp, Block b){

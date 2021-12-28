@@ -20,9 +20,9 @@ import net.minecraft.world.IWorldReader;
 public abstract class BlockRune extends BlockMod implements IRune
 {
 	protected static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
-
+	
 	abstract int getModeCount();
-
+	
 	public BlockRune()
 	{
 		this(Properties.create(Material.ROCK).notSolid().hardnessAndResistance(1.0F, 1.5F).sound(SoundType.STONE));
@@ -37,7 +37,6 @@ public abstract class BlockRune extends BlockMod implements IRune
 	{
 		return SHAPE;
 	}
-
 
 
 

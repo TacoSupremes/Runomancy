@@ -15,14 +15,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ModRecipes {
-	
-	
+public class ModRecipes
+{
 	public static List<RuneChargerRecipe> rcr = new ArrayList<RuneChargerRecipe>();
 	public static Map<String, ItemStack[][]> shapeless = new HashMap<String, ItemStack[][]>();
 	public static Map<String, ItemStack[][]> shaped = new HashMap<String, ItemStack[][]>();
 	public static Map<String, ItemStack> furnace = new HashMap<String, ItemStack>();
-
 
 	public static ItemStack getSmeltingResult(World w, ItemStack is)
 	{
@@ -186,5 +184,4 @@ public class ModRecipes {
 	
 	*/
 	}
-
 }

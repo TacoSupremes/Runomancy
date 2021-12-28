@@ -27,7 +27,7 @@ public class RuneEffectFurnace implements IFunctionalRuneEffect {
 		int y = pos.getY();
 		int z = pos.getZ();
 		
-		if(te.power <this.getCost())
+		if(te.getPower() < this.getCost())
 			return;
 		
 		  List<ItemEntity> entities = w.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(x - 1, y - 1, z - 1, x + 2, y + 0.3F, z + 2));
@@ -41,9 +41,9 @@ public class RuneEffectFurnace implements IFunctionalRuneEffect {
 	        	
 	        	if(!result.isEmpty())
 	        	{
-	        		if(te.power >= this.getCost()){
+	        		if(te.getPower() >= getCost()){
 	        		
-	        			te.power-=this.getCost();
+	        			te.removePower(getCost());
 	        			
 	        			spawnParticleOnEntity(ParticleTypes.SMOKE, entity);
 	        			spawnParticleOnEntity(ParticleTypes.FLAME, entity);

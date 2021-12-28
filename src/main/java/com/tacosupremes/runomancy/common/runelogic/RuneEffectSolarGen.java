@@ -25,7 +25,7 @@ public class RuneEffectSolarGen implements IRuneEffect {
 		i = Math.round((float)i * MathHelper.cos(f));
 		i = MathHelper.clamp(i, 0, 15);
       
-		te.power += i;
+		te.addPower(i);
 	}
 
 	@Override

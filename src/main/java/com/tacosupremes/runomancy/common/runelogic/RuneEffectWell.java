@@ -19,7 +19,8 @@ public class RuneEffectWell implements IFunctionalRuneEffect {
 	public void doEffect(World w, BlockPos pos, TileEndRune te, CompoundNBT nbt)
 	{
 
-		if(snowMode(w,pos)){
+		if(snowMode(w,pos))
+		{
 			
 			for(int x = -1; x<= 1; x++){
 				for(int z = -1; z<= 1; z++){
@@ -27,7 +28,7 @@ public class RuneEffectWell implements IFunctionalRuneEffect {
 					if(x == 0 || z == 0)
 						continue;
 					
-					if(w.getBlockState(pos.add(x,0,z)).getBlock() == Blocks.SNOW && w.getBlockState(pos.add(x, 0, z)).get(SnowBlock.LAYERS) != 7 && te.power >= this.getCost())
+					if(w.getBlockState(pos.add(x,0,z)).getBlock() == Blocks.SNOW && w.getBlockState(pos.add(x, 0, z)).get(SnowBlock.LAYERS) != 7 && te.getPower() >= this.getCost())
 					w.addParticle(ParticleTypes.FIREWORK, pos.getX() + x + 0.5D + w.rand.nextDouble() / 4 - w.rand.nextDouble() / 4, pos.getY() + 0.3 + w.getBlockState(pos.add(x, 0, z)).get(SnowBlock.LAYERS) * 0.1D, pos.getZ() + z + 0.5D + w.rand.nextDouble()/4 - w.rand.nextDouble()/4,  0, 0, 0);
 					else
 						continue;
@@ -35,14 +36,14 @@ public class RuneEffectWell implements IFunctionalRuneEffect {
 					if(te.ticks %40 != 0)
 						continue;
 				
-					if(te.power < this.getCost())
+					if(te.getPower() < this.getCost())
 						return;
 					
 		if(w.getBlockState(pos.add(x, 0, z)).getBlock().isAir(w.getBlockState(pos.add(x, 0, z)),w, pos.add(x, 0, z)) && w.getBlockState(pos.add(x, 0, z)).getBlock() != Blocks.SNOW){
 				if(!w.isRemote)
 			w.setBlockState(pos.add(x,0,z), Blocks.SNOW.getDefaultState());
 			
-			te.power -= this.getCost();
+			te.removePower(this.getCost());
 			
 			return;
 		}
@@ -60,7 +61,7 @@ public class RuneEffectWell implements IFunctionalRuneEffect {
 					if(te.ticks %40 != 0)
 						continue;
 					
-					if(te.power < this.getCost())
+					if(te.getPower() < this.getCost())
 						return;
 					
 					if(w.getBlockState(pos.add(x,0,z)).getBlock() != Blocks.SNOW)
@@ -71,7 +72,7 @@ public class RuneEffectWell implements IFunctionalRuneEffect {
 					
 			if(!w.isRemote)
 			w.setBlockState(pos.add(x, 0, z), w.getBlockState(pos.add(x, 0, z)).with(SnowBlock.LAYERS,w.getBlockState(pos.add(x, 0, z)).get(SnowBlock.LAYERS)+1));
-			te.power -= this.getCost();
+			te.removePower(this.getCost());
 			return;
 		}
 				
@@ -81,9 +82,7 @@ public class RuneEffectWell implements IFunctionalRuneEffect {
 			
 			return;
 		}
-		
-		
-		
+
 		for(int x = -1; x<= 1; x++){
 			for(int z = -1; z<= 1; z++){
 				

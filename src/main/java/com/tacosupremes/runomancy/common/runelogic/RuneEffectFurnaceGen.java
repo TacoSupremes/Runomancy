@@ -36,7 +36,7 @@ public class RuneEffectFurnaceGen implements IRuneEffect {
 		
 		if(timeleft > 0)
 		{
-			te.power += 10;
+			te.addPower(10);
 		
 			nbt.putInt("FGTL", timeleft-2);
 			w.addParticle(ParticleTypes.SMOKE, x+0.5D, y+0.2D, z+0.5D, 0, 0, 0);

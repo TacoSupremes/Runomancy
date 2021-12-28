@@ -17,6 +17,8 @@ import com.tacosupremes.runomancy.common.runelogic.RuneFormations;
 import com.tacosupremes.runomancy.common.utils.BlockUtils;
 import com.tacosupremes.runomancy.common.utils.Vector3;
 import net.minecraft.block.BlockState;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.particles.RedstoneParticleData;
@@ -27,7 +29,7 @@ import net.minecraft.world.World;
 public class TileEndRune extends TileMod implements IPowerTile, ITickableTileEntity
 {
     int currentEffect = -1;
-    public int power = 0;
+    private int power = 0;
 
     public CompoundNBT rEffect = null;
 
@@ -46,9 +48,7 @@ public class TileEndRune extends TileMod implements IPowerTile, ITickableTileEnt
     {
         for (int i = 0; i < nbt.getInt("LENGTH"); i++) {
             children.add(BlockPos.fromLong(nbt.getCompound("children").getLong("L" + i)));
-
         }
-
 
         nbt.remove("children");
         this.currentEffect = nbt.getInt("effect");
@@ -93,7 +93,6 @@ public class TileEndRune extends TileMod implements IPowerTile, ITickableTileEnt
 
         if (rEffect == null)
             rEffect = new CompoundNBT();
-
 
         if (!isFormed()) {
             effect:
@@ -157,10 +156,13 @@ public class TileEndRune extends TileMod implements IPowerTile, ITickableTileEnt
             }
 
 
-        } else {
+        }
+        else
+            {
 
 
-            if (shouldDestroy()) {
+            if (shouldDestroy())
+            {
                 System.out.println("BIGF");
                 destroy();
                 this.currentEffect = -1;
@@ -391,7 +393,7 @@ public class TileEndRune extends TileMod implements IPowerTile, ITickableTileEnt
         if(!canFill())
             return 0;
 
-        System.out.print("\nadding power" + getPower() + "--->");
+       // System.out.print("\nadding power" + getPower() + "--->");
 
         if(power + i > getMaxPower())
         {
@@ -399,7 +401,7 @@ public class TileEndRune extends TileMod implements IPowerTile, ITickableTileEnt
 
             power = getMaxPower();
 
-            System.out.print(power);
+        //    System.out.print(power);
 
             return res;
         }
@@ -416,19 +418,19 @@ public class TileEndRune extends TileMod implements IPowerTile, ITickableTileEnt
         if (power <= 0)
             return 0;
 
-        System.out.print("\nremoving power" + getPower() + "--->");
+      //  System.out.print("\nremoving power" + getPower() + "--->");
 
         if(power < i)
         {
             int t = power;
             power = 0;
-            System.out.print(0);
+          //  System.out.print(0);
             return t;
         }
 
         power -= i;
 
-        System.out.print(power);
+        //System.out.print(power);
 
         return i;
     }
