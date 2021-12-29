@@ -7,11 +7,11 @@ import net.minecraft.util.math.BlockPos;
 
 public interface INode 
 {
+	boolean isActiveNode();
 	
-	public boolean isActiveNode();
-	
-	public List<BlockPos> getNodeList();
-	
-	public Vector3 getParticleOffset();
+	List<BlockPos> getNodeList();
 
+	List<Boolean> getNodeDrawList();
+	
+	Vector3 getParticleOffset();
 }

@@ -17,13 +17,12 @@ public class BlockSoulRune extends BlockRune
         super();
         this.setDefaultState(this.stateContainer.getBaseState().with(mode, 0));
     }
+
     @Override
     int getModeCount()
     {
         return ModBlocks.soulCount;
     }
-
-
 
     @Override
     public String getName()
@@ -42,7 +41,6 @@ public class BlockSoulRune extends BlockRune
     {
         return state.get(mode);
     }
-
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)

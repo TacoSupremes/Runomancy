@@ -8,6 +8,7 @@ import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.block.rune.IRune;
 import com.tacosupremes.runomancy.common.block.tile.INode;
 import com.tacosupremes.runomancy.common.block.tile.TileMod;
+import com.tacosupremes.runomancy.common.block.tile.TileNode;
 import com.tacosupremes.runomancy.common.power.PowerHelper;
 import com.tacosupremes.runomancy.common.power.block.tile.IPowerTile;
 import com.tacosupremes.runomancy.common.power.block.tile.TilePowerStorage;
@@ -38,6 +39,7 @@ public class TileEndRune extends TileMod implements IPowerTile, ITickableTileEnt
     public int ticks = 0;
 
     private List<BlockPos> l = new ArrayList<BlockPos>();
+    private List<Boolean> linkedToDraw = new ArrayList<Boolean>();
 
     public TileEndRune()
     {
@@ -57,8 +59,10 @@ public class TileEndRune extends TileMod implements IPowerTile, ITickableTileEnt
         this.rEffect = nbt.getCompound("NBTE");
 
         for (int i = 0; i < nbt.getCompound("CC").size(); i++)
+        {
             l.add(BlockPos.fromLong(nbt.getCompound("CC").getLong("L" + i)));
-
+            linkedToDraw.add(nbt.getBoolean("B" + i));
+        }
         nbt.remove("CC");
 
     }
@@ -79,6 +83,7 @@ public class TileEndRune extends TileMod implements IPowerTile, ITickableTileEnt
         CompoundNBT nn = new CompoundNBT();
         for (int i = 0; i < l.size(); i++) {
             nn.putLong("L" + i, l.get(i).toLong());
+            nn.putBoolean("B" + i, linkedToDraw.get(i));
         }
 
         nbt.put("CC", nn);
@@ -119,7 +124,6 @@ public class TileEndRune extends TileMod implements IPowerTile, ITickableTileEnt
                         } else if (re.getNeededBlocks()[index] == null)
                             index++;
                         else {
-                            index = 0;
                             continue effect;
                         }
 
@@ -148,18 +152,12 @@ public class TileEndRune extends TileMod implements IPowerTile, ITickableTileEnt
                             }
                             break effect;
                         }
-
                     }
                 }
-
-
             }
-
-
         }
         else
             {
-
 
             if (shouldDestroy())
             {
@@ -171,6 +169,9 @@ public class TileEndRune extends TileMod implements IPowerTile, ITickableTileEnt
 
             if (!isActiveNode())
                 return;
+
+
+                TileNode.spawnNodeParticles(getWorld(), this);
 
             //	System.out.println("FORMED: " + this.getEffect().getName());
 
@@ -317,8 +318,6 @@ public class TileEndRune extends TileMod implements IPowerTile, ITickableTileEnt
 */
     public boolean shouldDestroy()
     {
-
-
         IRuneEffect re = RuneFormations.effects.get(currentEffect);
 
         int sr = Math.round((float) ((float) Math.sqrt(re.getNeededBlocks().length) / 2F)) - 1;
@@ -454,6 +453,12 @@ public class TileEndRune extends TileMod implements IPowerTile, ITickableTileEnt
     }
 
     @Override
+    public List<Boolean> getNodeDrawList()
+    {
+        return linkedToDraw;
+    }
+
+    @Override
     public Vector3 getParticleOffset()
     {
         return Vector3.fromBlockPos(getPos()).add(0.5, 0.2, 0.5);
@@ -481,7 +486,7 @@ public class TileEndRune extends TileMod implements IPowerTile, ITickableTileEnt
                 System.out.println("Loop at " + bp.toString());
 
 
-                if(path.indexOf(bp) == -1 || path.lastIndexOf(bp) == -1)
+                if(!path.contains(bp) || path.lastIndexOf(bp) == -1)
                     continue;
                 path.removeAll(path.subList(path.indexOf(bp) + 1, path.lastIndexOf(bp)));
             }
@@ -537,9 +542,8 @@ public class TileEndRune extends TileMod implements IPowerTile, ITickableTileEnt
                 if (!path.isEmpty())
                     path.remove(path.size() - 1);
             }
-
         }
-        return false;
 
+        return false;
     }
 }

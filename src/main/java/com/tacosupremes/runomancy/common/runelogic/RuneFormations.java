@@ -23,7 +23,8 @@ public class RuneFormations {
 		
 		if(re == null)
 			return 0;
-		return Math.round((float)((float)Math.sqrt(re.getNeededBlocks().length) / 2F)) - 1;
+
+		return Math.round((float)Math.sqrt(re.getNeededBlocks().length) / 2F) - 1;
 	}
 	
 

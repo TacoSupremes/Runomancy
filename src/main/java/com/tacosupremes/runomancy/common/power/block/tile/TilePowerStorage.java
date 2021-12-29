@@ -2,6 +2,7 @@ package com.tacosupremes.runomancy.common.power.block.tile;
 
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.block.tile.TileMod;
+import com.tacosupremes.runomancy.common.block.tile.TileNode;
 import com.tacosupremes.runomancy.common.utils.Vector3;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.IParticleData;
@@ -20,6 +21,7 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickableTi
 	public int power = 0;
 
 	private List<BlockPos> linkedTo = new ArrayList<BlockPos>();
+	private List<Boolean> linkedToDraw = new ArrayList<Boolean>();
 
 	public TilePowerStorage()
 	{
@@ -39,10 +41,10 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickableTi
 		
 		if(nbt.contains("BPS")){
 			
-			for(int i = 0; i< nbt.getCompound("BPS").size(); i++){
-				
-				
+			for(int i = 0; i< nbt.getCompound("BPS").size(); i++)
+			{
 				linkedTo.add(BlockPos.fromLong(nbt.getCompound("BPS").getLong("B"+i)));
+				linkedToDraw.add(nbt.getCompound("BPS").getBoolean("BOOL"+i));
 			}
 			
 			nbt.remove("BPS");
@@ -61,13 +63,11 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickableTi
 		for(int i = 0; i<linkedTo.size(); i++){
 			
 			bt.putLong("B"+i, linkedTo.get(i).toLong());
+			bt.putBoolean("BOOL"+i, linkedToDraw.get(i));
 			
 		}
-			
 		nbt.put("BPS", bt);
-
 		}
-		
 	}
 	
 	
@@ -159,6 +159,11 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickableTi
 	@Override
 	public void tick()
 	{
+		if(!isActiveNode())
+			return;
+
+		TileNode.spawnNodeParticles(getWorld(), this);
+
 		if(this.getPower() > this.getMaxPower())
 			this.power = this.getMaxPower();
 
@@ -232,6 +237,12 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickableTi
 	public List<BlockPos> getNodeList()
 	{
 		return linkedTo;
+	}
+
+	@Override
+	public List<Boolean> getNodeDrawList()
+	{
+		return linkedToDraw;
 	}
 
 	@Override

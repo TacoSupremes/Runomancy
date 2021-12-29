@@ -18,10 +18,8 @@ public class RuneEffectWell implements IFunctionalRuneEffect {
 	@Override
 	public void doEffect(World w, BlockPos pos, TileEndRune te, CompoundNBT nbt)
 	{
-
 		if(snowMode(w,pos))
 		{
-			
 			for(int x = -1; x<= 1; x++){
 				for(int z = -1; z<= 1; z++){
 					
@@ -68,10 +66,11 @@ public class RuneEffectWell implements IFunctionalRuneEffect {
 						continue;
 				
 			
-		if(w.getBlockState(pos.add(x, 0, z)).get(SnowBlock.LAYERS) != 8){
+		if(w.getBlockState(pos.add(x, 0, z)).get(SnowBlock.LAYERS) != 8)
+		{
 					
 			if(!w.isRemote)
-			w.setBlockState(pos.add(x, 0, z), w.getBlockState(pos.add(x, 0, z)).with(SnowBlock.LAYERS,w.getBlockState(pos.add(x, 0, z)).get(SnowBlock.LAYERS)+1));
+				w.setBlockState(pos.add(x, 0, z), w.getBlockState(pos.add(x, 0, z)).with(SnowBlock.LAYERS,w.getBlockState(pos.add(x, 0, z)).get(SnowBlock.LAYERS)+1));
 			te.removePower(this.getCost());
 			return;
 		}
@@ -100,9 +99,7 @@ public class RuneEffectWell implements IFunctionalRuneEffect {
 		}
 		
 	}
-	
-	
-	
+
 	public boolean snowMode(World w, BlockPos pos){
 		
 		for(int x = -1; x<= 1; x++){
@@ -127,18 +124,14 @@ public class RuneEffectWell implements IFunctionalRuneEffect {
 		Block w = ModBlocks.WATER_RUNE.get();
 		Block e = ModBlocks.END_RUNE.get();
 		Block n = null;
+
 		return new Block[]{n,w,n,
 						   w,e,w,
 						   n,w,n};
-
 	}
 
 	@Override
-	public boolean isGenerating() {
-
-		return false;
-
-	}
+	public boolean isGenerating() { return false; }
 
 	@Override
 	public int[] getFinalBlockStates() {
@@ -152,7 +145,7 @@ public class RuneEffectWell implements IFunctionalRuneEffect {
 	@Override
 	public int getPowerCapacity() {
 
-		return 200;
+		return 80;
 
 	}
 

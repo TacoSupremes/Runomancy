@@ -12,7 +12,6 @@ import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 
 public class TileBatteryRenderer extends TileEntityRenderer<TilePowerStorage>
 {
-
     public TileBatteryRenderer(TileEntityRendererDispatcher rendererDispatcherIn)
     {
         super(rendererDispatcherIn);

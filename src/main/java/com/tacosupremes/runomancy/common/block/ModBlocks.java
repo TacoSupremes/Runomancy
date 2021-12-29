@@ -66,8 +66,6 @@ public class ModBlocks {
 
 	public static Block marker;
 
-
-
 	public static final int obsidianCount = 12;
 	public static final int endRuneCount = RuneFormations.effects.size();
 	public static final int fireCount = 6;

@@ -1,5 +1,6 @@
 package com.tacosupremes.runomancy.common.item;
 
+import com.mojang.datafixers.util.Pair;
 import com.tacosupremes.runomancy.common.block.tile.INode;
 import com.tacosupremes.runomancy.common.utils.BlockUtils;
 import com.tacosupremes.runomancy.common.utils.Vector3;
@@ -27,13 +28,9 @@ public class ItemRunicWand extends ItemMod
 		return "runic_wand";
 	}
 
-
-
-
 	@Override
 	public ActionResultType onItemUse(ItemUseContext context)
 	{
-		
 		World w = context.getWorld();
 
 		BlockPos pos = context.getPos();
@@ -54,8 +51,11 @@ public class ItemRunicWand extends ItemMod
 				INode n = (INode)w.getTileEntity(pos);
 				
 				n.getNodeList().add(BlockPos.fromLong(player.getHeldItem(hand).getTag().getLong("LINK")));
+				n.getNodeDrawList().add(false);
 				INode n2 = (INode)w.getTileEntity(BlockPos.fromLong(player.getHeldItem(hand).getTag().getLong("LINK")));
 				n2.getNodeList().add(pos);
+				n2.getNodeDrawList().add(true);
+
 				
 				player.getHeldItem(hand).getTag().remove("LINK");
 				player.getHeldItem(hand).getTag().putBoolean("ACTIVE", false);
@@ -68,15 +68,10 @@ public class ItemRunicWand extends ItemMod
 		//	INode n = (IPowerNode)w.getTileEntity(pos);
 			
 		//	System.out.println(n.getLinkedBlocks().toString());
-			
-			
+
 		}
-		
-		
-		
-		
+
 		return super.onItemUse(context);
-		
 	}
 
 	@Override

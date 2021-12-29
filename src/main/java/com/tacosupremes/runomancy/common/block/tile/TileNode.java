@@ -5,18 +5,19 @@ import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.utils.BlockUtils;
 import com.tacosupremes.runomancy.common.utils.Vector3;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.particles.ParticleTypes;
+
 import net.minecraft.particles.RedstoneParticleData;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TileNode extends TileMod implements INode, ITickableTileEntity
 {
-
 	public TileNode()
 	{
 		super(ModBlocks.TILE_NODE.get());
@@ -28,7 +29,8 @@ public class TileNode extends TileMod implements INode, ITickableTileEntity
 		return !this.getWorld().isBlockPowered(this.getPos());
 	}
 	
-	public List<BlockPos> linkedTo = new ArrayList<BlockPos>();
+	private List<BlockPos> linkedTo = new ArrayList<BlockPos>();
+	private List<Boolean> linkedToDraw = new ArrayList<Boolean>();
 
 	@Override
 	public void writeCustomNBT(CompoundNBT cmp)
@@ -40,6 +42,7 @@ public class TileNode extends TileMod implements INode, ITickableTileEntity
 			for(int i = 0; i < linkedTo.size(); i++)
 			{
 				cmp.putLong("L" + i, linkedTo.get(i).toLong());
+				cmp.putBoolean("B" + i, linkedToDraw.get(i));
 			}
 		}
 	}
@@ -52,7 +55,10 @@ public class TileNode extends TileMod implements INode, ITickableTileEntity
 			for(int i = 0; i < cmp.getInt("SIZE"); i++)
 			{
 				linkedTo.add(BlockPos.fromLong(cmp.getLong("L" + i)));
+				linkedToDraw.add(cmp.getBoolean("B"+i));
+
 				cmp.remove("L" + i);
+				cmp.remove("B" + i);
 			}
 			
 			cmp.remove("SIZE");
@@ -60,7 +66,7 @@ public class TileNode extends TileMod implements INode, ITickableTileEntity
 	}
 	
 	@Override
-	public List<BlockPos> getNodeList() 
+	public List<BlockPos> getNodeList()
 	{
 		return this.linkedTo;
 	}
@@ -68,27 +74,33 @@ public class TileNode extends TileMod implements INode, ITickableTileEntity
 	@Override
 	public void tick()
 	{
-	
+		spawnNodeParticles(getWorld(),this);
+	}
+
+	public static void spawnNodeParticles(World w, INode node)
+	{
+		List<BlockPos> linkedTo = node.getNodeList();
+		List<Boolean> linkedToDraw = node.getNodeDrawList();
+
 		for(int i = 0; i< linkedTo.size(); i++)
 		{
-			if(this.getWorld().getTileEntity(linkedTo.get(i)) instanceof INode)
+			if(w.getTileEntity(linkedTo.get(i)) instanceof INode)
 			{
-				if(this.isActiveNode() && ((INode)this.getWorld().getTileEntity(linkedTo.get(i))).isActiveNode())
-							BlockUtils.drawLine(getWorld(), this.getParticleOffset(), ((INode)this.getWorld().getTileEntity(linkedTo.get(i))).getParticleOffset(), RedstoneParticleData.REDSTONE_DUST);
+				if(node.isActiveNode() && ((INode)w.getTileEntity(linkedTo.get(i))).isActiveNode() && linkedToDraw.get(i))
+					BlockUtils.drawLine(w, node.getParticleOffset(), ((INode)w.getTileEntity(linkedTo.get(i))).getParticleOffset(), RedstoneParticleData.REDSTONE_DUST);
 			}
 			else
 			{
 				linkedTo.remove(i);
 				break;
 			}
-				
+
 		}
 	}
 
 	@Override
 	public Vector3 getParticleOffset()
 	{
-	
 		Direction enumfacing = this.getWorld().getBlockState(getPos()).get(BlockNode.FACING);
 	
 		double d0 = (double)pos.getX() + 0.5D;
@@ -112,4 +124,9 @@ public class TileNode extends TileMod implements INode, ITickableTileEntity
 	    }	
 	}
 
+	@Override
+	public List<Boolean> getNodeDrawList()
+	{
+		return linkedToDraw;
+	}
 }

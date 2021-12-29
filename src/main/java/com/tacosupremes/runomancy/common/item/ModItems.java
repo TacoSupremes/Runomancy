@@ -39,7 +39,7 @@ public class ModItems {
 
 	public static final RegistryObject<Item> FIRE_RUNE_ITEM = makeBlockItem(ModBlocks.FIRE_RUNE);
 
-	public static final RegistryObject<Item> WATTER_RUNE_ITEM = makeBlockItem(ModBlocks.WATER_RUNE);
+	public static final RegistryObject<Item> WATER_RUNE_ITEM = makeBlockItem(ModBlocks.WATER_RUNE);
 
 	public static final RegistryObject<Item> SOUL_RUNE_ITEM = makeBlockItem(ModBlocks.SOUL_RUNE);
 
