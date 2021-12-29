@@ -61,7 +61,7 @@ public class TileEndRune extends TileMod implements IPowerTile, ITickableTileEnt
         for (int i = 0; i < nbt.getCompound("CC").size(); i++)
         {
             l.add(BlockPos.fromLong(nbt.getCompound("CC").getLong("L" + i)));
-            linkedToDraw.add(nbt.getBoolean("B" + i));
+            linkedToDraw.add(nbt.getCompound("CC").getBoolean("B" + i));
         }
         nbt.remove("CC");
 
@@ -257,27 +257,13 @@ public class TileEndRune extends TileMod implements IPowerTile, ITickableTileEnt
 
         for (int i = 0; i < l.size(); i++) {
 
-            if (this.getWorld().getTileEntity(l.get(i)) == null || this.getWorld().getTileEntity(l.get(i)) == this)
+            if (this.getWorld().getTileEntity(l.get(i)) == null || this.getWorld().getTileEntity(l.get(i)) == this) {
                 l.remove(i);
-
-        }
-
-        List<String> s = new ArrayList<String>();
-
-        for (int i = 0; i < l.size(); i++) {
-
-            if (s.contains(l.get(i).toString())) {
-                l.remove(i);
-                continue;
+                linkedToDraw.remove(i);
+                return;
             }
-
-            s.add(l.get(i).toString());
-
-
         }
-
     }
-
 
     /*
     private List<Vector3> getPathToBattery()

@@ -4,6 +4,7 @@ import com.tacosupremes.runomancy.common.block.BlockNode;
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.utils.BlockUtils;
 import com.tacosupremes.runomancy.common.utils.Vector3;
+import com.tacosupremes.runomancy.proxy.CommonProxy;
 import net.minecraft.nbt.CompoundNBT;
 
 import net.minecraft.particles.RedstoneParticleData;
@@ -86,15 +87,15 @@ public class TileNode extends TileMod implements INode, ITickableTileEntity
 		{
 			if(w.getTileEntity(linkedTo.get(i)) instanceof INode)
 			{
-				if(node.isActiveNode() && ((INode)w.getTileEntity(linkedTo.get(i))).isActiveNode() && linkedToDraw.get(i))
+				if(node.isActiveNode() && ((INode)w.getTileEntity(linkedTo.get(i))).isActiveNode() && linkedToDraw.get(i) && CommonProxy.isPlayerHoldingWand())
 					BlockUtils.drawLine(w, node.getParticleOffset(), ((INode)w.getTileEntity(linkedTo.get(i))).getParticleOffset(), RedstoneParticleData.REDSTONE_DUST);
 			}
 			else
 			{
 				linkedTo.remove(i);
+				linkedToDraw.remove(i);
 				break;
 			}
-
 		}
 	}
 

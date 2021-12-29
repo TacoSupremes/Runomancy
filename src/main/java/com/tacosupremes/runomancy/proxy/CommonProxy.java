@@ -6,7 +6,7 @@ import net.minecraftforge.fml.common.thread.SidedThreadGroups;
 
 public class CommonProxy
 {
-    public static boolean isPlayerHoldingItemStack()
+    public static boolean isPlayerHoldingWand()
     {
         if(Thread.currentThread().getThreadGroup() != SidedThreadGroups.SERVER)
             return Minecraft.getInstance().player.getHeldItemMainhand().getItem() == ModItems.RUNIC_WAND.get();

@@ -167,17 +167,12 @@ public class TilePowerStorage extends TileMod implements IPowerTile, ITickableTi
 		if(this.getPower() > this.getMaxPower())
 			this.power = this.getMaxPower();
 
-		//power += getMaxPower() / 15 / 20;
-		//System.out.println(this.getPower());
-
-		//spawnEnergy();
-
-
-
 		for(int i =0; i< linkedTo.size(); i++)
 		{
-			if(this.getWorld().getTileEntity(linkedTo.get(i)) == null || this.getWorld().getTileEntity(linkedTo.get(i)) == this)
+			if(this.getWorld().getTileEntity(linkedTo.get(i)) == null || this.getWorld().getTileEntity(linkedTo.get(i)) == this) {
 				linkedTo.remove(i);
+				linkedToDraw.remove(i);
+			}
 		}
 
 		/*

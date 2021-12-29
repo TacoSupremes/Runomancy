@@ -55,8 +55,6 @@ public class BlockPowerStorage extends BlockModContainer
         return "battery";
     }
 
-
-
     public boolean eventReceived(BlockState state, World w, BlockPos pos, int id, int param)
     {
         if(!w.isRemote)
@@ -66,34 +64,4 @@ public class BlockPowerStorage extends BlockModContainer
 
         return false;
     }
-	
-
-
-
-	/*
-	@Override
-	public void breakBlock(World w, BlockPos pos, IBlockState state) {
-		
-		
-		
-		
-		
-List<BlockPos> bpl = ((IPowerNode)w.getTileEntity(pos)).getLinkedBlocks();
-		
-		super.breakBlock(w, pos, state);
-		
-		for(BlockPos bp : bpl){
-			
-			IPowerNode k = (IPowerNode)w.getTileEntity(bp);
-			
-			k.updateLinkedBlocks(pos);
-			k.getLinkedBlocks().remove(pos);
-		}
-	}
-
-
-
-	 */
-
-	
 }
