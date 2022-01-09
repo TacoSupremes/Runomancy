@@ -3,6 +3,8 @@ package com.tacosupremes.runomancy.common.item;
 
 import com.tacosupremes.runomancy.common.Runomancy;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.IProjectile;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -10,36 +12,43 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.function.Predicate;
 
-public class ItemRunicShield extends ItemMod  {
+public class ItemRunicShield extends ItemToggleMod
+{
+	public ItemRunicShield()
+	{
+		super(3500);
+	}
 
 	@Override
-	public void inventoryTick(ItemStack is, World w, Entity e, int itemSlot, boolean isSelected)
+	public void activeTick(ItemStack is, World w, Entity e, int itemSlot, boolean isSelected)
 	{
-		List<Entity> l = w.getEntitiesInAABBexcluding(e, new AxisAlignedBB(e.getPosition().add(-3, -2, -3), e.getPosition().add(3, 2, 3)), null);
+		int r = 6;
+		List<Entity> l = w.getEntitiesInAABBexcluding(e, new AxisAlignedBB(e.getPosition().add(-r, -r, -r), e.getPosition().add(r, r, r)), shouldReflect);
 
 		for (Entity e2 : l)
 		{
-			if (e2 != null)
+			if(is.getDamage() < (is.getMaxDamage() - 1) - 2)
 			{
 				BlockPos bp = e2.getPosition().subtract(e.getPosition());
 
 				e2.setMotion(bp.getX() * 0.75D, e2.getMotion().y, bp.getZ() * 0.75D);
+				is.setDamage(is.getDamage() + 2);
 
-				for (int i = 0; i <= 8; i++)
-				{
-					w.addParticle(ParticleTypes.CRIT, e2.getPosX() + Runomancy.rand.nextGaussian() / 4 - Runomancy.rand.nextGaussian() / 4, e2.getPosY() + 1, e2.getPosZ() + Runomancy.rand.nextGaussian() / 4 - Runomancy.rand.nextGaussian() / 4, 0, 0, 0);
-				}
-				return;
+				w.addParticle(ParticleTypes.CRIT, e2.getPosX() + Runomancy.rand.nextGaussian() / 4 - Runomancy.rand.nextGaussian() / 4, e2.getPosY() + 1, e2.getPosZ() + Runomancy.rand.nextGaussian() / 4 - Runomancy.rand.nextGaussian() / 4, 0, 0, 0);
+
 			}
-
 		}
+
+
 	}
 
+	public Predicate<Entity> shouldReflect = (e) -> e instanceof LivingEntity || e instanceof  IProjectile;
 
 	@Override
 	public String getItemRegistryName()
 	{
-		return null;
+		return "runic_shield";
 	}
 }

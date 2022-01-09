@@ -35,7 +35,6 @@ public class ItemRunicWand extends ItemMod
 
 		BlockPos pos = context.getPos();
 
-
 		PlayerEntity player = context.getPlayer();
 
 		Hand hand = context.getHand();
@@ -49,14 +48,17 @@ public class ItemRunicWand extends ItemMod
 			if(player.getHeldItem(hand).getTag().getBoolean("ACTIVE")){
 				
 				INode n = (INode)w.getTileEntity(pos);
-				
-				n.getNodeList().add(BlockPos.fromLong(player.getHeldItem(hand).getTag().getLong("LINK")));
-				n.getNodeDrawList().add(false);
-				INode n2 = (INode)w.getTileEntity(BlockPos.fromLong(player.getHeldItem(hand).getTag().getLong("LINK")));
-				n2.getNodeList().add(pos);
-				n2.getNodeDrawList().add(true);
 
-				
+				if(!n.getNodeList().contains(BlockPos.fromLong(player.getHeldItem(hand).getTag().getLong("LINK"))))
+				{
+					n.getNodeList().add(BlockPos.fromLong(player.getHeldItem(hand).getTag().getLong("LINK")));
+					n.getNodeDrawList().add(false);
+					
+					INode n2 = (INode) w.getTileEntity(BlockPos.fromLong(player.getHeldItem(hand).getTag().getLong("LINK")));
+					n2.getNodeList().add(pos);
+					n2.getNodeDrawList().add(true);
+				}
+
 				player.getHeldItem(hand).getTag().remove("LINK");
 				player.getHeldItem(hand).getTag().putBoolean("ACTIVE", false);
 			}else{

@@ -85,9 +85,9 @@ public class TileNode extends TileMod implements INode, ITickableTileEntity
 
 		for(int i = 0; i< linkedTo.size(); i++)
 		{
-			if(w.getTileEntity(linkedTo.get(i)) instanceof INode)
+			if(w.getTileEntity(linkedTo.get(i)) != null && w.getTileEntity(linkedTo.get(i)) instanceof INode)
 			{
-				if(node.isActiveNode() && ((INode)w.getTileEntity(linkedTo.get(i))).isActiveNode() && linkedToDraw.get(i) && CommonProxy.isPlayerHoldingWand())
+				if(node.isActiveNode() && ((INode)w.getTileEntity(linkedTo.get(i))).isActiveNode() && linkedToDraw.get(i) && CommonProxy.drawParticles())
 					BlockUtils.drawLine(w, node.getParticleOffset(), ((INode)w.getTileEntity(linkedTo.get(i))).getParticleOffset(), RedstoneParticleData.REDSTONE_DUST);
 			}
 			else

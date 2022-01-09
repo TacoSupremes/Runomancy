@@ -1,0 +1,87 @@
+{
+    "itemGroup.runomancy.tab": "Runomancy",
+    "item.runomancy.runic_wand": "Runic Wand",
+    "item.runomancy.runic_battery": "Bottled Runic Essence",
+    "item.runomancy.runic_pickaxe": "Runic Pickaxe",
+    "item.runomancy.runic_shovel": "Runic Shovel",
+    "item.runomancy.runic_axe": "Runic Axe",
+    "item.runomancy.runic_hoe": "Runic Hoe",
+    "item.runomancy.runic_ingot": "Runic Ingot",
+    "item.runomancy.mod_book": "Runic Tome",
+    "item.runomancy.hunger_rune": "Hunger Rune",
+    "item.runomancy.soul_gem": "Soul Gem",
+    "item.runomancy.ender_shard": "Ender Shard",
+    "item.runomancy.runic_shield": "Runic Barrier",
+
+    "block.runomancy.end_rune": "End Rune",
+    "block.runomancy.obsidian_rune": "Obsidian Rune",
+    "block.runomancy.fire_rune": "Lava Rune",
+    "block.runomancy.earth_rune": "Earth Rune",
+    "block.runomancy.water_rune": "Water Rune",
+    "block.runomancy.soul_rune": "Soul Rune",
+    "block.runomancy.node": "Runic Torch",
+    "block.runomancy.battery": "Runic Battery",
+
+    "runomancy.contains": "Currently contains",
+    "runomancy.bound": "Bound to",
+    "runomancy.empty": "Empty",
+    "runomancy.blank": "Blank",
+    "runomancy.active": "Active",
+    "runomancy.inactive": "Inactive",
+    "runomancy.press": "Press",
+    "runomancy.shift": "Shift",
+    "runomancy.moreInfo": "For More Info",
+    "runomancy.health": "Health",
+    "runomancy.runic": "Runic",
+    "runomancy.ability": "Ability",
+    "runomancy.power": "Power",
+
+
+    "runomancy.table": "Table of Contents",
+    "runomancy.recipe": "Recipe",
+    "runomancy.viewFormation": "View Formation",
+    "runomancy.next": "Next",
+    "runomancy.back": "Back",
+    "runomancy.cat": "Runes",
+    "runomancy.cat1": "Basic Runomancy",
+    "runomancy.cat2": "Generating Formations",
+    "runomancy.cat3": "Functional Formations",
+    "runomancy.cat4": "Runic Items",
+    "runomancy.cat5": "Runic Blocks",
+
+    "runomancy.runes": "Runes",
+    "runomancy.basics": "Basic Runomancy",
+    "runomancy.generating": "Generating Formations",
+    "runomancy.functional": "Functional Formations",
+    "runomancy.runicitems": "Runic Items",
+    "runomancy.runicblocks": "Runic Blocks",
+    "runomancy.begin": "Beginning Runomancy",
+    "runomancy.chargerRecipe": "Runic Imbuer Recipe",
+
+    "runomancy.runicAxe.entry": "The Runic Axe is an Axe made out of Runic Ingots. The Axe must be charged with Runic Energy to break blocks at a reasonable speed.",
+    "runomancy.runicWand.entry": "The Runic Wand is used for a couple of things.",
+    "runomancy.runicIngot.entry": "Runic Ingots are the building blocks for various items.",
+
+    "runomancy.endRune.entry": "End Runes are the brain of runic formations. Every Runic Formation must have this rune at the center of it.",
+    "runomancy.obsidianRune.entry": "Obsidian Runes are like a wall for runic energy.  These runes are typically used with runes that manipulate items or blocks in the world and provide stability to the constructs.",
+    "runomancy.fireRune.entry": "Lava Runes are firey like their normal block counterparts. These runes can be used in formations to channel fire to allow smelting or burning of items.",
+    "runomancy.earthRune.entry": "Earth Runes are filled with the essence of the earth.  These runes can interact with all living things which can include plants and the world itself.",
+
+    "runomancy.solar.effect": "Sun Absorber",
+    "runomancy.solar.effect.entry": "The Sun Absorber uses the power of the sun to create Runic Energy.  This method of power generation is incredibly slow and not the recommended method.",
+
+    "runomancy.furnacegen.effect": "Rings of Fire",
+    "runomancy.furnacegen.effect.entry": "The Rings of Fire can melt down items into pure Runic Energy.  This technique is not flawless and can result in fires being spawned due to the Runic Energy that leaks out of the formation.",
+
+    "runomancy.repair.effect": "Runic Imbuer",
+    "runomancy.repair.effect.entry": "The Runic Imbuer is used to charge runic items. The Runic Imbuer can also infuse mundane items to create various Runic Items.",
+
+    "runomancy.furnace.effect": "Lava Pit",
+    "runomancy.furnace.effect.entry": "The Lava Pit uses Runic Energy to tap into the heat of the Earth's core. The Lava Pit can cook multiple items at once and does it quickly at a high cost.",
+
+    "runomancy.plant.effect": "Nature Manipulator",
+    "runomancy.plant.effect.entry": "The Nature Manipulator uses the life force of the Earth and Runic Energy to encourage nearby Plant Growth.",
+
+    "runomancy.miner.effect": "Runic Miner",
+    "runomancy.miner.effect.entry": "The Runic Miner uses Runic Energy to to mine out large amounts of land. The Runic Miner will not mine out blocks that have a Rune or Power Torch on top of them to prevent disconnecting it self from the Runic Network."
+}

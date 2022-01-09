@@ -8,9 +8,14 @@ public class CommonProxy
 {
     public static boolean isPlayerHoldingWand()
     {
-        if(Thread.currentThread().getThreadGroup() != SidedThreadGroups.SERVER)
-            return Minecraft.getInstance().player.getHeldItemMainhand().getItem() == ModItems.RUNIC_WAND.get();
+        if(Thread.currentThread().getThreadGroup() == SidedThreadGroups.SERVER)
+            return false;
 
-        return false;
+        return Minecraft.getInstance().player.getHeldItemMainhand().getItem() == ModItems.RUNIC_WAND.get();
+    }
+
+    public static boolean drawParticles()
+    {
+        return isPlayerHoldingWand();
     }
 }

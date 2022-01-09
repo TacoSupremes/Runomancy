@@ -63,10 +63,9 @@ public class TileEndRune extends TileMod implements IPowerTile, ITickableTileEnt
             l.add(BlockPos.fromLong(nbt.getCompound("CC").getLong("L" + i)));
             linkedToDraw.add(nbt.getCompound("CC").getBoolean("B" + i));
         }
+
         nbt.remove("CC");
-
     }
-
 
     public void writeCustomNBT(CompoundNBT nbt)
     {

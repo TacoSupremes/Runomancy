@@ -105,7 +105,7 @@ public class Runomancy
     
    // public static CreativeTabs tab;
 
-    public static Random rand;
+    public static Random rand = new Random();
     /*
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)

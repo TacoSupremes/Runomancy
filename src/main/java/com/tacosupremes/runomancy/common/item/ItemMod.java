@@ -15,9 +15,19 @@ public abstract class ItemMod extends Item implements IModItem
         super(props);
     }
 
+    public ItemMod(int maxDamage)
+    {
+        this(ItemMod.getDefaultProps(maxDamage));
+    }
+
     public static Properties getDefaultProps()
     {
         return new Item.Properties().group(Runomancy.TAB);
+    }
+
+    public static Properties getDefaultProps(int maxDamage)
+    {
+        return new Item.Properties().group(Runomancy.TAB).maxDamage(maxDamage);
     }
 
 }

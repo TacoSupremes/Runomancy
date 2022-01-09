@@ -31,6 +31,8 @@ public class ModItems {
 
 	public static final RegistryObject<Item> RUNIC_WAND = regItem(ItemRunicWand::new);
 
+	public static final RegistryObject<Item> RUNIC_SHIELD = regItem(ItemRunicShield::new);
+
 	public static final RegistryObject<Item> END_RUNE_ITEM = makeBlockItem(ModBlocks.END_RUNE);
 
 	public static final RegistryObject<Item> OBSIDIAN_RUNE_ITEM = makeBlockItem(ModBlocks.OBSIDIAN_RUNE);
