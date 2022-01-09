@@ -1,6 +1,6 @@
 {
     "parent": "item/handheld",
     "textures": {
-        "layer0": "runomancy:items/runicAxe"
+        "layer0": "runomancy:items/runic_shovel"
     }
 }

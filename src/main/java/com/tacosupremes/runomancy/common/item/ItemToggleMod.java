@@ -56,6 +56,9 @@ public abstract class ItemToggleMod extends ItemMod
     @Override
     public ActionResult<ItemStack> onItemRightClick(World w, PlayerEntity player, Hand hand)
     {
+        if(!player.isSneaking())
+            return super.onItemRightClick(w, player, hand);
+
         ItemStack is = player.getHeldItem(hand);
 
         if(!is.hasTag())
@@ -67,6 +70,11 @@ public abstract class ItemToggleMod extends ItemMod
         is.getTag().putBoolean(ACTIVE, !is.getTag().getBoolean(ACTIVE));
 
         return super.onItemRightClick(w, player, hand);
+    }
+
+    public boolean hasEffect(ItemStack stack)
+    {
+        return isActive(stack);
     }
 
     @Override

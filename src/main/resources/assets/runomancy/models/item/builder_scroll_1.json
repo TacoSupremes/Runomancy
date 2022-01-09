@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "runomancy:items/soulGem"
+        "layer0": "runomancy:items/builder_scroll_1"
     }
 }

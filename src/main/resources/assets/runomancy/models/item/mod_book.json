@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "runomancy:items/builderscroll1"
+        "layer0": "runomancy:items/mod_book"
     }
 }

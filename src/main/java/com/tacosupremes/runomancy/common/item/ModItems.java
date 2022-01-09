@@ -4,11 +4,8 @@ import com.tacosupremes.runomancy.common.Runomancy;
 import com.tacosupremes.runomancy.common.block.BlockMod;
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
-import com.tacosupremes.runomancy.common.recipes.ModRecipes;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.item.WallOrFloorItem;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -32,6 +29,8 @@ public class ModItems {
 	public static final RegistryObject<Item> RUNIC_WAND = regItem(ItemRunicWand::new);
 
 	public static final RegistryObject<Item> RUNIC_SHIELD = regItem(ItemRunicShield::new);
+
+	public static final RegistryObject<Item> SOUL_GEM = regItem(ItemSoulGem::new);
 
 	public static final RegistryObject<Item> END_RUNE_ITEM = makeBlockItem(ModBlocks.END_RUNE);
 

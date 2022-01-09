@@ -1,426 +1,120 @@
 package com.tacosupremes.runomancy.common.item;
 
-/*
-import java.util.List;
-import java.util.UUID;
-
-import javax.annotation.Nullable;
-
-import com.mojang.realmsclient.gui.ChatFormatting;
-import com.tacosupremes.runomancy.common.Runomancy;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
-import com.tacosupremes.runomancy.gui.Categories;
-import com.tacosupremes.runomancy.gui.IPageGiver;
-import com.tacosupremes.runomancy.gui.ItemPage;
-import com.tacosupremes.runomancy.gui.Page;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockFence;
-import net.minecraft.block.BlockLiquid;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityList;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.IEntityLivingData;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.stats.StatList;
-import net.minecraft.tileentity.MobSpawnerBaseLogic;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityMobSpawner;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
+import net.minecraft.item.ItemUseContext;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.translation.I18n;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.registries.ForgeRegistries;
 
-public class ItemSoulGem extends ItemMod implements IPageGiver {
+import javax.annotation.Nullable;
+import java.util.List;
 
-	public ItemSoulGem() {
-		super("soulGem");
-		
-	}
+public class ItemSoulGem extends ItemMod
+{
+    public static final String ID = "id";
+    public static final String ENTITY_TAG = "EntityTag";
+    public static final String NAME = "name";
+    public static final String ENAME = "CUSTOMNAME";
 
-	@Override
-	public Page getPage() {
+    @Override
+    public String getItemRegistryName()
+    {
+        return "soul_gem";
+    }
 
-		return new ItemPage(new ItemStack(this));
+    @Override
+    public ActionResultType onItemUse(ItemUseContext context)
+    {
+        ItemStack is = context.getItem();
 
-	}
+        World w = context.getWorld();
 
-	@Override
-	public Categories getCategories() {
+        BlockPos pos = context.getPos().add(context.getFace().getDirectionVec());
 
-		return null;
+        if(hasEntity(is))
+        {
+            String[] id = is.getTag().getString(ID).split(":");
 
-	}
+            Entity e = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(id[0], id[1])).create(w);
 
-	@Override
-	public boolean hasNormalRecipe() {
+            e.deserializeNBT(is.getTag().getCompound(ENTITY_TAG));
 
-		return true;
+            e.setUniqueId(MathHelper.getRandomUUID(w.rand));
 
-	}
+            e.setLocationAndAngles((double) pos.getX() + 0.5D, (double) pos.getY(), (double) pos.getZ() + 0.5D, MathHelper.wrapDegrees(w.rand.nextFloat() * 360.0F), 0.0F);
 
-	@Override
-	public Page getSubPages() {
+            w.addEntity(e);
 
-		return null;
+            is.setTag(new CompoundNBT());
+        }
+        else
+            return ActionResultType.PASS;
 
-	}
+        return super.onItemUse(context);
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack is, EntityPlayer player, List<String> l, boolean advanced) {
-		
-		if(!is.hasTagCompound() || !is.getTagCompound().hasKey("EntityTag")){
-			l.add(I18n.translateToLocal(LibMisc.MODID + "." + "empty"));
-			return;
-		}
-		
-		EntityLiving e = (EntityLiving)EntityList.createEntityFromNBT(is.getSubCompound("EntityTag"), player.world);
-		e.readFromNBT(is.getSubCompound("EntityTag"));
-		
-		String n = e.getName();
-	
-		l.add(I18n.translateToLocal("runomancy.contains") + " : "+(e.hasCustomName() ? e.getCustomNameTag() + " (" + n + ")" : n));
-		
-	if(Runomancy.proxy.isShiftDown())
-		l.add(I18n.translateToLocal("runomancy.health")+" : "+ e.getHealth() + " / " + e.getMaxHealth());
-	else
-		l.add(I18n.translateToLocal("runomancy.press")+" "+ChatFormatting.GREEN+I18n.translateToLocal("runomancy." + "shift")+" "+ChatFormatting.GRAY+I18n.translateToLocal("runomancy." + "moreInfo"));
-		
-	}
-	
-	
-	 @Override
-	public boolean itemInteractionForEntity(ItemStack is, EntityPlayer playerIn, EntityLivingBase e,
-			EnumHand hand) {
-		 
-		 if(!is.hasTagCompound())
-				is.setTagCompound(new NBTTagCompound());
-						
-	
-		   
-		 if(!is.getTagCompound().hasKey("EntityTag")){
-			applyEntityIdToItemStack(is, EntityList.getKey(e));
-			
-			
-			NBTTagCompound nbt = new NBTTagCompound();
-			
-			nbt.setString("id", EntityList.getKey(e).toString());
-		
-			is.getTagCompound().setTag("EntityTag", nbt);
-			e.setDead();
-			
-		 }
-			
-		return super.itemInteractionForEntity(is, playerIn, e, hand);
-		
-	}
+    private boolean hasEntity(ItemStack is)
+    {
+        return is.hasTag() && is.getTag().contains(ID);
+    }
 
-	  public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
-	    {
-	      
+    public boolean hasEffect(ItemStack stack) {
+        return hasEntity(stack);
+    }
 
-	      player.getHeldItem(hand).getItem().updateItemStackNBT(player.getActiveItemStack().getTagCompound());
-	        if (worldIn.isRemote)
-	        {
-	        	
-	            return EnumActionResult.SUCCESS;
-	        }
-	        else if (!player.canPlayerEdit(pos.offset(facing), facing, player.getActiveItemStack()))
-	        {
-	            return EnumActionResult.FAIL;
-	        }
-	        else
-	        {
-	            IBlockState iblockstate = worldIn.getBlockState(pos);
-	            Block block = iblockstate.getBlock();
+    @Override
+    public boolean itemInteractionForEntity(ItemStack is, PlayerEntity player, LivingEntity e, Hand hand)
+    {
+        if(!is.hasTag())
+            is.setTag(new CompoundNBT());
 
-	            if (block == Blocks.MOB_SPAWNER)
-	            {
-	                TileEntity tileentity = worldIn.getTileEntity(pos);
+        if(!hasEntity(is))
+        {
+            is.getTag().putString(ID, EntityType.getKey(e.getType()).toString());
+            is.getTag().put(ENTITY_TAG, e.serializeNBT());
+            is.getTag().putString(NAME, e.getName().getString());
 
-	                if (tileentity instanceof TileEntityMobSpawner)
-	                {
-	                    MobSpawnerBaseLogic mobspawnerbaselogic = ((TileEntityMobSpawner)tileentity).getSpawnerBaseLogic();
-	                    mobspawnerbaselogic.setEntityId(getNamedIdFrom(player.getActiveItemStack()));
-	                    tileentity.markDirty();
-	                    worldIn.notifyBlockUpdate(pos, iblockstate, iblockstate, 3);
+            if(e.hasCustomName())
+                is.getTag().putString(ENAME, e.getType().getName().getString());
 
-	                    if (!player.capabilities.isCreativeMode)
-	                    {
-	                      player.getHeldItem(hand).shrink(1);
-	                    }
+            e.remove(false);
+        }
 
-	                    return EnumActionResult.SUCCESS;
-	                }
-	            }
+        return super.itemInteractionForEntity(is, player, e, hand);
+    }
 
-	            BlockPos blockpos = pos.offset(facing);
-	            double d0 = this.getYOffset(worldIn, blockpos);
-	            Entity entity = spawnCreature(worldIn, getNamedIdFrom(player.getActiveItemStack()), (double)blockpos.getX() + 0.5D, (double)blockpos.getY() + d0, (double)blockpos.getZ() + 0.5D);
+    @Override
+    public void addInformation(ItemStack is, @Nullable World w, List<ITextComponent> tooltip, ITooltipFlag flagIn)
+    {
+        if(hasEntity(is))
+        {
+            String text = is.getTag().getString(NAME);
 
-	            if (entity != null)
-	            {
-	                if (entity instanceof EntityLivingBase && player.getActiveItemStack().hasDisplayName())
-	                {
-	                    entity.setCustomNameTag(player.getActiveItemStack().getDisplayName());
-	                }
+            if(is.getTag().contains(ENAME))
+                text += String.format(" (%s)", is.getTag().getString(ENAME));
 
-	                applyItemEntityDataToEntity(worldIn, player, player.getActiveItemStack(), entity);
-
-	                if (!player.capabilities.isCreativeMode)
-	                {
-	                  player.getActiveItemStack().getTagCompound().removeTag("EntityTag");
-	                }
-	            }
-
-	            return EnumActionResult.SUCCESS;
-	        }
-	    }
-
-	    protected double getYOffset(World p_190909_1_, BlockPos p_190909_2_)
-	    {
-	        AxisAlignedBB axisalignedbb = (new AxisAlignedBB(p_190909_2_)).addCoord(0.0D, -1.0D, 0.0D);
-	        List<AxisAlignedBB> list = p_190909_1_.getCollisionBoxes((Entity)null, axisalignedbb);
-
-	        if (list.isEmpty())
-	        {
-	            return 0.0D;
-	        }
-	        else
-	        {
-	            double d0 = axisalignedbb.minY;
-
-	            for (AxisAlignedBB axisalignedbb1 : list)
-	            {
-	                d0 = Math.max(axisalignedbb1.maxY, d0);
-	            }
-
-	            return d0 - (double)p_190909_2_.getY();
-	        }
-	    }
-
-	    /**
-	     * Applies the data in the EntityTag tag of the given ItemStack to the given Entity.
-
-	    public static void applyItemEntityDataToEntity(World entityWorld, @Nullable EntityPlayer player, ItemStack stack, @Nullable Entity targetEntity)
-	    {
-	        MinecraftServer minecraftserver = entityWorld.getMinecraftServer();
-
-	        if (minecraftserver != null && targetEntity != null)
-	        {
-	            NBTTagCompound nbttagcompound = stack.getTagCompound();
-
-	            if (nbttagcompound != null && nbttagcompound.hasKey("EntityTag", 10))
-	            {
-	                if (!entityWorld.isRemote && targetEntity.ignoreItemEntityData() && (player == null || !minecraftserver.getPlayerList().canSendCommands(player.getGameProfile())))
-	                {
-	                    return;
-	                }
-
-	                NBTTagCompound nbttagcompound1 = targetEntity.writeToNBT(new NBTTagCompound());
-	                UUID uuid = targetEntity.getUniqueID();
-	                nbttagcompound1.merge(nbttagcompound.getCompoundTag("EntityTag"));
-	                targetEntity.setUniqueId(uuid);
-	                targetEntity.readFromNBT(nbttagcompound1);
-	            }
-	        }
-	    }
-
-	    /**
-	     * Called when the equipped item is right clicked.
-
-	    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand handIn)
-	    {
-	     
-
-	        if (worldIn.isRemote)
-	        {
-	            return new ActionResult(EnumActionResult.PASS, player.getActiveItemStack());
-	        }
-	        else
-	        {
-	            RayTraceResult raytraceresult = this.rayTrace(worldIn, player, true);
-
-	            if (raytraceresult != null && raytraceresult.typeOfHit == RayTraceResult.Type.BLOCK)
-	            {
-	                BlockPos blockpos = raytraceresult.getBlockPos();
-
-	                if (!(worldIn.getBlockState(blockpos).getBlock() instanceof BlockLiquid))
-	                {
-	                    return new ActionResult(EnumActionResult.PASS, player.getActiveItemStack());
-	                }
-	                else if (worldIn.isBlockModifiable(player, blockpos) && player.canPlayerEdit(blockpos, raytraceresult.sideHit, player.getActiveItemStack()))
-	                {
-	                    Entity entity = spawnCreature(worldIn, getNamedIdFrom(player.getActiveItemStack()), (double)blockpos.getX() + 0.5D, (double)blockpos.getY() + 0.5D, (double)blockpos.getZ() + 0.5D);
-
-	                    if (entity == null)
-	                    {
-	                        return new ActionResult(EnumActionResult.PASS, player.getActiveItemStack());
-	                    }
-	                    else
-	                    {
-	                        if (entity instanceof EntityLivingBase && player.getActiveItemStack().hasDisplayName())
-	                        {
-	                            entity.setCustomNameTag(player.getActiveItemStack().getDisplayName());
-	                        }
-
-	                        applyItemEntityDataToEntity(worldIn, player, player.getActiveItemStack(), entity);
-
-	                        if (!player.capabilities.isCreativeMode)
-	                        {
-	                            player.getActiveItemStack().getTagCompound().removeTag("EntityTag");
-	                        }
-
-	                        player.addStat(StatList.getObjectUseStats(this));
-	                        return new ActionResult(EnumActionResult.SUCCESS, player.getActiveItemStack());
-	                    }
-	                }
-	                else
-	                {
-	                    return new ActionResult(EnumActionResult.FAIL, player.getActiveItemStack());
-	                }
-	            }
-	            else
-	            {
-	                return new ActionResult(EnumActionResult.PASS, player.getActiveItemStack());
-	            }
-	        }
-	    }
-
-
-	     * Spawns the creature specified by the egg's type in the location specified by the last three parameters.
-	     * Parameters: world, entityID, x, y, z.
-
-	    @Nullable
-	    public static Entity spawnCreature(World worldIn, @Nullable ResourceLocation entityID, double x, double y, double z)
-	    {
-	        if (entityID != null && EntityList.ENTITY_EGGS.containsKey(entityID))
-	        {
-	            Entity entity = null;
-
-	            for (int i = 0; i < 1; ++i)
-	            {
-	                entity = EntityList.createEntityByIDFromName(entityID, worldIn);
-
-	                if (entity instanceof EntityLiving)
-	                {
-	                    EntityLiving entityliving = (EntityLiving)entity;
-	                    entity.setLocationAndAngles(x, y, z, MathHelper.wrapDegrees(worldIn.rand.nextFloat() * 360.0F), 0.0F);
-	           
-	                    entityliving.rotationYawHead = entityliving.rotationYaw;
-	                    entityliving.renderYawOffset = entityliving.rotationYaw;
-	                    entityliving.onInitialSpawn(worldIn.getDifficultyForLocation(new BlockPos(entityliving)), (IEntityLivingData)null);
-	                    worldIn.spawnEntity(entity);
-	                    entityliving.playLivingSound();
-	                }
-	            }
-
-	            return entity;
-	        }
-	        else
-	        {
-	            return null;
-	        }
-	    }
-
-	    /**
-	     * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
-
-	    @SideOnly(Side.CLIENT)
-	    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems)
-	    {
-	    	
-	    	subItems.add(new ItemStack(this));
-	        for (EntityList.EntityEggInfo entitylist$entityegginfo : EntityList.ENTITY_EGGS.values())
-	        {
-	            ItemStack itemstack = new ItemStack(itemIn, 1);
-	            applyEntityIdToItemStack(itemstack, entitylist$entityegginfo.spawnedID);
-	            subItems.add(itemstack);
-	        }
-	    }
-
-	    /**
-	     * APplies the given entity ID to the given ItemStack's NBT data.
-
-	    @SideOnly(Side.CLIENT)
-	    public static void applyEntityIdToItemStack(ItemStack stack, ResourceLocation entityId)
-	    {
-	        NBTTagCompound nbttagcompound = stack.hasTagCompound() ? stack.getTagCompound() : new NBTTagCompound();
-	        NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-	        nbttagcompound1.setString("id", entityId.toString());
-	        nbttagcompound.setTag("EntityTag", nbttagcompound1);
-	        stack.setTagCompound(nbttagcompound);
-	    }
-	    
-	   
-	    public static void applyEntityIdToItemStacks(ItemStack stack, ResourceLocation entityId)
-	    {
-	        NBTTagCompound nbttagcompound = stack.hasTagCompound() ? stack.getTagCompound() : new NBTTagCompound();
-	        NBTTagCompound nbttagcompound1 = new NBTTagCompound();
-	        nbttagcompound1.setString("id", entityId.toString());
-	        nbttagcompound.setTag("EntityTag", nbttagcompound1);
-	        stack.setTagCompound(nbttagcompound);
-	    }
-
-	    @Nullable
-	    public static ResourceLocation getNamedIdFrom(ItemStack p_190908_0_)
-	    {
-	        NBTTagCompound nbttagcompound = p_190908_0_.getTagCompound();
-
-	        if (nbttagcompound == null)
-	        {
-	            return null;
-	        }
-	        else if (!nbttagcompound.hasKey("EntityTag", 10))
-	        {
-	            return null;
-	        }
-	        else
-	        {
-	            NBTTagCompound nbttagcompound1 = nbttagcompound.getCompoundTag("EntityTag");
-
-	            if (!nbttagcompound1.hasKey("id", 8))
-	            {
-	                return null;
-	            }
-	            else
-	            {
-	                String s = nbttagcompound1.getString("id");
-	                ResourceLocation resourcelocation = new ResourceLocation(s);
-
-	                if (!s.contains(":"))
-	                {
-	                    nbttagcompound1.setString("id", resourcelocation.toString());
-	                }
-
-	                return resourcelocation;
-	            }
-	        }
-	    }
-	
-	
-
-	
-	 
-
+            tooltip.add(new StringTextComponent(I18n.format("runomancy.contains") + ": " + text).applyTextStyle(TextFormatting.GRAY));
+        }
+        else
+        {
+            ITextComponent comp = new TranslationTextComponent(LibMisc.MODID + "." + "empty").applyTextStyle(TextFormatting.GRAY);
+            tooltip.add(comp);
+        }
+    }
 }
-*/

@@ -24,7 +24,8 @@ public class ItemRunicShield extends ItemToggleMod
 	@Override
 	public void activeTick(ItemStack is, World w, Entity e, int itemSlot, boolean isSelected)
 	{
-		int r = 6;
+		int r = 4;
+
 		List<Entity> l = w.getEntitiesInAABBexcluding(e, new AxisAlignedBB(e.getPosition().add(-r, -r, -r), e.getPosition().add(r, r, r)), shouldReflect);
 
 		for (Entity e2 : l)
@@ -33,7 +34,7 @@ public class ItemRunicShield extends ItemToggleMod
 			{
 				BlockPos bp = e2.getPosition().subtract(e.getPosition());
 
-				e2.setMotion(bp.getX() * 0.75D, e2.getMotion().y, bp.getZ() * 0.75D);
+				e2.setMotion(bp.getX() * 0.75D, e2.getMotion().y * 0.75D, bp.getZ() * 0.75D);
 				is.setDamage(is.getDamage() + 2);
 
 				w.addParticle(ParticleTypes.CRIT, e2.getPosX() + Runomancy.rand.nextGaussian() / 4 - Runomancy.rand.nextGaussian() / 4, e2.getPosY() + 1, e2.getPosZ() + Runomancy.rand.nextGaussian() / 4 - Runomancy.rand.nextGaussian() / 4, 0, 0, 0);

@@ -1,7 +1,7 @@
 {
    "parent": "item/handheld",
     "textures": {
-        "layer0": "runomancy:items/runicWand"
+        "layer0": "runomancy:items/runic_wand"
         
     
     
