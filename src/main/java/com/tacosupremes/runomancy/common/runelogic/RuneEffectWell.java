@@ -11,10 +11,8 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class RuneEffectWell implements IFunctionalRuneEffect {
-
-	
-	
+public class RuneEffectWell implements IFunctionalRuneEffect
+{
 	@Override
 	public void doEffect(World w, BlockPos pos, TileEndRune te, CompoundNBT nbt)
 	{

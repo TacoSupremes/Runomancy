@@ -16,15 +16,11 @@ import net.minecraftforge.common.ForgeHooks;
 
 import java.util.List;
 
-public class RuneEffectFurnaceGen implements IRuneEffect {
-
-	
-	
+public class RuneEffectFurnaceGen implements IRuneEffect
+{
 	@Override
-	public void doEffect(World w, BlockPos pos, TileEndRune te, CompoundNBT nbt) {
-		
-		
-		
+	public void doEffect(World w, BlockPos pos, TileEndRune te, CompoundNBT nbt)
+	{
 		if(!nbt.contains("FGTL"))
 			nbt.putInt("FGTL", 0);
 		

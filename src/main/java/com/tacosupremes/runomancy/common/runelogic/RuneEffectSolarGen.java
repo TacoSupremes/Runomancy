@@ -23,7 +23,7 @@ public class RuneEffectSolarGen implements IRuneEffect {
 		float f1 = f < (float)Math.PI ? 0.0F : ((float)Math.PI * 2F);
 		f = f + (f1 - f) * 0.2F;
 		i = Math.round((float)i * MathHelper.cos(f));
-		i = MathHelper.clamp(i, 0, 15);
+		i = MathHelper.clamp(i, 0, 10);
       
 		te.addPower(i);
 	}
@@ -67,9 +67,8 @@ public class RuneEffectSolarGen implements IRuneEffect {
 	}
 	
 	@Override
-	public String getName() {
-		
+	public String getName()
+	{
 		return LibMisc.MODID + ".solar.effect";
 	}
-
 }

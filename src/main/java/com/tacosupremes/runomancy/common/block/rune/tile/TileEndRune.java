@@ -89,7 +89,6 @@ public class TileEndRune extends TileMod implements IPowerTile, ITickableTileEnt
 
     }
 
-
     @Override
     public void tick()
     {
@@ -248,10 +247,7 @@ public class TileEndRune extends TileMod implements IPowerTile, ITickableTileEnt
 
             }
 
-
             RuneFormations.effects.get(currentEffect).doEffect(this.getWorld(), this.getPos(), this, this.rEffect);
-
-
         }
 
         for (int i = 0; i < l.size(); i++) {

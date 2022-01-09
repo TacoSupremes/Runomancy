@@ -63,13 +63,7 @@ public class Runomancy
 	{
 		// some preinit code
 
-		RuneFormations.addEffect(new RuneEffectRepair());
-		RuneFormations.addEffect(new RuneEffectSolarGen());
-		RuneFormations.addEffect(new RuneEffectFurnace());
-		RuneFormations.addEffect(new RuneEffectPlantGrower());
-		RuneFormations.addEffect(new RuneEffectFurnaceGen());
-		RuneFormations.addEffect(new RuneEffectMiner());
-		RuneFormations.addEffect(new RuneEffectWell());
+		RuneFormations.addEffects();
 		ModRecipes.addChargerRecipes();
 		//LOGGER.info("HELLO FROM PREINIT");
 		//LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
