@@ -23,7 +23,7 @@ public class BlockEarthRune extends BlockRune
         this.setDefaultState(this.stateContainer.getBaseState().with(mode, 0));
     }
 
-    public static final IntegerProperty mode = IntegerProperty.create("mode",0, 16);
+    public static final IntegerProperty mode = IntegerProperty.create("mode",0, ModBlocks.earthCount);
 
     @Override
     int getModeCount()

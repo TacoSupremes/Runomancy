@@ -13,7 +13,6 @@ public class BlockObsidianRune extends BlockRune
 {
 	public static final IntegerProperty mode = IntegerProperty.create("mode", 0, ModBlocks.obsidianCount);
 
-
     public BlockObsidianRune()
     {
         super();
@@ -42,7 +41,6 @@ public class BlockObsidianRune extends BlockRune
     {
         return state.get(mode);
     }
-
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)

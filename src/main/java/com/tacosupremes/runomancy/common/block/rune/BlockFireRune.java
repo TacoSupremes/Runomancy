@@ -8,7 +8,7 @@ import net.minecraft.state.StateContainer;
 
 public class BlockFireRune extends BlockRune
 {
-    public static final IntegerProperty mode = IntegerProperty.create("mode",0, 16);
+    public static final IntegerProperty mode = IntegerProperty.create("mode",0, ModBlocks.fireCount);
 
     @Override
     int getModeCount()

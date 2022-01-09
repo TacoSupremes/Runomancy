@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 
 public class BlockWaterRune extends BlockRune
 {
-    public static final IntegerProperty mode = IntegerProperty.create("mode",0, 16);
+    public static final IntegerProperty mode = IntegerProperty.create("mode",0, ModBlocks.waterCount);
 
     public BlockWaterRune()
     {
@@ -57,7 +57,6 @@ public class BlockWaterRune extends BlockRune
     {
         return state.get(mode);
     }
-
 
     @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder)

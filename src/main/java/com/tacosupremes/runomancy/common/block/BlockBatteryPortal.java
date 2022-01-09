@@ -19,8 +19,6 @@ public class BlockBatteryPortal extends BlockMod
     public static BlockState GREEN;
     public static BlockState BLUE;
 
-
-
     public BlockBatteryPortal()
     {
         super(Properties.create(Material.PORTAL));
@@ -43,12 +41,9 @@ public class BlockBatteryPortal extends BlockMod
         builder.add(color);
     }
 
-
-
     private enum ColorEnum implements IStringSerializable
     {
-        purple, red, green, blue
-        ;
+        purple, red, green, blue;
 
         @Override
         public String getName()

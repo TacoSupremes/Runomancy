@@ -8,7 +8,7 @@ import net.minecraft.state.StateContainer;
 
 public class BlockSoulRune extends BlockRune
 {
-    public static final IntegerProperty mode = IntegerProperty.create("mode",0, 16);
+    public static final IntegerProperty mode = IntegerProperty.create("mode",0, ModBlocks.soulCount);
 
     public BlockSoulRune()
     {

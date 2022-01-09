@@ -24,14 +24,13 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class ModBlocks {
-
+public class ModBlocks
+{
 	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, LibMisc.MODID);
 
 	public static final DeferredRegister<TileEntityType<?>> TILES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, LibMisc.MODID);
 
 	// blocks
-
 	public static final RegistryObject<BlockMod> END_RUNE = regBlock(BlockEndRune::new);
 
 	public static final RegistryObject<TileEntityType<?>> TILE_END_RUNE = regTile(TileEndRune::new, ModBlocks.END_RUNE);
@@ -56,8 +55,6 @@ public class ModBlocks {
 
 	public static final RegistryObject<TileEntityType<TilePowerStorage>> TILE_BATTERY = TILES.register(ModBlocks.BATTERY.getId().getPath(), () -> TileEntityType.Builder.create(TilePowerStorage::new, ModBlocks.BATTERY.get()).build(null));
 
-	//public static List<Block> blocks = new ArrayList<Block>();
-	
 	public static List<Block> runes = new ArrayList<Block>();
 
 	public static Block powerTorch;
@@ -70,9 +67,7 @@ public class ModBlocks {
 	public static final int endRuneCount = RuneFormations.effects.size();
 	public static final int fireCount = 6;
 	public static final int earthCount = 7;
-
 	public static final int waterCount = 5;
-
 	public static final int soulCount = 4;
 
 	/*
@@ -107,7 +102,4 @@ public class ModBlocks {
 	{
 		return  BLOCKS.register(sup.get().getName(), sup);
 	}
-	
-	
-
 }

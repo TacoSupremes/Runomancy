@@ -29,12 +29,12 @@ public class BlockEndRune extends BlockContainerRune
 	}
 
 	@Override
-	public void onReplaced(BlockState state, World w, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (state.getBlock() != newState.getBlock()) {
-
+	public void onReplaced(BlockState state, World w, BlockPos pos, BlockState newState, boolean isMoving)
+	{
+		if (state.getBlock() != newState.getBlock())
+		{
 			TileEndRune te = (TileEndRune)w.getTileEntity(pos);
 			te.destroy();
-
 
 			List<BlockPos> bpl = ((IPowerTile)w.getTileEntity(pos)).getNodeList();
 
@@ -47,11 +47,8 @@ public class BlockEndRune extends BlockContainerRune
 				//k.updateLinkedBlocks(pos);
 				k.getNodeList().remove(pos);
 			}
-
 		}
 	}
-
-
 
 	@Override
 	int getModeCount()
@@ -82,7 +79,6 @@ public class BlockEndRune extends BlockContainerRune
 	{
 		builder.add(mode);
 	}
-
 
 	@Override
 	public String getName()
