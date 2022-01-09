@@ -21,16 +21,13 @@ import javax.annotation.Nullable;
 
 public class BlockWaterRune extends BlockRune
 {
-
     public static final IntegerProperty mode = IntegerProperty.create("mode",0, 16);
-
 
     public BlockWaterRune()
     {
         super();
         this.setDefaultState(this.stateContainer.getBaseState().with(mode, 0));
     }
-
 
     public BlockWaterRune(Properties properties)
     {

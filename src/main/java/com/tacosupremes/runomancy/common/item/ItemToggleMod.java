@@ -19,17 +19,16 @@ import java.util.List;
 
 public abstract class ItemToggleMod extends ItemMod
 {
-
     public static final String ACTIVE = "ACTIVE";
 
     public ItemToggleMod(int maxDamage)
     {
-        super(maxDamage);
+        this(ItemMod.getDefaultProps().maxStackSize(1).maxDamage(maxDamage));
     }
 
     public ItemToggleMod()
     {
-        this(ItemMod.getDefaultProps());
+        this(ItemMod.getDefaultProps().maxStackSize(1));
     }
 
     public ItemToggleMod(Properties props)
