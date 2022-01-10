@@ -1,7 +1,7 @@
 {
     "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
     "textures": {
-        "0": "minecraft:block/water_still"
+        "0": "runomancy:blocks/water_still"
     },
     "elements": [
         {

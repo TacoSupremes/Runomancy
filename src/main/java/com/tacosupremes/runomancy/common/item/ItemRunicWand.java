@@ -22,6 +22,11 @@ import net.minecraft.world.World;
 
 public class ItemRunicWand extends ItemMod
 {
+	public ItemRunicWand()
+	{
+		super(ItemMod.getDefaultProps().maxStackSize(1));
+	}
+
 	@Override
 	public String getItemRegistryName()
 	{

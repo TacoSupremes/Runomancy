@@ -111,7 +111,7 @@ public class RuneEffectSoulGen implements IRuneEffect
         {
             nbt.put(ITEM, is.getTag());
             player.setHeldItem(handIn, ItemStack.EMPTY);
-            return ActionResultType.SUCCESS;
+            return ActionResultType.CONSUME;
         }
         else if(nbt.getBoolean(CLAIM))
         {
@@ -120,7 +120,6 @@ public class RuneEffectSoulGen implements IRuneEffect
                 player.setHeldItem(Hand.MAIN_HAND, new ItemStack(ModItems.SOUL_GEM.get(), 1));
                 nbt.putBoolean(CLAIM, false);
                 nbt.remove(ITEM);
-
                 return ActionResultType.SUCCESS;
             }
         }
