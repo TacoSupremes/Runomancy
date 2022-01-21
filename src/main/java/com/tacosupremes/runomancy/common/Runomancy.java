@@ -62,7 +62,6 @@ public class Runomancy
 	private void setup(final FMLCommonSetupEvent event)
 	{
 		// some preinit code
-
 		RuneFormations.addEffects();
 		ModRecipes.addChargerRecipes();
 		//LOGGER.info("HELLO FROM PREINIT");
@@ -71,18 +70,14 @@ public class Runomancy
 
 	private void doClientStuff(final FMLClientSetupEvent event)
 	{
-		// do something that can only be done on the client
-	//	RenderTypeLookup.setRenderLayer(ModBlocks.RAIN_DETECTOR.get(), RenderType.getCutout());
-
-	//	ClientRegistry.bindTileEntityRenderer(ModBlocks.TILE_BOUND_ENDER_CHEST.get(), TileBoundEnderChestRenderer::new);
-		// LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
 		WaterColorHandler.registerBlockColors();
 		GrassColorHandler.registerBlockColors();
 		RenderTypeLookup.setRenderLayer(ModBlocks.NODE.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.BATTERY.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.BATTERY_INSIDE.get(), RenderType.getCutout());
-		ClientRegistry.bindTileEntityRenderer(ModBlocks.TILE_BATTERY.get(), TileBatteryRenderer::new);
 
+		ClientRegistry.bindTileEntityRenderer(ModBlocks.TILE_BATTERY.get(), TileBatteryRenderer::new);
+		ClientRegistry.bindTileEntityRenderer(ModBlocks.TILE_END_RUNE.get(), TileEndRuneRenderer::new);
 	}
 
 	private void enqueueIMC(final InterModEnqueueEvent event)
@@ -100,54 +95,14 @@ public class Runomancy
    // public static CreativeTabs tab;
 
     public static Random rand = new Random();
-    /*
-    @EventHandler
-    public void preInit(FMLPreInitializationEvent event)
-    {
-    	tab = new RTab();	
-  
-    	rand = new Random();
-    	
-    	ModItems.preInit();
-    	RuneFormations.addEffect(new RuneEffectRepair());
-    	RuneFormations.addEffect(new RuneEffectSolarGen());
-    	RuneFormations.addEffect(new RuneEffectFurnace());
-    	RuneFormations.addEffect(new RuneEffectPlantGrower());
-    	RuneFormations.addEffect(new RuneEffectFurnaceGen());
-    	RuneFormations.addEffect(new RuneEffectMiner());
-    	RuneFormations.addEffect(new RuneEffectWell());
-    //	RuneFormations.addEffect(new RuneEffectNetherGen());
-    	ModBlocks.preInit();
-		
-    }
-    
-    */
 
-
-    /*
-    @EventHandler
-    public void postInit(FMLPostInitializationEvent event)
-    {
-    	ModRecipes.postInit();
-    	LibMisc.Ores.postInit();
-    	Pages.postInit();
-    	RuneFormations.makePages();
-    	
-   
-		
-    }
-    */
-
-    
-    public static int randInt(int max, int exclude){
-    	
+    public static int randInt(int max, int exclude)
+	{
     	int i = rand.nextInt(max);
     	
     	while(i == exclude)
     		i = rand.nextInt(max);
-    	
-    		
-    	
+
     	return i;
     }
 
@@ -171,5 +126,4 @@ public class Runomancy
 			return new ItemStack(ModBlocks.END_RUNE.get());
 		}
 	};
-
 }

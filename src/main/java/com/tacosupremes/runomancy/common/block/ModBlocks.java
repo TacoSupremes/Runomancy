@@ -33,7 +33,7 @@ public class ModBlocks
 	// blocks
 	public static final RegistryObject<BlockMod> END_RUNE = regBlock(BlockEndRune::new);
 
-	public static final RegistryObject<TileEntityType<?>> TILE_END_RUNE = regTile(TileEndRune::new, ModBlocks.END_RUNE);
+	public static final RegistryObject<TileEntityType<TileEndRune>> TILE_END_RUNE = TILES.register(ModBlocks.END_RUNE.getId().getPath(), () -> TileEntityType.Builder.create(TileEndRune::new, ModBlocks.END_RUNE.get()).build(null));
 
 	public static final RegistryObject<BlockMod> OBSIDIAN_RUNE = regBlock(BlockObsidianRune::new);
 

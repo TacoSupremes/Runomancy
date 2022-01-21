@@ -1,13 +1,18 @@
 package com.tacosupremes.runomancy.common.runelogic;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
 import com.tacosupremes.runomancy.common.item.ItemSoulGem;
 import com.tacosupremes.runomancy.common.item.ModItems;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -17,6 +22,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class RuneEffectSoulGen implements IRuneEffect
 {
@@ -34,8 +41,8 @@ public class RuneEffectSoulGen implements IRuneEffect
 
                 if(e.getHealth() >= 0.5F)
                 {
-                    e.attackEntityFrom(DamageSource.OUT_OF_WORLD, 0.5F);
                     e.setPosition(pos.getX() + 0.5F, pos.getY() + 0.2F + 1, pos.getZ() + 0.5F);
+                    e.setHealth(e.getHealth() - 0.5F);
                     te.addPower(50);
                     ItemSoulGem.entityToNBT(nbt.getCompound(ITEM), e);
                     System.out.println("\n\n" + "HP:ENTITY" + e.getHealth() + "\n\n");
@@ -125,5 +132,25 @@ public class RuneEffectSoulGen implements IRuneEffect
         }
 
         return ActionResultType.PASS;
+    }
+
+    @Override
+    public boolean hasSpecialRender()
+    {
+        return true;
+    }
+
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public void render(TileEndRune tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedLightIn1, CompoundNBT nbt)
+    {
+        if (nbt.contains(ITEM))
+        {
+            LivingEntity e = ItemSoulGem.getEntity(nbt.getCompound(ITEM), Minecraft.getInstance().world);
+
+            EntityRenderer s = Minecraft.getInstance().getRenderManager().renderers.get(e.getType());
+
+            s.render(e,e.rotationYaw, partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+        }
     }
 }
