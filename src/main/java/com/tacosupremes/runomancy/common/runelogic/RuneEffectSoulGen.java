@@ -42,10 +42,10 @@ public class RuneEffectSoulGen implements IRuneEffect
                 if(e.getHealth() >= 0.5F)
                 {
                     e.setPosition(pos.getX() + 0.5F, pos.getY() + 0.2F + 1, pos.getZ() + 0.5F);
-                    e.setHealth(e.getHealth() - 0.5F);
-                    te.addPower(50);
+                   // e.setHealth(e.getHealth() - 0.5F);
+                    //te.addPower(50);
                     ItemSoulGem.entityToNBT(nbt.getCompound(ITEM), e);
-                    System.out.println("\n\n" + "HP:ENTITY" + e.getHealth() + "\n\n");
+                    //System.out.println("\n\n" + "HP:ENTITY" + e.getHealth() + "\n\n");
                 }
                 else
                 {
@@ -150,7 +150,10 @@ public class RuneEffectSoulGen implements IRuneEffect
 
             EntityRenderer s = Minecraft.getInstance().getRenderManager().renderers.get(e.getType());
 
-            s.render(e,e.rotationYaw, partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+            matrixStackIn.push();
+            matrixStackIn.translate(0,1.25D,0);
+            s.render(e, e.prevRotationYaw + 0.1F, partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+            matrixStackIn.pop();
         }
     }
 }

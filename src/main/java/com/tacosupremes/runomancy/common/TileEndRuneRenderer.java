@@ -29,6 +29,11 @@ public class TileEndRuneRenderer extends TileEntityRenderer<TileEndRune>
         CompoundNBT nbt = tileEntityIn.rEffect;
 
         if(effect.hasSpecialRender())
+        {
+            matrixStackIn.push();
+            matrixStackIn.translate(0.5D,0,0.5D);
             effect.render(tileEntityIn, partialTicks, matrixStackIn, bufferIn, combinedLightIn, combinedLightIn, nbt);
+            matrixStackIn.pop();
+        }
     }
 }
