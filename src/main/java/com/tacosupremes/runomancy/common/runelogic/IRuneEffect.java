@@ -44,7 +44,7 @@ public interface IRuneEffect {
 	default boolean hasSpecialRender(){ return false; }
 
 	@OnlyIn(Dist.CLIENT)
-	default void render(TileEndRune tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedLightIn1, CompoundNBT nbt){}
+	default void render(TileEndRune tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedOverlayIn, CompoundNBT nbt){}
 }
 
 

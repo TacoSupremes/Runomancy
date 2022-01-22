@@ -10,8 +10,10 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
+import net.minecraft.client.renderer.Quaternion;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -21,6 +23,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -140,6 +143,10 @@ public class RuneEffectSoulGen implements IRuneEffect
         return true;
     }
 
+
+
+
+
     @Override
     @OnlyIn(Dist.CLIENT)
     public void render(TileEndRune tileEntityIn, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int combinedLightIn, int combinedLightIn1, CompoundNBT nbt)
@@ -147,13 +154,17 @@ public class RuneEffectSoulGen implements IRuneEffect
         if (nbt.contains(ITEM))
         {
             LivingEntity e = ItemSoulGem.getEntity(nbt.getCompound(ITEM), Minecraft.getInstance().world);
-
+            e.setPositionAndRotation(0,0,0,0,0);
+            
+            matrixStackIn.push();
+            matrixStackIn.translate(0,1.25D + (Math.sin((double)tileEntityIn.ticks / 16D) / 2),0);
             EntityRenderer s = Minecraft.getInstance().getRenderManager().renderers.get(e.getType());
 
-            matrixStackIn.push();
-            matrixStackIn.translate(0,1.25D,0);
-            s.render(e, e.prevRotationYaw + 0.1F, partialTicks, matrixStackIn, bufferIn, combinedLightIn);
+            matrixStackIn.rotate(new Quaternion(0, tileEntityIn.ticks % 360,0,true));
+            s.render(e, e.rotationYaw, partialTicks, matrixStackIn,  bufferIn, combinedLightIn);
+            ItemSoulGem.entityToNBT(nbt.getCompound(ITEM), e);
             matrixStackIn.pop();
         }
     }
+
 }
