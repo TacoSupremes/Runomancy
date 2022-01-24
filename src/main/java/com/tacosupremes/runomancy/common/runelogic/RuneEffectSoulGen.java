@@ -19,6 +19,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -44,7 +45,7 @@ public class RuneEffectSoulGen implements IRuneEffect
                 if(e.getHealth() >= 0.5F)
                 {
                     e.setPosition(pos.getX() + 0.5F, pos.getY() + 0.2F + 1, pos.getZ() + 0.5F);
-                   // e.setHealth(e.getHealth() - 0.5F);
+                    //e.attackEntityFrom(DamageSource.causeMobDamage(e), 0.5F);
                     //te.addPower(50);
                     ItemSoulGem.entityToNBT(nbt.getCompound(ITEM), e);
                     //System.out.println("\n\n" + "HP:ENTITY" + e.getHealth() + "\n\n");
@@ -155,7 +156,6 @@ public class RuneEffectSoulGen implements IRuneEffect
         {
             LivingEntity e = ItemSoulGem.getEntity(nbt.getCompound(ITEM), Minecraft.getInstance().world);
             e.setPositionAndRotation(0,0,0,0,0);
-
 
             matrixStackIn.push();
             matrixStackIn.translate(0,1.25D + (Math.sin((double)tileEntityIn.ticks / 16D) / 2),0);

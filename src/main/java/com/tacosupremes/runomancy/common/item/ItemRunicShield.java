@@ -38,14 +38,11 @@ public class ItemRunicShield extends ItemToggleMod
 				is.setDamage(is.getDamage() + 2);
 
 				w.addParticle(ParticleTypes.CRIT, e2.getPosX() + Runomancy.rand.nextGaussian() / 4 - Runomancy.rand.nextGaussian() / 4, e2.getPosY() + 1, e2.getPosZ() + Runomancy.rand.nextGaussian() / 4 - Runomancy.rand.nextGaussian() / 4, 0, 0, 0);
-
 			}
 		}
-
-
 	}
 
-	public Predicate<Entity> shouldReflect = (e) -> e instanceof LivingEntity || e instanceof  IProjectile;
+	public Predicate<Entity> shouldReflect = (e) -> e instanceof LivingEntity || e instanceof IProjectile;
 
 	@Override
 	public String getItemRegistryName()

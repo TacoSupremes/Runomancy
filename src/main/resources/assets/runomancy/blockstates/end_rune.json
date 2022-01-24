@@ -7,6 +7,7 @@
     "mode=4": { "model": "runomancy:block/end_rune_plant" },
     "mode=5": { "model": "runomancy:block/end_rune_furnace_gen" },
     "mode=6": { "model": "runomancy:block/end_rune_plant" },
-    "mode=7": { "model": "runomancy:block/end_rune_well" }
+    "mode=7": { "model": "runomancy:block/end_rune_well" },
+    "mode=8": { "model": "runomancy:block/soul_rune_cage" }
   }
 }

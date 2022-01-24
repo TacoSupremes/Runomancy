@@ -30,7 +30,20 @@ public class ModItems {
 
 	public static final RegistryObject<Item> RUNIC_SHIELD = regItem(ItemRunicShield::new);
 
+	//public static final RegistryObject<Item> PET_BOUNDER; OSRS
+
+	//public static final RegistryObject<Item> GROWTH_SWORD; It do be gettin stronger
+
+	// NetherCraft PICK
+
+	// CAVE TELE
+
+
+	public static final RegistryObject<Item> RETURN_CHARM = regItem(ItemReturnCharm::new);
+
 	public static final RegistryObject<Item> SOUL_GEM = regItem(ItemSoulGem::new);
+
+
 
 	public static final RegistryObject<Item> END_RUNE_ITEM = makeBlockItem(ModBlocks.END_RUNE);
 
