@@ -5,7 +5,9 @@ import com.tacosupremes.runomancy.common.block.BlockMod;
 import com.tacosupremes.runomancy.common.block.ModBlocks;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
+import net.minecraft.item.TieredItem;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -30,20 +32,25 @@ public class ModItems {
 
 	public static final RegistryObject<Item> RUNIC_SHIELD = regItem(ItemRunicShield::new);
 
-	//public static final RegistryObject<Item> PET_BOUNDER; OSRS
+	public static final RegistryObject<Item> DECAY_HEAL = regItem(ItemDecayHeal::new);
 
-	//public static final RegistryObject<Item> GROWTH_SWORD; It do be gettin stronger
+	public static final RegistryObject<Item> PET_BINDER = regItem(ItemPetBinder::new);
+
+	public static final RegistryObject<Item> SHARPENING_SWORD = ITEMS.register("sharp_sword", () -> new ItemSharpSword(new Item.Properties().group(Runomancy.TAB)));
+
+	//move biome
+
+	// public static final RegistryObject<Item> PET_BOUNDER; OSRS
+
+	//
 
 	// NetherCraft PICK
-
-	// CAVE TELE
-
 
 	public static final RegistryObject<Item> RETURN_CHARM = regItem(ItemReturnCharm::new);
 
 	public static final RegistryObject<Item> SOUL_GEM = regItem(ItemSoulGem::new);
 
-
+	public static final RegistryObject<Item> LAVA_GEM = regItem(ItemLavaGem::new);
 
 	public static final RegistryObject<Item> END_RUNE_ITEM = makeBlockItem(ModBlocks.END_RUNE);
 
@@ -80,9 +87,7 @@ public class ModItems {
 	public static Item runicSword;
 	
 	public static Item modBook;
-	
-	public static Item soulGem;
-	
+
 	public static Item hungerTablet;
 	
 	public static Item enderShard;

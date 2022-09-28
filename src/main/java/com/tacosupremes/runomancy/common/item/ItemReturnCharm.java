@@ -3,7 +3,6 @@ package com.tacosupremes.runomancy.common.item;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
