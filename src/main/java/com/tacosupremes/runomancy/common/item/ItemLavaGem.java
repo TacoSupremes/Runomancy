@@ -33,7 +33,7 @@ public class ItemLavaGem extends ItemMod
 
     public ItemLavaGem()
     {
-        super(getDefaultProps());
+        super(getDefaultProps().maxStackSize(1));
     }
 
     @Override
