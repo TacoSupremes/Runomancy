@@ -32,6 +32,7 @@ public class RuneEffectSoulGen implements IRuneEffect
 {
     public static final String ITEM = "ITEM";
     public static final String CLAIM = "CLAIM";
+    public static final String EFFECT_NAME = LibMisc.MODID + ".soul.tap.effect";
 
     @Override
     public void doEffect(World w, BlockPos pos, TileEndRune te, CompoundNBT nbt)
@@ -109,7 +110,7 @@ public class RuneEffectSoulGen implements IRuneEffect
     @Override
     public String getName()
     {
-        return LibMisc.MODID + ".soul.tap.effect";
+        return EFFECT_NAME;
     }
 
     @Override
@@ -120,7 +121,6 @@ public class RuneEffectSoulGen implements IRuneEffect
         if(!nbt.contains(ITEM) && !nbt.getBoolean(CLAIM) && is.getItem() == ModItems.SOUL_GEM.get() && ItemSoulGem.hasEntity(is))
         {
             nbt.put(ITEM, is.getTag());
-            if(!worldIn.isRemote())
                 player.setHeldItem(handIn, ItemStack.EMPTY);
 
             return ActionResultType.CONSUME;
@@ -162,6 +162,7 @@ public class RuneEffectSoulGen implements IRuneEffect
             matrixStackIn.rotate(new Quaternion(0, tileEntityIn.ticks % 360,0,true));
 
             EntityRenderer s = Minecraft.getInstance().getRenderManager().getRenderer(e);
+
             s.render(e, e.rotationYaw, partialTicks, matrixStackIn,  bufferIn, combinedLightIn);
 
             ItemSoulGem.entityToNBT(nbt.getCompound(ITEM), e);

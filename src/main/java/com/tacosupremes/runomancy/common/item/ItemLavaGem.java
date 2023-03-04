@@ -40,7 +40,7 @@ public class ItemLavaGem extends ItemMod
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn)
     {
         if(stack.hasTag())
-            tooltip.add(new StringTextComponent(""+stack.getTag().getInt(LAVA)));
+            tooltip.add(new StringTextComponent(String.valueOf(stack.getTag().getInt(LAVA))));
         else
             tooltip.add(new TranslationTextComponent("runomancy.empty"));
     }

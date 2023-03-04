@@ -2,6 +2,7 @@ package com.tacosupremes.runomancy.common.item;
 
 import com.tacosupremes.runomancy.common.block.rune.tile.TileEndRune;
 import com.tacosupremes.runomancy.common.lib.LibMisc;
+import com.tacosupremes.runomancy.common.runelogic.RuneEffectSoulGen;
 import com.tacosupremes.runomancy.common.runelogic.RuneFormations;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -79,7 +80,7 @@ public class ItemSoulGem extends ItemMod
             {
                 TileEndRune te = (TileEndRune) w.getTileEntity(context.getPos());
 
-                if(te.getEffect() == RuneFormations.runeEffectByName(LibMisc.MODID + ".soul.effect"))
+                if(te.getEffect() == RuneFormations.runeEffectByName(RuneEffectSoulGen.EFFECT_NAME))
                 {
                     return ActionResultType.PASS;
                 }
